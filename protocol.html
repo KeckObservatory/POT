@@ -1,0 +1,1071 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Protocol &mdash; mKTL 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=4bba6b87" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = "pre.mermaid {\n    /* Same as .mermaid-container > pre */\n    display: block;\n    width: 100%;\n}\n\npre.mermaid > svg {\n    /* Same as .mermaid-container > pre > svg */\n    height: 500px;\n    width: 100%;\n    max-width: 100% !important;\n}";
+    document.head.appendChild(defaultStyle);
+
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = ".mermaid-container {\n    position: relative;\n    display: flex;\n    flex-direction: row;\n    width: 100%;\n}\n\n.mermaid-container > pre {\n    display: block;\n    width: 100%;\n}\n\n.mermaid-container > pre > svg {\n    height: 500px;\n    width: 100%;\n    max-width: 100% !important;\n}\n\n.mermaid-fullscreen-btn {\n    position: absolute;\n    width: 28px;\n    height: 28px;\n    background: rgba(255, 255, 255, 0.95);\n    border: 1px solid rgba(0, 0, 0, 0.3);\n    border-radius: 4px;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    transition: all 0.2s;\n    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);\n    font-size: 14px;\n    line-height: 1;\n    padding: 0;\n    color: #333;\n}\n\n.mermaid-fullscreen-btn:hover {\n    opacity: 100% !important;\n    background: rgba(255, 255, 255, 1);\n    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);\n    transform: scale(1.1);\n}\n\n.mermaid-fullscreen-btn.dark-theme {\n    background: rgba(50, 50, 50, 0.95);\n    border: 1px solid rgba(255, 255, 255, 0.3);\n    color: #e0e0e0;\n}\n\n.mermaid-fullscreen-btn.dark-theme:hover {\n    background: rgba(60, 60, 60, 1);\n    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);\n}\n\n.mermaid-fullscreen-modal {\n    display: none;\n    position: fixed !important;\n    top: 0 !important;\n    left: 0 !important;\n    width: 95vw;\n    height: 100vh;\n    background: rgba(255, 255, 255, 0.98);\n    z-index: 9999;\n    padding: 20px;\n    overflow: auto;\n}\n\n.mermaid-fullscreen-modal.dark-theme {\n    background: rgba(0, 0, 0, 0.98);\n}\n\n.mermaid-fullscreen-modal.active {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen {\n    position: relative;\n    width: 95vw;\n    height: 90vh;\n    max-width: 95vw;\n    max-height: 90vh;\n    background: white;\n    border-radius: 8px;\n    padding: 20px;\n    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);\n    overflow: auto;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen.dark-theme {\n    background: #1a1a1a;\n    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);\n}\n\n.mermaid-container-fullscreen pre.mermaid {\n    width: 100%;\n    height: 100%;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen .mermaid svg {\n    height: 100% !important;\n    width: 100% !important;\n    cursor: grab;\n}\n\n.mermaid-fullscreen-close {\n    position: fixed !important;\n    top: 20px !important;\n    right: 20px !important;\n    width: 40px;\n    height: 40px;\n    background: rgba(255, 255, 255, 0.95);\n    border: 1px solid rgba(0, 0, 0, 0.2);\n    border-radius: 50%;\n    cursor: pointer;\n    z-index: 10000;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);\n    transition: all 0.2s;\n    font-size: 24px;\n    line-height: 1;\n    color: #333;\n}\n\n.mermaid-fullscreen-close:hover {\n    background: white;\n    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);\n    transform: scale(1.1);\n}\n\n.mermaid-fullscreen-close.dark-theme {\n    background: rgba(50, 50, 50, 0.95);\n    border: 1px solid rgba(255, 255, 255, 0.2);\n    color: #e0e0e0;\n}\n\n.mermaid-fullscreen-close.dark-theme:hover {\n    background: rgba(60, 60, 60, 1);\n    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);\n}\n\n.mermaid-fullscreen-modal .mermaid-fullscreen-btn {\n    display: none !important;\n}";
+    document.head.appendChild(fullscreenStyle);
+}
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
+        return brightness < 128;
+    }
+    // console.log("No dark or light theme detected, defaulting to light theme");
+    return false;
+};
+
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
+let _lazyObserver = null;
+let _renderQueue = Promise.resolve();
+let closeModal = () => {};
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('active')) {
+        closeModal();
+    }
+});
+
+// Apply d3 zoom to each SVG. Idempotent: an SVG already wrapped is skipped,
+// so this is safe to call both for the initial batch and for diagrams that
+// render lazily once they become visible.
+const addZoomToSvgs = (svgs) => {
+    svgs.each(function() {
+        if (this.getAttribute('data-zoom-applied') === 'true') return;
+        var svg = d3.select(this);
+        svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+        var inner = svg.select("g");
+        var zoom = d3.zoom().on("zoom", function(event) {
+            inner.attr("transform", event.transform);
+        });
+        svg.call(zoom);
+        this.setAttribute('data-zoom-applied', 'true');
+    });
+};
+
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        // Disconnect any previous lazy rendering observer
+        if (_lazyObserver) {
+            _lazyObserver.disconnect();
+            _lazyObserver = null;
+        }
+
+        all_mermaids.forEach((el) => {
+            el.removeAttribute('data-mermaid-deferred');
+            el.removeAttribute('data-mermaid-render-failed');
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+
+        // Separate visible and hidden elements. Mermaid's layout engine measures
+        // text dimensions via the DOM, which fails for elements hidden by a parent
+        // (e.g., Reveal.js non-active slides, sphinx-design unopened tabs),
+        // producing broken SVGs. Render visible elements now, defer hidden ones.
+        const visible = [];
+        const hidden = [];
+        all_mermaids.forEach((el) => {
+            // offsetParent is null for display:none ancestors.
+            // getClientRects().length > 0 catches position:fixed elements
+            // (which also have null offsetParent but are still visible).
+            if (el.offsetParent !== null || el.getClientRects().length > 0) {
+                visible.push(el);
+            } else {
+                hidden.push(el);
+                el.setAttribute('data-mermaid-deferred', 'true');
+            }
+        });
+
+        if (visible.length > 0) {
+            try {
+                await mermaid.run({ nodes: visible });
+            } catch (e) {
+                console.error("Mermaid rendering failed:", e);
+            }
+        }
+
+        // Lazily render hidden elements when they become visible.
+        // Uses a promise chain (_renderQueue) to serialize rendering,
+        // since IntersectionObserver may report multiple entries at once
+        // and mermaid.run() is not safe to call concurrently.
+        if (hidden.length > 0) {
+            if (typeof IntersectionObserver === 'undefined') {
+                console.warn("IntersectionObserver not available; hidden mermaid diagrams will not render.");
+            } else {
+                _renderQueue = Promise.resolve();
+                _lazyObserver = new IntersectionObserver((entries) => {
+                    for (const entry of entries) {
+                        if (entry.isIntersecting && entry.target.getAttribute("data-processed") !== "true") {
+                            _lazyObserver.unobserve(entry.target);
+                            const el = entry.target;
+                            _renderQueue = _renderQueue.then(async () => {
+                                try {
+                                    await mermaid.run({ nodes: [el] });
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    // Apply zoom to the now-rendered diagram, matching
+                                    // the decoration visible diagrams receive.
+                                    if (false) {
+                                        addZoomToSvgs(d3.selectAll("").select(function() {
+                                            return this.querySelector("svg");
+                                        }));
+                                    }
+                                } catch (e) {
+                                    console.error("Mermaid deferred rendering failed:", e);
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    el.setAttribute('data-mermaid-render-failed', 'true');
+                                }
+                            });
+                        }
+                    }
+                });
+                hidden.forEach((el) => _lazyObserver.observe(el));
+            }
+        }
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
+    // Exclude deferred (hidden) and render-failed elements from completion checks
+    const mermaids_active = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])");
+    const mermaids_processed = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])[data-processed='true']");
+
+    if (false) {
+        const mermaids_to_add_zoom = 0 === -1 ? mermaids_active.length : 0;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("").select(function() {
+                return this.querySelector("svg");
+            });
+            // Wait until every active (visible) diagram has rendered. Deferred
+            // diagrams are excluded, so a fixed d3_node_count that counts a
+            // hidden diagram no longer loops forever waiting for its SVG.
+            if(mermaids_active.length !== mermaids_processed.length) {
+                setTimeout(() => runMermaid(false), 200);
+                return;
+            }
+            addZoomToSvgs(svgs);
+        }
+    } else if(mermaids_active.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(() => runMermaid(false), 200);
+        return;
+    }
+
+    // Stop here if not adding fullscreen capability
+    if (!true) return;
+
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = "\u26f6";
+        fullscreenBtn.style.opacity = "50%";
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scrollX, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.display = 'block';
+
+                if (false) {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        container.appendChild(fullscreenBtn);
+    });
+};
+
+
+
+const load = async () => {
+    initStyles();
+
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "default" : "default", "theme");
+            await mermaid.initialize(
+                {...{"startOnLoad": false},
+                ...{ darkMode: darkTheme, theme: darkTheme ? "default" : "default" },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "default" : "default", "theme");
+mermaid.initialize(
+    {...{"startOnLoad": false},
+    ...{ darkMode: darkTheme, theme: darkTheme ? "default" : "default" },
+    }
+);
+
+window.addEventListener("load", load);
+window.runMermaid = runMermaid;</script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Protocol interface" href="protocol_interface.html" />
+    <link rel="prev" title="Built-in items" href="built_ins.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mKTL
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="client.html">Client interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="daemon.html">Daemon interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store.html">The Store class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item.html">The Item class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="executables.html">Executables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">JSON metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="built_ins.html">Built-in items</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Protocol</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#principles-of-operation">Principles of operation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#request-response">Request/response</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#message-types">Message types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#message-payload">Message payload</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#publish-subscribe">Publish/subscribe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#discovery">Discovery</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="protocol_interface.html">Protocol interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="heritage.html">Heritage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_of_conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="governance.html">Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mKTL</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Protocol</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/protocol.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="protocol">
+<span id="id1"></span><h1>Protocol<a class="headerlink" href="#protocol" title="Link to this heading"></a></h1>
+<p>The mKTL protocol is the primary interface layer for mKTL as a whole;
+associated Python code can be considered a reference implementation,
+but the intent is for the protocol to be language agnostic. mKTL clients
+and daemons communicate using ZeroMQ sockets. This document describes the
+socket types used, the formatting of the messages, and the types of requests
+that can be made.</p>
+<section id="principles-of-operation">
+<h2>Principles of operation<a class="headerlink" href="#principles-of-operation" title="Link to this heading"></a></h2>
+<p>Unique addressing of daemons within a store is accomplished by the use of
+a unique port number to connect to that daemon; messages arriving on a
+specific port are thus guaranteed, by construction, to only need decoding
+exactly once; there is no envelope for the message contents, such that the
+message contents may need to be rerouted to a new location. Each daemon
+will use a unique <a class="reference internal" href="#publish"><span class="std std-ref">publish</span></a> and <a class="reference internal" href="#request"><span class="std std-ref">request</span></a>
+listener, operating on a unique port on that host.</p>
+<p>A given host providing connectivity for mKTL could have thousands of daemons
+running locally, each listening on a unique port number. Each daemon deploys
+a UDP listener on a predetermined port number (10111) to enable discovery of
+daemons on that host; a <a class="reference internal" href="executables.html#mkregistryd"><span class="std std-ref">dedicated registry process</span></a> also
+listens on a predetermined port number (10103) to streamline discovery from
+the client side. This usage pattern expects there to be a single
+<a class="reference internal" href="executables.html#mkregistryd"><span class="std std-ref">mkregistryd</span></a> process running on every host running one or more mKTL
+daemons. The discovery exchange is <a class="reference internal" href="#discovery"><span class="std std-ref">described below</span></a>
+in more detail.</p>
+<p>An mKTL proxy, were such a thing to exist, would follow the same principle:
+a unique port for each listener of each proxied daemon, which allows the use
+of the <code class="docutils literal notranslate"><span class="pre">zmq.proxy()</span></code> method to cleanly bridge between endpoints at the
+protocol level without any inspection of message contents, thus ensuring the
+proxy has minimal processing overhead.</p>
+</section>
+<section id="request-response">
+<span id="request"></span><h2>Request/response<a class="headerlink" href="#request-response" title="Link to this heading"></a></h2>
+<p>The first socket type implements a request/response pattern. This represents
+the majority of the interactive traffic between a mKTL client and daemon.
+Because requests can be asynchronous, mKTL does not use the REQ/REP
+implementation in ZeroMQ, which enforces a strict one request, one response
+pattern; instead, we use DEALER/ROUTER, which allows any amount of messages
+in any order, in any direction.</p>
+<pre  class="mermaid">
+        sequenceDiagram
+    autonumber
+    Participant Client
+    Participant Daemon
+
+    Client-&gt;&gt;+Daemon: GET: foo
+    Daemon-&gt;&gt;Client: ACK
+    Daemon-&gt;&gt;-Client: REP: JSON payload
+
+    </pre><p>Upon receipt of a request the daemon will immediately issue an ACK response.
+The purpose of the ACK response is to verify that the appropriate endpoint
+for the request is online and available to respond; the final response to a
+request may be significantly delayed compared to its initial receipt, and
+the ACK response allows a client to distinguish between delayed operations
+and the complete absence of a proper handler for the request. The client
+should immediately raise an error in the absence of a quick response.</p>
+<p>The full REP response can be issued at any time. If it arrives prior to the
+ACK response the client will consider this final response to be a combined
+ACK and REP response. There is never more than one ACK response for a request;
+likewise, there is never more than one REP response.</p>
+<p>All requests are handled
+fully asynchronously; a client could send a thousand requests in quick
+succession, but the responses will not be serialized, and the response order
+is not guaranteed. Synchronous behavior, if desired, is implemented by client
+code and not in the protocol itself.
+Here is an example of what the full exchange on the client side might look
+like, in this case handling the exchange as a synchronous request:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">socket</span> <span class="o">=</span> <span class="n">zmq_context</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">DEALER</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">LINGER</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">identity</span> <span class="o">=</span> <span class="n">identity</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">daemon</span><span class="p">)</span>
+
+<span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">send_multipart</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="c1"># milliseconds</span>
+<span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">TimeoutError</span><span class="p">(</span><span class="s1">&#39;no response received in 100 ms&#39;</span><span class="p">)</span>
+
+<span class="n">ack</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">recv_multipart</span><span class="p">()</span>
+<span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">recv_multipart</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The request/response interaction between the client and daemon is a multipart
+message, where each component of the message has a specific meaning.
+The message parts are identical for both ends of the request/response
+exchange.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><em>Field</em></p></td>
+<td><p><em>Data type</em></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>version</strong></p></td>
+<td><p>A single ASCII character indicating the mKTL protocol version number.
+The initial release of the mKTL protocol uses the version character ‘a’.
+The version identifier is always present.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>identifier</strong></p></td>
+<td><p>A unique identifier for the request. The format of this identifier is
+not strict, it could be any byte string (such as a UUID), but the initial
+implementation uses a monotonically increasing eight-byte integer. The
+identifier is set by the client, and allows the client to tie a response
+to the original request. Note that this identifier does not necessarily
+have significance on the daemon side, daemons will use their own internal
+scheme to uniquely identify requests, but the response will always include
+this original identifier. The request identifier is always present.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>type</strong></p></td>
+<td><p>The message type. This is a short string of characters that identifies
+what type of request, or response, this message represents. It is one
+of the values described in the <a class="reference internal" href="#message-types"><span class="std std-ref">Message types</span></a> section below. The
+message type is always present.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>target</strong></p></td>
+<td><p>The target for this request/response, if any. Not all requests have a
+target; responses don’t need to specify it, since the identifier field
+associates a response with a request. If a target is specified it
+is a store or a key, depending on the request; this field will be an empty
+byte sequence if the target is not specified.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>flags</strong></p></td>
+<td><p>A big-endian integer representing boolean flags that modify how this
+message is handled. The default value is an integer zero; if this field
+is transmitted as an empty byte sequence it must be interpreted as the
+integer zero. Each bit in the integer has a specific meaning:</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><em>Bit</em></p></td>
+<td><p><em>Name</em></p></td>
+<td><p><em>Meaning</em></p></td>
+</tr>
+<tr class="row-even"><td><p>0b0001</p></td>
+<td><p>NO_ACK</p></td>
+<td><p>Suppress the ACK response to this request.</p></td>
+</tr>
+<tr class="row-odd"><td><p>0b0010</p></td>
+<td><p>NO_REP</p></td>
+<td><p>Suppress the REP response to this request.</p></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>payload</strong></p></td>
+<td><p>The message payload. This is the JSON representation of any additional
+data required as part of this exchange; if setting a new value, it would
+contain the value; if it is a response containing additional information
+it would go here. See the <a class="reference internal" href="#message-payload"><span class="std std-ref">Message payload</span></a> section
+for a more complete description of the payload contents. This field will
+be an empty byte sequence if there is no payload.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>bulk</strong></p></td>
+<td><p>A bulk byte sequence, typically a component of the payload. This is to
+allow the transmission of information like image data, where the bulk
+bytes represent the image buffer, and the JSON payload describes how
+to interpret the buffer. This field will be omitted entirely if there
+is no bulk component, which allows a recipient to distinguish between
+an empty byte sequence and the complete absence of data.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Here is a representation of what the on-the-wire messages might look like
+for a simple GET request:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sa">b</span><span class="s1">&#39;a&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;00000023&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;GET&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;kpfguide.LASTFILENAME&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;&#39;</span>
+
+<span class="sa">b</span><span class="s1">&#39;a&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;00000023&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;ACK&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;&#39;</span>
+
+<span class="sa">b</span><span class="s1">&#39;a&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;00000023&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;REP&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;{&quot;value&quot;: /sdata1701/kpf1/2025-06-23/image_672.fits&#39;</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="mf">234.23</span><span class="p">}</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+<p>The reference implementation provides a <a class="reference internal" href="protocol_interface.html#mktl.protocol.message.Message" title="mktl.protocol.message.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.protocol.message.Message</span></code></a>
+class to minimize the amount of code that has to be aware about the on-the-wire
+message structure.</p>
+</section>
+<section id="message-types">
+<span id="id2"></span><h2>Message types<a class="headerlink" href="#message-types" title="Link to this heading"></a></h2>
+<p>This section describes the various requests a client can make of the mKTL
+daemon via the request/response socket. An additional message type, the PUB,
+also exists, but has its own message structure outside this scheme.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><em>Message type</em></p></td>
+<td><p><em>Description</em></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>GET</strong></p></td>
+<td><p>Request the current value for a single item.
+The target is always the name of the store, and the key for the item,
+concatenated with a period. No additional payload is required for a
+basic GET request.</p>
+<p>The default behavior for a GET request is for a cached value to be
+returned by the handling daemon. A client can explicitly request an
+up-to-date value by setting the ‘refresh’ field in the payload to
+‘True’; see the <a class="reference internal" href="#message-payload"><span class="std std-ref">Message payload</span></a> section for additional details.</p>
+<p>The payload of the response will contain ‘value’ and ‘time’ fields,
+corresponding to the item value and the last-changed timestamp. If
+the item has a bulk data component, the payload will instead describe
+the bulk data.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>SET</strong></p></td>
+<td><p>Request a change to the value of a single key. Depending on the daemon,
+this could result in a variety of behavior, from simply caching the value
+to slewing a telescope, and anything in-between. The final response
+indicates the request is complete but does not indicate what the new
+item value is.</p>
+<p>The <a class="reference internal" href="#message-payload"><span class="std std-ref">Message payload</span></a> for a SET request is the same as the payload
+for a GET response, except that the ‘time’ field is not required or
+expected, and there are additional fields set by the client to describe
+the origin of the request.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>ACK</strong></p></td>
+<td><p>Immediate acknowledgement of a request; this message type originates from
+a daemon, only in response to a request. If this response is not received
+with a very small time window after the initial request, the client can
+and should assume the daemon handling that request is offline. The
+acknowledgement confers no additional information beyond a positive
+affirmation that the request has been received.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>REP</strong></p></td>
+<td><p>A response to a direct request; this message type originates from a
+daemon, only in response to a request. This response will contain the
+full payload to satisfy the request, any error text related to a problem
+satisfying the request, or be an empty indication that the request has
+been completed.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="message-payload">
+<span id="id3"></span><h2>Message payload<a class="headerlink" href="#message-payload" title="Link to this heading"></a></h2>
+<p>The payload of a message is a JSON associative array. The fields will vary
+depending on the message type, and are optional in nearly all circumstances,
+but each field has a consistent meaning. Arbitrary additional fields are
+allowed, but a standard mKTL client will not notice or handle them.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><em>Payload field</em></p></td>
+<td><p><em>Description</em></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>value</strong></p></td>
+<td><p>The base representation of the value being transmitted in this message.
+For a GET response or a SET request, this would be the item value;
+depending on the item type this could be a boolean, numeric, or string
+value, or any valid data that can be serialized as JSON.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>time</strong></p></td>
+<td><p>The timestamp associated with the transmitted value. This should be
+interpreted as the “last modified” timestamp for an item, indicating
+when the item assumed the transmitted value. The timestamp is a numeric
+representation of UNIX epoch seconds.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>error</strong></p></td>
+<td><p>A JSON dictionary with information about any error that occurred while
+processing the request. If the value is not present or is the JSON null
+value, no error occurred. If it is present, it will have these fields:</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><strong>type</strong></p></td>
+<td><p>Analogous to the Python exception type
+(ValueError, TypeError, etc.).</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>text</strong></p></td>
+<td><p>Descriptive text of the error.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>debug</strong></p></td>
+<td><p>Optional additional information about the
+error, such as a Python traceback.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The intent of this error field is not to provide enough information for
+debugging of code, it is intended to provide enough information for the
+client to perform meaningful error handling.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>prime</strong></p></td>
+<td><p>An optional field associated with a GET request. If this field is
+present, and it is set to True, the daemon processing the request will
+initiate a series of priming broadcasts on its PUB/SUB interface for
+the requested item. These broadcasts look exactly like a regular
+<a class="reference internal" href="#publish"><span class="std std-ref">published broadcast</span></a> for an item, except the topic
+is prefixed with <cite>prime:</cite> to distinguish it from the regular message
+stream. This allows the requesting client to know, with confidence,
+that the PUB/SUB channel is fully operational for this item.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>refresh</strong></p></td>
+<td><p>An optional field associated with a GET request. If this field is
+present, and it is set to True, the daemon processing the request is
+expected to ignore cached data and retrieve the most current value
+for the target item. For example, if the item represents a temperature
+reading, the daemon would be expected to query the hardware controller,
+update its local cache, and return the result to the requesting client.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>shape</strong></p></td>
+<td><p>One of the two required fields in order to describe a bulk data array.
+This defines the dimensions of the bulk data array, and is interpreted
+the same way as the ‘shape’ parameter for a numpy ndarray.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>dtype</strong></p></td>
+<td><p>One of the two required fields in order to describe a bulk data array.
+This defines the data type of the bulk data array, and is interpreted
+the same way as the ‘dtype’ parameter for a numpy ndarray. If starting
+from an ndarray, the dtype is the string representation of the .dtype
+attribute of that array; when recreating an ndarray, this string is
+used to get the matching dtype attribute from the numpy module. In
+Python:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">payload</span><span class="p">[</span><span class="s1">&#39;dtype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">my_numpy_array</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="n">dtype</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">numpy</span><span class="p">,</span> <span class="n">payload</span><span class="p">[</span><span class="s1">&#39;dtype&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>_user</strong></p></td>
+<td><p>The user name associated with a SET request.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>_hostname</strong></p></td>
+<td><p>The host name from which a SET request originated.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>_pid</strong></p></td>
+<td><p>The process identifier associated with a SET request.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>_ppid</strong></p></td>
+<td><p>The identifier for the parent process associated with a SET request.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>_executable</strong></p></td>
+<td><p>The executable running the process associated with a SET request.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>_argv</strong></p></td>
+<td><p>All additional command line arguments provided to the process associated
+with a SET request.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="publish-subscribe">
+<span id="publish"></span><h2>Publish/subscribe<a class="headerlink" href="#publish-subscribe" title="Link to this heading"></a></h2>
+<p>The second socket type implements a publish/subscribe socket pattern. The
+desired functionality in mKTL is a neat match for the PUB/SUB socket pattern
+offered by ZeroMQ:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>SUB clients subscribe to one or more topics from
+a given PUB socket, or can subscribe to all topics
+by subscribing to the empty string. This aligns well
+with existing usage patterns, where KTL keyword
+names and EPICS channel names are treated as unique
+identifiers, and map easily to a PUB/SUB topic.</p></li>
+<li><p>The filtering of topics occurs on the daemon side,
+so if a PUB is publishing a mixture of high-frequency
+values or large broadcasts, and a client is not
+subscribed to those specific topics, the broadcasts
+are never sent to the client.</p></li>
+</ul>
+</div></blockquote>
+<pre  class="mermaid">
+        sequenceDiagram
+    autonumber
+    Participant Alpha
+    Participant Beta
+    Participant Gamma
+    Participant Daemon
+    Participant Controller
+
+    Alpha-&gt;&gt;Daemon: SUB temp
+    Gamma-&gt;&gt;Daemon:
+    Daemon-&gt;&gt;+Controller: RI02
+    Controller-&gt;&gt;-Daemon: 0aae
+    Daemon-&gt;&gt;Alpha: PUB temp 273.4
+    Daemon-&gt;&gt;Gamma:
+    Daemon-&gt;&gt;+Controller: RI02
+    Controller-&gt;&gt;-Daemon: 0aac
+    Daemon-&gt;&gt;Alpha: PUB temp 273.2
+    Daemon-&gt;&gt;Gamma:
+    Beta-&gt;&gt;Daemon: SUB temp
+    Daemon-&gt;&gt;+Controller: RI02
+    Controller-&gt;&gt;-Daemon: 0aad
+    Daemon-&gt;&gt;Alpha: PUB temp 273.3
+    Daemon-&gt;&gt;Beta:
+    Daemon-&gt;&gt;Gamma:
+
+    </pre><p>The above diagram shows a typical pattern for publish/subscribe interactions.
+A daemon periodically polls a hardware controller for a new value; the daemon
+publishes any new values to any clients subscribed to updates for that item.
+Subscribers may come and go at any time. Once the daemon issues the publication
+it has no awareness of any subsequent processing or potential performance
+bottlenecks on the client side; subscribed clients offer no feedback on their
+receipt or handling of a published message.</p>
+<p>The formatting of the PUB message is very similar to what is described
+above for the <a class="reference internal" href="#request"><span class="std std-ref">request/response multipart message format</span></a>.
+Some fields are not necessary for the PUB variant, and in order for the
+topic matching to work the topic must be the first component of a multipart
+message. The fields are as follows:</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><em>Field</em></p></td>
+<td><p><em>Data type</em></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>topic</strong></p></td>
+<td><p>For a typical broadcast the topic will be the full key for a single
+mKTL item. This is similar to the ‘target’ field in a
+<a class="reference internal" href="#request"><span class="std std-ref">request/response message</span></a>. For all mKTL addressing
+the topic appends a trailing ‘.’ in order to prevent unwanted substring
+matching between similarly
+named keys. Likewise, because of the ZeroMQ behavior around leading
+substrings, any expanded use of mKTL PUB/SUB behavior will use a
+leading prefix to distinguish it from other message types. For example,
+broadcasting all SET requests with a leading ‘set:’ prefix, or
+broadcasting a bundle of related mKTL items with a leading ‘bundle:’
+prefix. The response to a priming GET request does exactly this,
+issuing a stream of broadcasts with a leading ‘prime:’ prefix.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>version</strong></p></td>
+<td><p>A single ASCII character indicating the mKTL protocol version number.
+The initial release of the mKTL protocol uses the version character ‘a’.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>payload</strong></p></td>
+<td><p>The message payload, with exactly the same contents as
+<a class="reference internal" href="#message-payload"><span class="std std-ref">described above</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>bulk</strong></p></td>
+<td><p>A bulk byte sequence, with exactly the same contents as the
+<a class="reference internal" href="#request"><span class="std std-ref">request/response message</span></a>. This field will be
+omitted entirely if there is no bulk component.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="discovery">
+<span id="id4"></span><h2>Discovery<a class="headerlink" href="#discovery" title="Link to this heading"></a></h2>
+<p>The UDP discovery layer takes advantage of a feature of UDP listeners: not only
+are you allowed to have multiple listeners on the same port, but they will all
+respond to an incoming broadcast message. This feature allows every listening
+participant to create a listener on the same port, which allows an arbitrary
+number of processes to participate in discovery.</p>
+<p>There are two phases to a client automatically discovering a daemon; these
+phases are separated by an intermediary, the registry process
+(<a class="reference internal" href="executables.html#mkregistryd"><span class="std std-ref">mkregistryd</span></a>). The first phase is for the registry daemon to discover
+all local daemons; the second phase is for a client to discover available
+registry daemons.</p>
+<p>The discovery process is identical for the two phases, except that the listeners
+are on different port numbers. Clients looking for registries, and registries
+looking for daemons, they both start with a UDP broadcast; the recipient then
+responds with a port number that can be used for REQ/REP mKTL queries.</p>
+<pre  class="mermaid">
+        sequenceDiagram
+    autonumber
+    Participant Client
+    Participant Registry as Any Registry
+
+    Client-&gt;&gt;+Registry: Hello?
+    Registry-&gt;&gt;-Client: Try port 10059
+
+    Client-&gt;&gt;+Registry: GET: store._catalog
+    Registry-&gt;&gt;-Client: REP: JSON payload
+
+    </pre><p>The client/registry interaction is narrower than the registry/daemon
+exchange: a client wants to know about a specific store,
+and if the registry doesn’t know about that store the query will fail. This
+sequence is the only time a client will initiate or otherwise participate in
+any form of broadcast discovery. Enumeration of available stores can also
+occur in a form of directed discovery: if a client already knows where a
+registry is running it can issue a directed UDP query to that host, though
+instead of asking for a single store the client will ask for all available
+stores. This specific exchange is intended to populate a local cache on
+the client side, and will not occur unless explicitly requested.</p>
+<pre  class="mermaid">
+        sequenceDiagram
+    autonumber
+    Participant Client
+    Participant Registry as Specific Registry
+
+    Client-&gt;&gt;+Registry: Hello?
+    Registry-&gt;&gt;-Client: Try port 10234
+
+    Client-&gt;&gt;+Registry: GET: _hash
+    Registry-&gt;&gt;-Client: REP: JSON payload
+
+    Client-&gt;&gt;+Registry: GET: store1._catalog
+    Registry-&gt;&gt;-Client: REP: JSON payload
+
+    Client-&gt;&gt;+Registry: GET: store2._catalog
+    Registry-&gt;&gt;-Client: REP: JSON payload
+
+    Client-&gt;&gt;+Registry: GET: store3._catalog
+    Registry-&gt;&gt;-Client: REP: JSON payload
+
+    </pre><p>The discovery exchange between a registry and a daemon uses the same structure,
+but with the listener running on a different UDP port; a single port is used to
+discover a registry daemon, and a single port is used to discover a daemon.</p>
+<pre  class="mermaid">
+        sequenceDiagram
+    autonumber
+    Participant Registry
+    Participant Daemon as Any Daemon
+
+    Registry-&gt;&gt;+Daemon: Hello?
+    Daemon-&gt;&gt;-Registry: Try port 10234
+
+    Registry-&gt;&gt;+Daemon: GET: _hash
+    Daemon-&gt;&gt;-Registry: REP: JSON payload
+
+    Registry-&gt;&gt;+Daemon: GET: store1._catalog
+    Daemon-&gt;&gt;-Registry: REP: JSON payload
+
+    </pre><p>The registry will run this discovery process exactly once upon startup, in an
+attempt to identify all available daemons on the local network, and cache their
+locally authoritative catalog blocks.</p>
+<pre  class="mermaid">
+        sequenceDiagram
+    autonumber
+    Participant Daemon
+    Participant Registry as Any Registry
+
+    Daemon-&gt;&gt;+Registry: Hello?
+    Registry-&gt;&gt;-Daemon: Try port 10234
+
+    Daemon-&gt;&gt;+Registry: SET: _catalog
+    Registry-&gt;&gt;-Daemon: REP:
+
+    </pre><p>Daemons are expected to self-announce on startup,
+which involves discovering local registries, and pushing the description of
+the daemon’s authoritative items to any discovered registries; the daemon
+will issue a SET request to the registry’s _catalog item to initiate further
+processing. The registry will reconcile the new description against what it
+already has cached, and will reject any announcement that introduces a
+conflict.</p>
+<p>There are four shared secrets used in the discovery exchange:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><em>Secret</em></p></th>
+<th class="head"><p><em>Description</em></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>registry port</strong></p></td>
+<td><p>The UDP port used to discover locally accessible
+<a class="reference internal" href="executables.html#mkregistryd"><span class="std std-ref">mkregistryd</span></a> processes. Clients and daemons send
+broadcasts to this port to initiate a discovery exchange.
+The port number is 10103.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>daemon port</strong></p></td>
+<td><p>The UDP port used to discover locally accessible mKTL daemons.
+<a class="reference internal" href="executables.html#mkregistryd"><span class="std std-ref">mkregistryd</span></a> sends a broadcast to this port to initiate
+a discovery exchange. The port number is 10111.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>call</strong></p></td>
+<td><p>An arbitrary string used by the discoverer to trigger a
+response from the listener. The string value is
+<code class="docutils literal notranslate"><span class="pre">Aloha</span> <span class="pre">mKTL</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>response</strong></p></td>
+<td><p>An arbitrary string used by the listener to respond to any
+received calls. The string value is <code class="docutils literal notranslate"><span class="pre">E</span> <span class="pre">komo</span> <span class="pre">mai:</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The purpose of the discovery response is to convey a single piece of
+information: the REQ/REP port number that process is using to receive
+proper mKTL requests. The port
+number, encoded as a string representation of an integer, is the sole additional
+component of the response after the colon. For example, if a daemon has a
+request port listening on port 10079, the full exchange (discovery request,
+discovery response) would be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sa">b</span><span class="s1">&#39;Aloha mKTL&#39;</span>
+
+<span class="sa">b</span><span class="s1">&#39;E komo mai:10079&#39;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="built_ins.html" class="btn btn-neutral float-left" title="Built-in items" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="protocol_interface.html" class="btn btn-neutral float-right" title="Protocol interface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright W. M. Keck Observatory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,547 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daemon interface &mdash; mKTL 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=4bba6b87" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The Store class" href="store.html" />
+    <link rel="prev" title="Client interface" href="client.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mKTL
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="client.html">Client interface</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Daemon interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-daemon-class">The Daemon class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.Daemon"><code class="docutils literal notranslate"><span class="pre">Daemon</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.Daemon.add_get_handler"><code class="docutils literal notranslate"><span class="pre">Daemon.add_get_handler()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.Daemon.add_get_performer"><code class="docutils literal notranslate"><span class="pre">Daemon.add_get_performer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.Daemon.add_handler"><code class="docutils literal notranslate"><span class="pre">Daemon.add_handler()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.Daemon.add_handlers"><code class="docutils literal notranslate"><span class="pre">Daemon.add_handlers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.Daemon.add_item"><code class="docutils literal notranslate"><span class="pre">Daemon.add_item()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.Daemon.add_performer"><code class="docutils literal notranslate"><span class="pre">Daemon.add_performer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.Daemon.add_performers"><code class="docutils literal notranslate"><span class="pre">Daemon.add_performers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.Daemon.add_set_handler"><code class="docutils literal notranslate"><span class="pre">Daemon.add_set_handler()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.Daemon.add_set_performer"><code class="docutils literal notranslate"><span class="pre">Daemon.add_set_performer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.Daemon.cleanup"><code class="docutils literal notranslate"><span class="pre">Daemon.cleanup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.Daemon.describe_items"><code class="docutils literal notranslate"><span class="pre">Daemon.describe_items()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.Daemon.parse_options"><code class="docutils literal notranslate"><span class="pre">Daemon.parse_options()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.Daemon.setup"><code class="docutils literal notranslate"><span class="pre">Daemon.setup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.Daemon.setup_final"><code class="docutils literal notranslate"><span class="pre">Daemon.setup_final()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.Daemon.stop"><code class="docutils literal notranslate"><span class="pre">Daemon.stop()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#store-metadata">Store metadata</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.meta.Catalog"><code class="docutils literal notranslate"><span class="pre">Catalog</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.meta.Catalog.convert_units"><code class="docutils literal notranslate"><span class="pre">Catalog.convert_units()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.meta.Catalog.from_format"><code class="docutils literal notranslate"><span class="pre">Catalog.from_format()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.meta.Catalog.from_quantity"><code class="docutils literal notranslate"><span class="pre">Catalog.from_quantity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.meta.Catalog.keys"><code class="docutils literal notranslate"><span class="pre">Catalog.keys()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.meta.Catalog.to_format"><code class="docutils literal notranslate"><span class="pre">Catalog.to_format()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.meta.Catalog.to_quantity"><code class="docutils literal notranslate"><span class="pre">Catalog.to_quantity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.meta.Catalog.update"><code class="docutils literal notranslate"><span class="pre">Catalog.update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.meta.Catalog.uuids"><code class="docutils literal notranslate"><span class="pre">Catalog.uuids()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.meta.authoritative"><code class="docutils literal notranslate"><span class="pre">authoritative()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.meta.catalog"><code class="docutils literal notranslate"><span class="pre">catalog()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mkd-executable">mkd executable</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="store.html">The Store class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item.html">The Item class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="executables.html">Executables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">JSON metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="built_ins.html">Built-in items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol.html">Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol_interface.html">Protocol interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="heritage.html">Heritage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_of_conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="governance.html">Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mKTL</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Daemon interface</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/daemon.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="daemon-interface">
+<span id="daemon"></span><h1>Daemon interface<a class="headerlink" href="#daemon-interface" title="Link to this heading"></a></h1>
+<p>A daemon is the source of authority for one or more mKTL items; when a client
+gets or sets an item value, that request is handled by the daemon. Exactly
+how that request gets handled is entirely up to the daemon code; there are no
+restrictions imposed by the mKTL protocol itself, it is up to the daemon to
+resolve any consistency issues or conflicting requests.</p>
+<p>The default behavior of the <a class="reference internal" href="store.html#mktl.Store" title="mktl.Store"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Store</span></code></a> is to act as a caching
+key/value store: values come in, values go out, they may or may not persist
+across restarts depending on the configuration. This behavior is rarely
+sufficient for an application; a typical daemon will implement custom code
+behind the getting and setting of individual items. The Python interface
+described here expects the user to create custom subclasses of
+<a class="reference internal" href="#mktl.Daemon" title="mktl.Daemon"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Daemon</span></code></a>, which in turn may instantiate custom subclasses of
+<a class="reference internal" href="item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Item</span></code></a>. Background threads are used widely, polling and callbacks
+in particular are two areas where dedicated per-item background threads will
+invoke any/all registered methods; the author of any custom code should not
+assume that calls arriving via these mechanisms will be serialized or
+thread-safe to any meaningful degree.</p>
+<section id="the-daemon-class">
+<h2>The Daemon class<a class="headerlink" href="#the-daemon-class" title="Link to this heading"></a></h2>
+<p>The <a class="reference internal" href="#mktl.Daemon" title="mktl.Daemon"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Daemon</span></code></a> class is the entry point and overall organization
+for the daemon; while it provides a common storage location for daemon-wide
+functions, such as handling requests and publishing broadcasts, from the
+perspective of the developer the <a class="reference internal" href="store.html#mktl.Store" title="mktl.Store"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Store</span></code></a> is a container for
+the <a class="reference internal" href="item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Item</span></code></a> instances that define the actual behavior of the
+system. An incoming set request, for example, is not handled by the
+any higher level construct, it is passed to the appropriate <a class="reference internal" href="item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Item</span></code></a>
+instance for proper handling.</p>
+<p>The <a class="reference internal" href="#mktl.Daemon" title="mktl.Daemon"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Daemon</span></code></a> also defines the initialization sequence, if any,
+for the daemon: which steps to take upon startup, which
+<a class="reference internal" href="item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Item</span></code></a> subclasses to invoke for specific items, whether other
+initialization steps must occur such as defining a common communication point
+to access a hardware controller, or whether the initial state of a set of
+items needs to be manipulated before proceeding with routine operations.</p>
+<p>In most cases the developer will need to create a custom <a class="reference internal" href="#mktl.Daemon" title="mktl.Daemon"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Daemon</span></code></a>
+subclass to satisfy the operational goals of an application. Likewise, in most
+cases the developer will need to create custom <a class="reference internal" href="item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Item</span></code></a> subclasses
+to implement application-specific behavior, with special attention paid to the
+<a class="reference internal" href="item.html#item-subclassing"><span class="std std-ref">specific methods to override</span></a>, and
+<a class="reference internal" href="item.html#item-daemon-methods"><span class="std std-ref">additional methods useful in a daemon context</span></a>.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mktl.Daemon">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">mktl.</span></span><span class="sig-name descname"><span class="pre">Daemon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">store</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alias</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">override</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Daemon" title="Link to this definition"></a></dt>
+<dd><p>The mKTL <a class="reference internal" href="#mktl.Daemon" title="mktl.Daemon"><code class="xref py py-class docutils literal notranslate"><span class="pre">Daemon</span></code></a> is a facilitator for common mKTL actions taken
+in a daemon context: loading a catalog file, instantiating
+<a class="reference internal" href="item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Item</span></code></a> instances, and commencing routine operations.</p>
+<p>The developer is expected to subclass the <a class="reference internal" href="#mktl.Daemon" title="mktl.Daemon"><code class="xref py py-class docutils literal notranslate"><span class="pre">Daemon</span></code></a> class and
+implement a <a class="reference internal" href="#mktl.Daemon.setup" title="mktl.Daemon.setup"><code class="xref py py-func docutils literal notranslate"><span class="pre">setup()</span></code></a> method, and/or a <a class="reference internal" href="#mktl.Daemon.setup_final" title="mktl.Daemon.setup_final"><code class="xref py py-func docutils literal notranslate"><span class="pre">setup_final()</span></code></a>
+method. This subclass is the gateway between mKTL functionality and
+the domain-specific custom code appropriate for the developer’s
+application.</p>
+<p>The <em>store</em> argument is the name of the store that this daemon is
+providing items for; <em>alias</em> is the unique name of this mKTL daemon,
+and is used to locate the catalog file that defines the items
+for which this daemon is authoritative.</p>
+<p><em>options</em> is expected to be an <a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.ArgumentParser</span></code></a>
+instance, though in practice it can be any Python object with specific
+named attributes of interest to a <a class="reference internal" href="#mktl.Daemon" title="mktl.Daemon"><code class="xref py py-class docutils literal notranslate"><span class="pre">Daemon</span></code></a> subclass; the
+<em>options</em> argument is not required. This is intended to be a vehicle
+for custom subclasses to receive key information from command-line
+options, such as the location of an auxiliary configuration file
+containing information about a hardware controller.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Daemon.add_get_handler">
+<span class="sig-name descname"><span class="pre">add_get_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Daemon.add_get_handler" title="Link to this definition"></a></dt>
+<dd><p>Assign a method that will be called for all GET requests for
+the specified item. See <a class="reference internal" href="item.html#mktl.Item.req_get" title="mktl.Item.req_get"><code class="xref py py-func docutils literal notranslate"><span class="pre">mktl.Item.req_get()</span></code></a> for additional
+details on the expected behavior; inspection of the implementation
+for that method is recommended to ensure all the necessary actions
+are covered.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Daemon.add_get_performer">
+<span class="sig-name descname"><span class="pre">add_get_performer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Daemon.add_get_performer" title="Link to this definition"></a></dt>
+<dd><p>Assign a method that will be called for all GET requests for
+the specified item. Refer to <a class="reference internal" href="item.html#mktl.Item.add_get_performer" title="mktl.Item.add_get_performer"><code class="xref py py-func docutils literal notranslate"><span class="pre">mktl.Item.add_get_performer()</span></code></a>
+for additional details.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Daemon.add_handler">
+<span class="sig-name descname"><span class="pre">add_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Daemon.add_handler" title="Link to this definition"></a></dt>
+<dd><p>Assign a method that will be called for either GET or SET
+requests, determined by the <em>request</em> argument, which must be one
+of ‘get’ or ‘set’.</p>
+<p>See <a class="reference internal" href="item.html#mktl.Item.req_get" title="mktl.Item.req_get"><code class="xref py py-func docutils literal notranslate"><span class="pre">mktl.Item.req_get()</span></code></a> and
+<a class="reference internal" href="item.html#mktl.Item.req_set" title="mktl.Item.req_set"><code class="xref py py-func docutils literal notranslate"><span class="pre">mktl.Item.req_set()</span></code></a> for additional details on the expected
+behavior; inspection of the implementation for those methods is
+recommended to ensure all the necessary actions are covered.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Daemon.add_handlers">
+<span class="sig-name descname"><span class="pre">add_handlers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">handlers</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Daemon.add_handlers" title="Link to this definition"></a></dt>
+<dd><p>This method is intended to be a single call, accepting a sequence
+of triplets mapping external methods handling GET and SET
+requests, bypassing the usual handling chain involving
+<a class="reference internal" href="item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Item</span></code></a> instances.</p>
+<p>A triplet is the key for an item (omitting the store name), whether
+this is a ‘get’ or a ‘set’ handler, and a valid reference to a
+method. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">mkwc</span><span class="o">.</span><span class="n">get_temperature</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="item.html#mktl.Item.req_get" title="mktl.Item.req_get"><code class="xref py py-func docutils literal notranslate"><span class="pre">mktl.Item.req_get()</span></code></a> and
+<a class="reference internal" href="item.html#mktl.Item.req_set" title="mktl.Item.req_set"><code class="xref py py-func docutils literal notranslate"><span class="pre">mktl.Item.req_set()</span></code></a> for additional details; inspection of
+the implementation for those methods is recommended to ensure all
+the necessary actions are covered.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Daemon.add_item">
+<span class="sig-name descname"><span class="pre">add_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item_class</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Daemon.add_item" title="Link to this definition"></a></dt>
+<dd><p>Add an <a class="reference internal" href="item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Item</span></code></a> to this daemon instance; this is the entry
+point for establishing an authoritative item, one that will handle
+inbound get/set request and the like. The <em>args</em> and <em>kwargs</em> will
+be passed directly to the <em>item_class</em> when it is called to be
+instantiated; note that a default <a class="reference internal" href="item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Item</span></code></a> takes no
+additional arguments, this is only meaningful for custom subclasses.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Daemon.add_performer">
+<span class="sig-name descname"><span class="pre">add_performer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Daemon.add_performer" title="Link to this definition"></a></dt>
+<dd><p>Assign a method that will be called for either GET or SET
+requests, determined by the <em>request</em> argument, which must be one
+of ‘get’ or ‘set’.</p>
+<p>See <a class="reference internal" href="item.html#mktl.Item.add_get_performer" title="mktl.Item.add_get_performer"><code class="xref py py-func docutils literal notranslate"><span class="pre">mktl.Item.add_get_performer()</span></code></a> and
+<a class="reference internal" href="item.html#mktl.Item.add_set_performer" title="mktl.Item.add_set_performer"><code class="xref py py-func docutils literal notranslate"><span class="pre">mktl.Item.add_set_performer()</span></code></a> for additional details.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Daemon.add_performers">
+<span class="sig-name descname"><span class="pre">add_performers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">performers</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Daemon.add_performers" title="Link to this definition"></a></dt>
+<dd><p>This method is intended to be a single call, accepting a sequence
+of triplets mapping external methods performing GET and SET
+requests onto the <a class="reference internal" href="item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Item</span></code></a> instances receiving those
+requests from this daemon.</p>
+<p>A triplet is the key for an item (omitting the store name), whether
+this is a ‘get’ or a ‘set’ performer, and a valid reference to a
+method. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">mkwc</span><span class="o">.</span><span class="n">get_temperature</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="item.html#mktl.Item.add_get_performer" title="mktl.Item.add_get_performer"><code class="xref py py-func docutils literal notranslate"><span class="pre">mktl.Item.add_get_performer()</span></code></a> and
+<a class="reference internal" href="item.html#mktl.Item.add_set_performer" title="mktl.Item.add_set_performer"><code class="xref py py-func docutils literal notranslate"><span class="pre">mktl.Item.add_set_performer()</span></code></a> for additional details.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Daemon.add_set_handler">
+<span class="sig-name descname"><span class="pre">add_set_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Daemon.add_set_handler" title="Link to this definition"></a></dt>
+<dd><p>Assign a method that will be called for all SET requests for
+the specified item. See <a class="reference internal" href="item.html#mktl.Item.req_set" title="mktl.Item.req_set"><code class="xref py py-func docutils literal notranslate"><span class="pre">mktl.Item.req_set()</span></code></a> for additional
+details on the expected behavior; inspection of the implementation
+for that method is recommended to ensure all the necessary actions
+are covered.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Daemon.add_set_performer">
+<span class="sig-name descname"><span class="pre">add_set_performer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Daemon.add_set_performer" title="Link to this definition"></a></dt>
+<dd><p>Assign a method that will be called for all SET requests for
+the specified item. Refer to <a class="reference internal" href="item.html#mktl.Item.add_set_performer" title="mktl.Item.add_set_performer"><code class="xref py py-func docutils literal notranslate"><span class="pre">mktl.Item.add_set_performer()</span></code></a>
+for additional details.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Daemon.cleanup">
+<span class="sig-name descname"><span class="pre">cleanup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Daemon.cleanup" title="Link to this definition"></a></dt>
+<dd><p>Subclasses should override the <a class="reference internal" href="#mktl.Daemon.cleanup" title="mktl.Daemon.cleanup"><code class="xref py py-func docutils literal notranslate"><span class="pre">cleanup()</span></code></a> method to perform
+any/all actions prior to shutting down the daemon, such as
+publishing a “shutting down” message, or cleanly terminating a
+connection with a hardware device. This method is guaranteed to
+only be invoked a single time. The default implementation of this
+method takes no actions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Daemon.describe_items">
+<span class="sig-name descname"><span class="pre">describe_items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Daemon.describe_items" title="Link to this definition"></a></dt>
+<dd><p>Subclasses should override the <a class="reference internal" href="#mktl.Daemon.describe_items" title="mktl.Daemon.describe_items"><code class="xref py py-func docutils literal notranslate"><span class="pre">describe_items()</span></code></a> method to
+supplement the daemon’s authoritative catalog block with any
+items whose description is generated at run time, as opposed to
+loaded from a file.</p>
+<p>The sole return argument is a dictionary, keyed by mKTL item
+keys, and the value is another dictionary containing the fields
+of the item description.</p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">items</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+<span class="n">items</span><span class="p">[</span><span class="s1">&#39;watermelons&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="n">items</span><span class="p">[</span><span class="s1">&#39;watermelons&#39;</span><span class="p">][</span><span class="s1">&#39;description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Quantity of watermelons.&#39;</span>
+<span class="n">items</span><span class="p">[</span><span class="s1">&#39;watermelons&#39;</span><span class="p">][</span><span class="s1">&#39;units&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;melons&#39;</span>
+<span class="n">items</span><span class="p">[</span><span class="s1">&#39;watermelons&#39;</span><span class="p">][</span><span class="s1">&#39;persist&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">items</span><span class="p">[</span><span class="s1">&#39;watermelons&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;numeric&#39;</span>
+<span class="n">items</span><span class="p">[</span><span class="s1">&#39;watermelons&#39;</span><span class="p">][</span><span class="s1">&#39;format&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">&quot;</span>
+
+<span class="k">return</span> <span class="n">items</span>
+</pre></div>
+</div>
+<p>The default implementation of this method takes no actions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Daemon.parse_options">
+<span class="sig-name descname"><span class="pre">parse_options</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Daemon.parse_options" title="Link to this definition"></a></dt>
+<dd><p>Subclasses should override the <a class="reference internal" href="#mktl.Daemon.parse_options" title="mktl.Daemon.parse_options"><code class="xref py py-func docutils literal notranslate"><span class="pre">parse_options()</span></code></a> method to
+interpret the <code class="xref py py-attr docutils literal notranslate"><span class="pre">options</span></code> attribute, which is a
+<a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.ArgumentParser</span></code></a> instance, and is passed as an
+argument to this method for convenience. This method is called
+early in the initialization of the Daemon, allowing the subclass
+to establish its local configuration prior to describing or
+instantiating any items.</p>
+<p>For example, the options.appconfig attribute may indicate the
+location of a configparser-formatted configuration file. A subclass
+would use this method to read the file, parse its contents, and
+establish local variables for subsequent use by other methods.</p>
+<p>The default implementation of this method takes no actions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Daemon.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Daemon.setup" title="Link to this definition"></a></dt>
+<dd><p>Subclasses should override the <a class="reference internal" href="#mktl.Daemon.setup" title="mktl.Daemon.setup"><code class="xref py py-func docutils literal notranslate"><span class="pre">setup()</span></code></a> method to invoke
+<a class="reference internal" href="#mktl.Daemon.add_item" title="mktl.Daemon.add_item"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_item()</span></code></a> for any custom <a class="reference internal" href="item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Item</span></code></a> subclasses
+or otherwise execute custom code. When <a class="reference internal" href="#mktl.Daemon.setup" title="mktl.Daemon.setup"><code class="xref py py-func docutils literal notranslate"><span class="pre">setup()</span></code></a> is called
+the bulk of the <a class="reference internal" href="#mktl.Daemon" title="mktl.Daemon"><code class="xref py py-class docutils literal notranslate"><span class="pre">Daemon</span></code></a> machinery is in place, but cached
+values have not been loaded, nor has the presence of this daemon
+been announced. The default implementation of this method takes
+no actions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Daemon.setup_final">
+<span class="sig-name descname"><span class="pre">setup_final</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Daemon.setup_final" title="Link to this definition"></a></dt>
+<dd><p>Subclasses should override the <a class="reference internal" href="#mktl.Daemon.setup_final" title="mktl.Daemon.setup_final"><code class="xref py py-func docutils literal notranslate"><span class="pre">setup_final()</span></code></a> method to
+execute any/all code that should occur after all <a class="reference internal" href="item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Item</span></code></a>
+instances have been created, including any non-custom
+<a class="reference internal" href="item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Item</span></code></a> instances, but before this daemon
+announces its availability on the local network. The default
+implementation of this method takes no actions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Daemon.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Daemon.stop" title="Link to this definition"></a></dt>
+<dd><p>Request that this daemon stop execution.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="store-metadata">
+<h2>Store metadata<a class="headerlink" href="#store-metadata" title="Link to this heading"></a></h2>
+<p>Largely for internal use, there are some aspects of the
+<a class="reference internal" href="#mktl.meta.Catalog" title="mktl.meta.Catalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.meta.Catalog</span></code></a> class that are directly relevant for use
+within a daemon. A reference to the appropriate Catalog instance can
+be accesssed as an attribute of the <a class="reference internal" href="store.html#mktl.Store" title="mktl.Store"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Store</span></code></a>, or via the
+<a class="reference internal" href="#mktl.meta.catalog" title="mktl.meta.catalog"><code class="xref py py-func docutils literal notranslate"><span class="pre">mktl.meta.catalog()</span></code></a> method; <a class="reference internal" href="#mktl.meta.Catalog" title="mktl.meta.Catalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.meta.Catalog</span></code></a> instances
+are singletons.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mktl.meta.Catalog">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">mktl.meta.</span></span><span class="sig-name descname"><span class="pre">Catalog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">store</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.meta.Catalog" title="Link to this definition"></a></dt>
+<dd><p>A convenience class to represent the JSON description of an mKTL store.
+To first order this acts like a dictionary, returning the description
+for a single key, or the full catalog block for a single UUID or
+unique alias.</p>
+<p>In addition to acting as a repository for the description of all items,
+the Catalog instance also provides translation routines for some
+item values; the behavior of these translations is fully driven by the
+item description, and does not depend on custom <a class="reference internal" href="item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Item</span></code></a>
+subclasses.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.meta.Catalog.convert_units">
+<span class="sig-name descname"><span class="pre">convert_units</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.meta.Catalog.convert_units" title="Link to this definition"></a></dt>
+<dd><p>Use the <code class="xref py py-mod docutils literal notranslate"><span class="pre">pint</span></code> module to convert the provided <em>value</em> from
+<em>old</em> units to <em>new</em> units. The value as a <a class="reference external" href="https://pint.readthedocs.io/en/stable/api/base.html#pint.Quantity" title="(in pint v0.1.dev50+g5a27ca223)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pint.Quantity</span></code></a>
+instance will be returned if <em>new</em> is set to None.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.meta.Catalog.from_format">
+<span class="sig-name descname"><span class="pre">from_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.meta.Catalog.from_format" title="Link to this definition"></a></dt>
+<dd><p>Translate the provided <em>value</em> according to the description of
+the item identified by the supplied <em>key</em>. For example, if the
+item is enumerated, this method will enable one-way mapping from
+string values to integers; for example, ‘Off’ to 0, ‘On’ to 1, etc.</p>
+<p>This is the inverse of <a class="reference internal" href="#mktl.meta.Catalog.to_format" title="mktl.meta.Catalog.to_format"><code class="xref py py-func docutils literal notranslate"><span class="pre">to_format()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.meta.Catalog.from_quantity">
+<span class="sig-name descname"><span class="pre">from_quantity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.meta.Catalog.from_quantity" title="Link to this definition"></a></dt>
+<dd><p>Translate the provided <a class="reference external" href="https://pint.readthedocs.io/en/stable/api/base.html#pint.Quantity" title="(in pint v0.1.dev50+g5a27ca223)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pint.Quantity</span></code></a> instance to the
+unformatted representation appropriate for the item identified
+by the supplied <em>key</em>. This is only relevant for numeric types
+that have defined units; a TypeError exception will be raised
+for items that do not have units.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.meta.Catalog.keys">
+<span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">authoritative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.meta.Catalog.keys" title="Link to this definition"></a></dt>
+<dd><p>Return an iterable sequence of keys for the items represented in
+this catalog. If <em>authoritative</em> is set to True, only
+return the keys for locally authoritative items; any keys with
+a leading underscore (built-in items) will be omitted from the
+reported authoritative set.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.meta.Catalog.to_format">
+<span class="sig-name descname"><span class="pre">to_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.meta.Catalog.to_format" title="Link to this definition"></a></dt>
+<dd><p>Translate the provided <em>value</em> according to the description of
+the item identified by the supplied <em>key</em>. For example, if the
+item is enumerated, this method will enable one-way mapping from
+integer values to representative strings; for example, 0 to ‘Off’,
+1 to ‘On’, etc.</p>
+<p>This is the inverse of <a class="reference internal" href="#mktl.meta.Catalog.from_format" title="mktl.meta.Catalog.from_format"><code class="xref py py-func docutils literal notranslate"><span class="pre">from_format()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.meta.Catalog.to_quantity">
+<span class="sig-name descname"><span class="pre">to_quantity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.meta.Catalog.to_quantity" title="Link to this definition"></a></dt>
+<dd><p>Translate the provided <em>value</em> according to the description of
+the item identified by the supplied <em>key</em> to a
+<a class="reference external" href="https://pint.readthedocs.io/en/stable/api/base.html#pint.Quantity" title="(in pint v0.1.dev50+g5a27ca223)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pint.Quantity</span></code></a> instance. This is only relevant for numeric
+types that have defined units; a TypeError exception will be raised
+for items that do not have units. The returned quantity will
+be translated to the specified <em>units</em>, if any, otherwise the
+default ‘unformatted’ units are used.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.meta.Catalog.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.meta.Catalog.update" title="Link to this definition"></a></dt>
+<dd><p>Update the locally cached catalog to include any/all contents
+in the provided <em>block</em>. A catalog block is a Python
+dictionary in the on-disk client format, minimally including the
+keys ‘store’, ‘alias’, ‘uuid’, and ‘items’.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.meta.Catalog.uuids">
+<span class="sig-name descname"><span class="pre">uuids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">authoritative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.meta.Catalog.uuids" title="Link to this definition"></a></dt>
+<dd><p>Return an iterable sequence of UUIDs represented in this
+catalog. If <em>authoritative</em> is set to True, only
+return the authoritative UUID.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>In addition to the class itself there are an assortment of helper methods,
+two of which are potentially relevant in a daemon context:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mktl.meta.authoritative">
+<span class="sig-prename descclassname"><span class="pre">mktl.meta.</span></span><span class="sig-name descname"><span class="pre">authoritative</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">store</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alias</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.meta.authoritative" title="Link to this definition"></a></dt>
+<dd><p>Declare an authoritative catalog block for use by a local
+authoritative daemon. This is the expected entry point for a daemon
+that generates or otherwise provides its own JSON catalog via
+custom routines.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mktl.meta.catalog">
+<span class="sig-prename descclassname"><span class="pre">mktl.meta.</span></span><span class="sig-name descname"><span class="pre">catalog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">store</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.meta.catalog" title="Link to this definition"></a></dt>
+<dd><p>Retrieve the locally cached <a class="reference internal" href="#mktl.meta.Catalog" title="mktl.meta.Catalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">Catalog</span></code></a> instance for
+the specified <em>store</em>.
+A KeyError exception is raised if there are no locally cached
+catalog blocks for that store. A typical client will only
+interact with <a class="reference internal" href="client.html#mktl.get" title="mktl.get"><code class="xref py py-func docutils literal notranslate"><span class="pre">mktl.get()</span></code></a>, which in turn calls this method.</p>
+</dd></dl>
+
+</section>
+<section id="mkd-executable">
+<h2>mkd executable<a class="headerlink" href="#mkd-executable" title="Link to this heading"></a></h2>
+<p>The <cite>mkd</cite> executable provides a command-line interface to invoke a
+persistent daemon executing a <a class="reference internal" href="#mktl.Daemon" title="mktl.Daemon"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Daemon</span></code></a> subclass as described above.
+It is the natural starting point for any persistent daemon implementing
+the scheme described in this document, since that is the precise purpose
+it is written for.</p>
+<p>Refer to the section covering <a class="reference internal" href="executables.html#mkd"><span class="std std-ref">mkd</span></a> in the <a class="reference internal" href="executables.html#executables"><span class="std std-ref">Executables</span></a>
+documentation for additional details.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="client.html" class="btn btn-neutral float-left" title="Client interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="store.html" class="btn btn-neutral float-right" title="The Store class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright W. M. Keck Observatory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,545 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Protocol interface &mdash; mKTL 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=4bba6b87" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Heritage" href="heritage.html" />
+    <link rel="prev" title="Protocol" href="protocol.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mKTL
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="client.html">Client interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="daemon.html">Daemon interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store.html">The Store class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item.html">The Item class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="executables.html">Executables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">JSON metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="built_ins.html">Built-in items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol.html">Protocol</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Protocol interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#payload-class">Payload class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.protocol.message.Payload"><code class="docutils literal notranslate"><span class="pre">Payload</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.protocol.message.Payload.add_origin"><code class="docutils literal notranslate"><span class="pre">Payload.add_origin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.protocol.message.Payload.encapsulate"><code class="docutils literal notranslate"><span class="pre">Payload.encapsulate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#message-classes">Message classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.protocol.message.Message"><code class="docutils literal notranslate"><span class="pre">Message</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.protocol.message.Message._finalize"><code class="docutils literal notranslate"><span class="pre">Message._finalize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.protocol.message.Message.log"><code class="docutils literal notranslate"><span class="pre">Message.log()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.protocol.message.Message.reconstruct"><code class="docutils literal notranslate"><span class="pre">Message.reconstruct()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.protocol.message.Broadcast"><code class="docutils literal notranslate"><span class="pre">Broadcast</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.protocol.message.Broadcast.reconstruct"><code class="docutils literal notranslate"><span class="pre">Broadcast.reconstruct()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.protocol.message.Request"><code class="docutils literal notranslate"><span class="pre">Request</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.protocol.message.Request.poll"><code class="docutils literal notranslate"><span class="pre">Request.poll()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.protocol.message.Request.wait"><code class="docutils literal notranslate"><span class="pre">Request.wait()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.protocol.message.Request.wait_ack"><code class="docutils literal notranslate"><span class="pre">Request.wait_ack()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#request-client">Request client</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.protocol.request.client"><code class="docutils literal notranslate"><span class="pre">client()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.protocol.request.send"><code class="docutils literal notranslate"><span class="pre">send()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.protocol.request.Client"><code class="docutils literal notranslate"><span class="pre">Client</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.protocol.request.Client.send"><code class="docutils literal notranslate"><span class="pre">Client.send()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#request-server">Request server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.protocol.request.Server"><code class="docutils literal notranslate"><span class="pre">Server</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.protocol.request.Server.req_ack"><code class="docutils literal notranslate"><span class="pre">Server.req_ack()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.protocol.request.Server.req_handler"><code class="docutils literal notranslate"><span class="pre">Server.req_handler()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.protocol.request.Server.req_incoming"><code class="docutils literal notranslate"><span class="pre">Server.req_incoming()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.protocol.request.Server.respond"><code class="docutils literal notranslate"><span class="pre">Server.respond()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.protocol.request.Server.send"><code class="docutils literal notranslate"><span class="pre">Server.send()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#publish-client">Publish client</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.protocol.publish.client"><code class="docutils literal notranslate"><span class="pre">client()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.protocol.publish.Client"><code class="docutils literal notranslate"><span class="pre">Client</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.protocol.publish.Client.propagate"><code class="docutils literal notranslate"><span class="pre">Client.propagate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.protocol.publish.Client.register"><code class="docutils literal notranslate"><span class="pre">Client.register()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.protocol.publish.Client.subscribe"><code class="docutils literal notranslate"><span class="pre">Client.subscribe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.protocol.publish.Client.unregister"><code class="docutils literal notranslate"><span class="pre">Client.unregister()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#publish-server">Publish server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.protocol.publish.Server"><code class="docutils literal notranslate"><span class="pre">Server</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mktl.protocol.publish.Server.publish"><code class="docutils literal notranslate"><span class="pre">Server.publish()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="heritage.html">Heritage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_of_conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="governance.html">Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mKTL</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Protocol interface</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/protocol_interface.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="protocol-interface">
+<span id="module-mktl.protocol"></span><h1>Protocol interface<a class="headerlink" href="#protocol-interface" title="Link to this heading"></a></h1>
+<p>Each aspect of the mKTL protocol is split into two different components: the
+client-facing half, and a server-facing half. The interfaces described here
+are generally not exposed to direct usage, they support the end-user
+functionality exposed in the <a class="reference internal" href="item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Item</span></code></a> class.</p>
+<section id="payload-class">
+<span id="module-mktl.protocol.message"></span><h2>Payload class<a class="headerlink" href="#payload-class" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="mktl.protocol.message.Payload">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">mktl.protocol.message.</span></span><span class="sig-name descname"><span class="pre">Payload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.message.Payload" title="Link to this definition"></a></dt>
+<dd><p>This is a lightweight class to properly encapsulate a Python-native
+value for later inclusion in a <a class="reference internal" href="#mktl.protocol.message.Message" title="mktl.protocol.message.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></a> instance. All attributes
+of this class, except for the <code class="xref py py-attr docutils literal notranslate"><span class="pre">bulk</span></code> attribute, or any attrbiutes
+set to None, will be added to as a JSON dictionary via
+<a class="reference internal" href="#mktl.protocol.message.Payload.encapsulate" title="mktl.protocol.message.Payload.encapsulate"><code class="xref py py-func docutils literal notranslate"><span class="pre">encapsulate()</span></code></a>, which is called when a <a class="reference internal" href="#mktl.protocol.message.Message" title="mktl.protocol.message.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></a> instance
+finalizes itself before generating its final on-the-wire representation.</p>
+<p>No interpretation of the <a class="reference internal" href="#mktl.protocol.message.Payload" title="mktl.protocol.message.Payload"><code class="xref py py-class docutils literal notranslate"><span class="pre">Payload</span></code></a> contents is performed, any
+interpretation (such as converting a numpy array to a form suitable
+for enapsulation) must occur before the <a class="reference internal" href="#mktl.protocol.message.Payload" title="mktl.protocol.message.Payload"><code class="xref py py-class docutils literal notranslate"><span class="pre">Payload</span></code></a> is
+instantiated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bulk</strong> – A bulk data value, in bytes, or None</p></li>
+<li><p><strong>omit</strong> – A set of fields to omit from encapsulation</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.protocol.message.Payload.add_origin">
+<span class="sig-name descname"><span class="pre">add_origin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.message.Payload.add_origin" title="Link to this definition"></a></dt>
+<dd><p>Add fields to this payload to provide information describing
+the origin of this message. The primary use case is for debugging
+or logging, as opposed to uniquely identifying the sender.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.protocol.message.Payload.encapsulate">
+<span class="sig-name descname"><span class="pre">encapsulate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.message.Payload.encapsulate" title="Link to this definition"></a></dt>
+<dd><p>Add all non-omitted local attributes to a dictionary, and return
+the JSON encoding of that dictionary. For example, if the .value
+and .time attributes of a <a class="reference internal" href="#mktl.protocol.message.Payload" title="mktl.protocol.message.Payload"><code class="xref py py-class docutils literal notranslate"><span class="pre">Payload</span></code></a> are assigned, the caller
+will receive a value like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sa">b</span><span class="s1">&#39;{&quot;value&quot;: 12, &quot;time&quot;: 1761100609.234571}&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="message-classes">
+<h2>Message classes<a class="headerlink" href="#message-classes" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="mktl.protocol.message.Message">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">mktl.protocol.message.</span></span><span class="sig-name descname"><span class="pre">Message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.message.Message" title="Link to this definition"></a></dt>
+<dd><p>The <a class="reference internal" href="#mktl.protocol.message.Message" title="mktl.protocol.message.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></a> provides a very thin encapsulation of what it
+means to be a message in an mKTL context. This class will be used
+to represent mKTL messages that do not result in a response.</p>
+<p>The fields are largely in order of how they are represented on the
+wire: the message <em>type</em>, the key/store <em>target</em> for the request,
+the <em>payload</em> of the message (a <a class="reference internal" href="#mktl.protocol.message.Payload" title="mktl.protocol.message.Payload"><code class="xref py py-class docutils literal notranslate"><span class="pre">Payload</span></code></a> instance),
+and an identification
+number unique to this correspondence. The identification number is
+the one field that is out-of-order compared to the multipart sequence
+on the wire; this is because some message types (publish messages,
+in particular) do not have an identification number, and it is
+automatically generated for request messages. Rather than force the
+caller to pass an explicit None, the id is left as the last field,
+so that the arguments for all <a class="reference internal" href="#mktl.protocol.message.Message" title="mktl.protocol.message.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></a> instances can have
+a similar structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>payload</strong> – The <a class="reference internal" href="#mktl.protocol.message.Payload" title="mktl.protocol.message.Payload"><code class="xref py py-class docutils literal notranslate"><span class="pre">Payload</span></code></a>, if any, for the message.</p></li>
+<li><p><strong>valid_types</strong> – A set of valid strings for the message type.</p></li>
+<li><p><strong>timestamp</strong> – A UNIX epoch timestamp for the message send time.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.protocol.message.Message._finalize">
+<span class="sig-name descname"><span class="pre">_finalize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.message.Message._finalize" title="Link to this definition"></a></dt>
+<dd><p>Take the contents of this <a class="reference internal" href="#mktl.protocol.message.Message" title="mktl.protocol.message.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></a>, interpet them as
+bytes, and prepare the tuple that will be used for the multipart
+transmission on the wire.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.protocol.message.Message.log">
+<span class="sig-name descname"><span class="pre">log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.message.Message.log" title="Link to this definition"></a></dt>
+<dd><p>Write a debug message describing the contents of this message.
+The intent is that other sections of code would use this, as
+needed, to log the contents of a message, rather than bake in
+direct awareness of all the message and payload fields that
+might be of interest for debugging.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.protocol.message.Message.reconstruct">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">reconstruct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parts</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.message.Message.reconstruct" title="Link to this definition"></a></dt>
+<dd><p>Reconstruct a <a class="reference internal" href="#mktl.protocol.message.Message" title="mktl.protocol.message.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></a> instance from the specified
+sequence of message parts. This is effectively the inverse of the
+<a class="reference internal" href="#mktl.protocol.message.Message._finalize" title="mktl.protocol.message.Message._finalize"><code class="xref py py-func docutils literal notranslate"><span class="pre">Message._finalize()</span></code></a> method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mktl.protocol.message.Broadcast">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">mktl.protocol.message.</span></span><span class="sig-name descname"><span class="pre">Broadcast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.message.Broadcast" title="Link to this definition"></a></dt>
+<dd><p>A <a class="reference internal" href="#mktl.protocol.message.Broadcast" title="mktl.protocol.message.Broadcast"><code class="xref py py-class docutils literal notranslate"><span class="pre">Broadcast</span></code></a> is a minor variant of a <a class="reference internal" href="#mktl.protocol.message.Message" title="mktl.protocol.message.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></a>,
+with a change to format the multipart tuple in a PUB/SUB specific
+fashion.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.protocol.message.Broadcast.reconstruct">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">reconstruct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parts</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.message.Broadcast.reconstruct" title="Link to this definition"></a></dt>
+<dd><p>Reconstruct a <a class="reference internal" href="#mktl.protocol.message.Broadcast" title="mktl.protocol.message.Broadcast"><code class="xref py py-class docutils literal notranslate"><span class="pre">Broadcast</span></code></a> instance from the specified
+sequence of message parts. This is effectively the inverse of the
+<code class="xref py py-func docutils literal notranslate"><span class="pre">Broadcast._finalize()</span></code> method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mktl.protocol.message.Request">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">mktl.protocol.message.</span></span><span class="sig-name descname"><span class="pre">Request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.message.Request" title="Link to this definition"></a></dt>
+<dd><p>A <a class="reference internal" href="#mktl.protocol.message.Request" title="mktl.protocol.message.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">Request</span></code></a> has a little extra functionality, focusing on
+local caching of response values and signaling that a request is
+complete. This is the class that will be used on the client side
+when a server is expected to provide a response, such as returning
+a requested value, or signaling that a set operation is complete.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>response</strong> – The response (as a <a class="reference internal" href="#mktl.protocol.message.Message" title="mktl.protocol.message.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></a>) to this request</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.protocol.message.Request.poll">
+<span class="sig-name descname"><span class="pre">poll</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.message.Request.poll" title="Link to this definition"></a></dt>
+<dd><p>Return True if the request is complete, otherwise return False.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.protocol.message.Request.wait">
+<span class="sig-name descname"><span class="pre">wait</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">60</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.message.Request.wait" title="Link to this definition"></a></dt>
+<dd><p>Block until the request has been handled. The response to the
+request is always returned; the response will be None if the
+original request is still pending.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.protocol.message.Request.wait_ack">
+<span class="sig-name descname"><span class="pre">wait_ack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.message.Request.wait_ack" title="Link to this definition"></a></dt>
+<dd><p>Block until the request has been acknowledged. This is a wrapper to
+a <a class="reference external" href="https://docs.python.org/3/library/threading.html#threading.Event" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">threading.Event</span></code></a> instance; if the event has occurred it
+will return True, otherwise it returns False after the requested
+<em>timeout</em>. If the <em>timeout</em> argument is None it will block
+indefinitely.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="request-client">
+<span id="module-mktl.protocol.request"></span><h2>Request client<a class="headerlink" href="#request-client" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="mktl.protocol.request.client">
+<span class="sig-prename descclassname"><span class="pre">mktl.protocol.request.</span></span><span class="sig-name descname"><span class="pre">client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.request.client" title="Link to this definition"></a></dt>
+<dd><p>Factory function for a <a class="reference internal" href="#mktl.protocol.request.Client" title="mktl.protocol.request.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code></a> instance. Use of this method is
+encouraged to streamline re-use of established connections.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mktl.protocol.request.send">
+<span class="sig-prename descclassname"><span class="pre">mktl.protocol.request.</span></span><span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.request.send" title="Link to this definition"></a></dt>
+<dd><p>Use <a class="reference internal" href="#mktl.protocol.request.client" title="mktl.protocol.request.client"><code class="xref py py-func docutils literal notranslate"><span class="pre">client()</span></code></a> to connect to the specified <em>address</em> and <em>port</em>,
+and send the specified <a class="reference internal" href="#mktl.protocol.message.Request" title="mktl.protocol.message.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.protocol.message.Request</span></code></a> instance.
+This method blocks until the completion of the request.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mktl.protocol.request.Client">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">mktl.protocol.request.</span></span><span class="sig-name descname"><span class="pre">Client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.request.Client" title="Link to this definition"></a></dt>
+<dd><p>Issue requests via a ZeroMQ DEALER socket and receive responses.
+Maintains a persistent connection to a single server; the <em>address</em>
+and <em>port</em> number must be specified.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.protocol.request.Client.send">
+<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.request.Client.send" title="Link to this definition"></a></dt>
+<dd><p>A <em>message</em> is a fully populated
+<a class="reference internal" href="#mktl.protocol.message.Request" title="mktl.protocol.message.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.protocol.message.Request</span></code></a> instance,
+which normalizes the arguments that will be sent via this method
+as a multi-part message. The message instance will also be used for
+notification of any/all responses from the remote end; this method
+will block while waiting for the ACK request, but will never block
+waiting for the full response; the caller is free to decide whether
+to block or wait for the full response, using the methods in the
+<a class="reference internal" href="#mktl.protocol.message.Request" title="mktl.protocol.message.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.protocol.message.Request</span></code></a> instance.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="request-server">
+<h2>Request server<a class="headerlink" href="#request-server" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="mktl.protocol.request.Server">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">mktl.protocol.request.</span></span><span class="sig-name descname"><span class="pre">Server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hostname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">avoid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.request.Server" title="Link to this definition"></a></dt>
+<dd><p>Receive requests via a ZeroMQ ROUTER socket, and respond to them. The
+default behavior is to listen for incoming requests on our locally
+known fully qualified domain name, on the first available automatically
+assigned port. The <em>avoid</em> set enumerates port numbers that should
+not be automatically assigned; this is ignored if a fixed <em>port</em> is
+specified.</p>
+<p>The hostname and port variables associated with a <a class="reference internal" href="#mktl.protocol.request.Server" title="mktl.protocol.request.Server"><code class="xref py py-class docutils literal notranslate"><span class="pre">Server</span></code></a>
+instance are key pieces of the provenance for an mKTL daemon.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hostname</strong> – The hostname on which this server can be contacted.</p></li>
+<li><p><strong>port</strong> – The port on which this server is listening for connections.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.protocol.request.Server.req_ack">
+<span class="sig-name descname"><span class="pre">req_ack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.request.Server.req_ack" title="Link to this definition"></a></dt>
+<dd><p>Acknowledge the incoming request. The client is expecting an
+immediate ACK for all request types, including errors; this is
+how a client knows whether a daemon is online to respond to its
+request.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.protocol.request.Server.req_handler">
+<span class="sig-name descname"><span class="pre">req_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.request.Server.req_handler" title="Link to this definition"></a></dt>
+<dd><p>The default request handler is for debug purposes only, and is
+effectively a no-op. <a class="reference internal" href="daemon.html#mktl.Daemon" title="mktl.Daemon"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Daemon</span></code></a> leverages a
+custom subclass of <a class="reference internal" href="#mktl.protocol.request.Server" title="mktl.protocol.request.Server"><code class="xref py py-class docutils literal notranslate"><span class="pre">Server</span></code></a> that properly handles specific
+types of requests, since it needs to be aware of the actual
+structure of what’s happening in the daemon code.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.protocol.request.Server.req_incoming">
+<span class="sig-name descname"><span class="pre">req_incoming</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parts</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.request.Server.req_incoming" title="Link to this definition"></a></dt>
+<dd><p>All inbound requests are filtered through this method. It will
+parse the request as JSON into a Python dictionary, and hand it
+off to <a class="reference internal" href="#mktl.protocol.request.Server.req_handler" title="mktl.protocol.request.Server.req_handler"><code class="xref py py-func docutils literal notranslate"><span class="pre">req_handler()</span></code></a> for further processing. Error handling
+is managed here; if <a class="reference internal" href="#mktl.protocol.request.Server.req_handler" title="mktl.protocol.request.Server.req_handler"><code class="xref py py-func docutils literal notranslate"><span class="pre">req_handler()</span></code></a> raises an exception it
+will be packaged up and returned to the client as an error.</p>
+<p><a class="reference internal" href="#mktl.protocol.request.Server.req_handler" title="mktl.protocol.request.Server.req_handler"><code class="xref py py-func docutils literal notranslate"><span class="pre">req_handler()</span></code></a> is expected to call <a class="reference internal" href="#mktl.protocol.request.Server.req_ack" title="mktl.protocol.request.Server.req_ack"><code class="xref py py-func docutils literal notranslate"><span class="pre">req_ack()</span></code></a> to
+acknowledge the incoming request; if <a class="reference internal" href="#mktl.protocol.request.Server.req_handler" title="mktl.protocol.request.Server.req_handler"><code class="xref py py-func docutils literal notranslate"><span class="pre">req_handler()</span></code></a> is
+returning a simple payload it will be packged into a REP response.
+No response will be issued if <a class="reference internal" href="#mktl.protocol.request.Server.req_handler" title="mktl.protocol.request.Server.req_handler"><code class="xref py py-func docutils literal notranslate"><span class="pre">req_handler()</span></code></a> returns None.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.protocol.request.Server.respond">
+<span class="sig-name descname"><span class="pre">respond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.request.Server.respond" title="Link to this definition"></a></dt>
+<dd><p>Issue a response for the specified request. This is broken out
+as a separate method to allow for background processing of requests.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.protocol.request.Server.send">
+<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.request.Server.send" title="Link to this definition"></a></dt>
+<dd><p>Queue a response to be sent back to the original requestor.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="publish-client">
+<span id="module-mktl.protocol.publish"></span><h2>Publish client<a class="headerlink" href="#publish-client" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="mktl.protocol.publish.client">
+<span class="sig-prename descclassname"><span class="pre">mktl.protocol.publish.</span></span><span class="sig-name descname"><span class="pre">client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.publish.client" title="Link to this definition"></a></dt>
+<dd><p>Factory function for a <a class="reference internal" href="#mktl.protocol.publish.Client" title="mktl.protocol.publish.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code></a> instance. Use of this method is
+encouraged to streamline re-use of established connections.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mktl.protocol.publish.Client">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">mktl.protocol.publish.</span></span><span class="sig-name descname"><span class="pre">Client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.publish.Client" title="Link to this definition"></a></dt>
+<dd><p>Establish a ZeroMQ SUB connection to a ZeroMQ PUB socket and receive
+broadcasts.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.protocol.publish.Client.propagate">
+<span class="sig-name descname"><span class="pre">propagate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.publish.Client.propagate" title="Link to this definition"></a></dt>
+<dd><p>Invoke any/all callbacks registered via <a class="reference internal" href="#mktl.protocol.publish.Client.register" title="mktl.protocol.publish.Client.register"><code class="xref py py-func docutils literal notranslate"><span class="pre">register()</span></code></a> for
+a newly arrived message.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.protocol.publish.Client.register">
+<span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.publish.Client.register" title="Link to this definition"></a></dt>
+<dd><p>Register a callback that will be invoked every time a new broadcast
+message arrives. If no topic is specified the callback will be
+invoked for all broadcast messages. The topic is case-sensitive and
+must be an exact match. Any callbacks registered in this fashion
+should be as lightweight as possible, as there is a single thread
+processing all arriving broadcast messages.</p>
+<p><a class="reference internal" href="#mktl.protocol.publish.Client.subscribe" title="mktl.protocol.publish.Client.subscribe"><code class="xref py py-func docutils literal notranslate"><span class="pre">subscribe()</span></code></a> will be invoked for any/all topics registered
+with a callback, it does not need to be called separately.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.protocol.publish.Client.subscribe">
+<span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.publish.Client.subscribe" title="Link to this definition"></a></dt>
+<dd><p>ZeroMQ subscriptions are based on a topic. Filtering of messages
+happens on the server side, depending on what a client is subscribed
+to. A client can subscribe to all messages by providing the empty
+string as the topic.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.protocol.publish.Client.unregister">
+<span class="sig-name descname"><span class="pre">unregister</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.publish.Client.unregister" title="Link to this definition"></a></dt>
+<dd><p>The inverse of <a class="reference internal" href="#mktl.protocol.publish.Client.register" title="mktl.protocol.publish.Client.register"><code class="xref py py-func docutils literal notranslate"><span class="pre">register()</span></code></a>, removing a callback from the
+list of registered callbacks. No errors are raised if the callback
+is not registered.</p>
+<p>Refer to <a class="reference internal" href="#mktl.protocol.publish.Client.register" title="mktl.protocol.publish.Client.register"><code class="xref py py-func docutils literal notranslate"><span class="pre">register()</span></code></a> for a description of the arguments.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="publish-server">
+<h2>Publish server<a class="headerlink" href="#publish-server" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="mktl.protocol.publish.Server">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">mktl.protocol.publish.</span></span><span class="sig-name descname"><span class="pre">Server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">avoid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.publish.Server" title="Link to this definition"></a></dt>
+<dd><p>Send broadcasts via a ZeroMQ PUB socket. The default behavior is to
+set up a listener on all available network interfaces on the first
+available automatically assigned port. The <em>avoid</em> set enumerates port
+numbers that should not be automatically assigned; this is ignored if a
+fixed <em>port</em> is specified.</p>
+<p>The port variables associated with a <a class="reference internal" href="#mktl.protocol.publish.Server" title="mktl.protocol.publish.Server"><code class="xref py py-class docutils literal notranslate"><span class="pre">Server</span></code></a> instance is a key
+pieces of the provenance for an mKTL daemon.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>port</strong> – The port on which this server is listening for connections.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.protocol.publish.Server.publish">
+<span class="sig-name descname"><span class="pre">publish</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.protocol.publish.Server.publish" title="Link to this definition"></a></dt>
+<dd><p>A <em>message</em> is a <a class="reference internal" href="#mktl.protocol.message.Broadcast" title="mktl.protocol.message.Broadcast"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.protocol.message.Broadcast</span></code></a> instance
+intended for broadcast to any/all subscribers.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="protocol.html" class="btn btn-neutral float-left" title="Protocol" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="heritage.html" class="btn btn-neutral float-right" title="Heritage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright W. M. Keck Observatory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,223 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daemon: unabridged &mdash; mKTL 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=4bba6b87" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Daemon: heater controller" href="heater.html" />
+    <link rel="prev" title="Daemon: basics" href="daemon.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            mKTL
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../client.html">Client interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../daemon.html">Daemon interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../store.html">The Store class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../item.html">The Item class</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="get.html">Client: get a value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="set.html">Client: set a value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="callback.html">Client: register a callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="daemon.html">Daemon: basics</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Daemon: unabridged</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#precious-py">precious.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#precious-json">precious.json</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="heater.html">Daemon: heater controller</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../executables.html">Executables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../metadata.html">JSON metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../built_ins.html">Built-in items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../protocol.html">Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../protocol_interface.html">Protocol interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../heritage.html">Heritage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code_of_conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../governance.html">Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">mKTL</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Daemon: unabridged</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/example/daemon_unabridged.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="daemon-unabridged">
+<span id="unabridged-daemon"></span><h1>Daemon: unabridged<a class="headerlink" href="#daemon-unabridged" title="Link to this heading"></a></h1>
+<p>This is an unabridged version of the <a class="reference internal" href="daemon.html#example-daemon"><span class="std std-ref">Daemon: basics</span></a> example. See that
+section for a description of each line shown here.</p>
+<section id="precious-py">
+<h2>precious.py<a class="headerlink" href="#precious-py" title="Link to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mktl</span>
+
+
+<span class="k">class</span> <span class="nc">Daemon</span><span class="p">(</span><span class="n">mktl</span><span class="o">.</span><span class="n">Daemon</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">Gold</span><span class="p">,</span> <span class="s1">&#39;GOLD&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">Silver</span><span class="p">,</span> <span class="s1">&#39;SILVER&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">Platinum</span><span class="p">,</span> <span class="s1">&#39;PLATINUM&#39;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">MarketPriced</span><span class="p">(</span><span class="n">mktl</span><span class="o">.</span><span class="n">Item</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">mktl</span><span class="o">.</span><span class="n">Item</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="mi">86400</span><span class="p">)</span>    <span class="c1"># Update once per day.</span>
+
+
+<span class="k">class</span> <span class="nc">Gold</span><span class="p">(</span><span class="n">MarketPriced</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">perform_get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">get_spot_value</span><span class="p">(</span><span class="s1">&#39;gold&#39;</span><span class="p">,</span> <span class="s1">&#39;usd&#39;</span><span class="p">,</span> <span class="s1">&#39;grams&#39;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Platinum</span><span class="p">(</span><span class="n">MarketPriced</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">perform_get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">get_spot_value</span><span class="p">(</span><span class="s1">&#39;platinum&#39;</span><span class="p">,</span> <span class="s1">&#39;usd&#39;</span><span class="p">,</span> <span class="s1">&#39;grams&#39;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Silver</span><span class="p">(</span><span class="n">MarketPriced</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">perform_get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">get_spot_value</span><span class="p">(</span><span class="s1">&#39;silver&#39;</span><span class="p">,</span> <span class="s1">&#39;usd&#39;</span><span class="p">,</span> <span class="s1">&#39;grams&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_spot_value</span><span class="p">(</span><span class="n">metal</span><span class="p">,</span> <span class="n">currency</span><span class="p">,</span> <span class="n">units</span><span class="p">):</span>
+
+    <span class="c1"># Presumably this involves something like a curl/wget call to an</span>
+    <span class="c1"># external website. Assume that is exactly what would occur in this</span>
+    <span class="c1"># space, and we retrieved a bare number for the metal, currency,</span>
+    <span class="c1"># and units of interest.</span>
+    <span class="c1">#</span>
+    <span class="c1"># current_price = some magical invocation of external resources</span>
+    <span class="n">current_price</span> <span class="o">=</span> <span class="mf">100.4</span>
+
+    <span class="n">current_price</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">current_price</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">current_price</span>
+
+
+<span class="c1"># vim: set expandtab tabstop=8 softtabstop=4 shiftwidth=4 autoindent:</span>
+</pre></div>
+</div>
+</section>
+<section id="precious-json">
+<h2>precious.json<a class="headerlink" href="#precious-json" title="Link to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+ <span class="s2">&quot;GOLD&quot;</span><span class="p">:</span> <span class="p">{</span>
+   <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;numeric&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;USD/gram&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Current spot price for pure gold.&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;settable&quot;</span><span class="p">:</span> <span class="n">false</span>
+ <span class="p">},</span>
+ <span class="s2">&quot;PLATINUM&quot;</span><span class="p">:</span> <span class="p">{</span>
+   <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;numeric&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;USD/gram&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Current spot price for pure platinum.&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;settable&quot;</span><span class="p">:</span> <span class="n">false</span>
+ <span class="p">},</span>
+ <span class="s2">&quot;SILVER&quot;</span><span class="p">:</span> <span class="p">{</span>
+   <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;numeric&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="p">{</span>
+     <span class="s1">&#39;&#39;</span><span class="p">:</span> <span class="s2">&quot;USD/gram&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;formatted&quot;</span><span class="p">:</span> <span class="s2">&quot;USD/gram&quot;</span>
+   <span class="p">},</span>
+   <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Current spot price for pure silver.&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;settable&quot;</span><span class="p">:</span> <span class="n">false</span>
+ <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="daemon.html" class="btn btn-neutral float-left" title="Daemon: basics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="heater.html" class="btn btn-neutral float-right" title="Daemon: heater controller" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright W. M. Keck Observatory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

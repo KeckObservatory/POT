@@ -1,0 +1,244 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client: set a value &mdash; mKTL 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=4bba6b87" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Client: register a callback" href="callback.html" />
+    <link rel="prev" title="Client: get a value" href="get.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            mKTL
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../client.html">Client interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../daemon.html">Daemon interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../store.html">The Store class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../item.html">The Item class</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="get.html">Client: get a value</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Client: set a value</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#getting-started">Getting started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-item-value-property">The <code class="xref py py-attr docutils literal notranslate"><span class="pre">Item.value</span></code> property</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#calling-item-set">Calling <code class="xref py py-func docutils literal notranslate"><span class="pre">Item.set()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#in-line-modification">In-line modification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#full-example">Full example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="callback.html">Client: register a callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="daemon.html">Daemon: basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="daemon_unabridged.html">Daemon: unabridged</a></li>
+<li class="toctree-l2"><a class="reference internal" href="heater.html">Daemon: heater controller</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../executables.html">Executables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../metadata.html">JSON metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../built_ins.html">Built-in items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../protocol.html">Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../protocol_interface.html">Protocol interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../heritage.html">Heritage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code_of_conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../governance.html">Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">mKTL</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Client: set a value</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/example/set.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="client-set-a-value">
+<h1>Client: set a value<a class="headerlink" href="#client-set-a-value" title="Link to this heading"></a></h1>
+<p>This example will use the ‘team’ store and the item ‘SCORE’. The
+objective is to set a new value for ‘team.SCORE’.</p>
+<section id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h2>
+<p>See the <a class="reference internal" href="get.html#getting-started"><span class="std std-ref">Getting started</span></a> section of the <a class="reference internal" href="get.html#example-get"><span class="std std-ref">Client: get a value</span></a> example for
+more details. We’ll get right to it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mktl</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">mktl</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;team.SCORE&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="the-item-value-property">
+<h2>The <a class="reference internal" href="../item.html#mktl.Item.value" title="mktl.Item.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Item.value</span></code></a> property<a class="headerlink" href="#the-item-value-property" title="Link to this heading"></a></h2>
+<p>Assigning a new value to the <a class="reference internal" href="../item.html#mktl.Item.value" title="mktl.Item.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Item.value</span></code></a> property will call
+<a class="reference internal" href="../item.html#mktl.Item.set" title="mktl.Item.set"><code class="xref py py-func docutils literal notranslate"><span class="pre">Item.set()</span></code></a> with default arguments, in particular, the call will
+block until the set operation is complete. This is considered the
+“Pythonic” approach to change the value of an mKTL item, though there
+are many circumstances (such as graphical user interfaces) where the
+default blocking call is not desired.</p>
+<p>The property is assigned directly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">score</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">44</span>
+</pre></div>
+</div>
+<p>There are two variants of the <a class="reference internal" href="../item.html#mktl.Item.value" title="mktl.Item.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Item.value</span></code></a> property:
+<a class="reference internal" href="../item.html#mktl.Item.formatted" title="mktl.Item.formatted"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Item.formatted</span></code></a>, and <a class="reference internal" href="../item.html#mktl.Item.quantity" title="mktl.Item.quantity"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Item.quantity</span></code></a>. They behave in the same
+fashion as <a class="reference internal" href="../item.html#mktl.Item.value" title="mktl.Item.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Item.value</span></code></a>, but work with different representations of
+the value.</p>
+</section>
+<section id="calling-item-set">
+<h2>Calling <a class="reference internal" href="../item.html#mktl.Item.set" title="mktl.Item.set"><code class="xref py py-func docutils literal notranslate"><span class="pre">Item.set()</span></code></a><a class="headerlink" href="#calling-item-set" title="Link to this heading"></a></h2>
+<p>The <a class="reference internal" href="../item.html#mktl.Item.set" title="mktl.Item.set"><code class="xref py py-func docutils literal notranslate"><span class="pre">Item.set()</span></code></a> method has one required argument, the new value:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">score</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">44</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The default behavior of this call is to block until the call is handled
+successfully on the daemon side. It is up to the daemon to decide what
+that means; a daemon may complete a set request instantly, or it may delay
+completing the request until some specific set of actions are themselves
+complete; for example, if a set request would cause a mechanism to move
+to a new physical position, the daemon may elect to not complete the
+request until the physical move is complete. Depending on the application,
+having this call block until completion may not be desirable– for example,
+in a graphical user interface. In that case, you can issue a non-blocking
+set request:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">score</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">44</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>With the <code class="docutils literal notranslate"><span class="pre">wait=False</span></code> argument the call to <a class="reference internal" href="../item.html#mktl.Item.set" title="mktl.Item.set"><code class="xref py py-func docutils literal notranslate"><span class="pre">Item.set()</span></code></a> will return
+immediately after the request is successfully delivered to the daemon for
+handling. This is the best option if the client application is not concerned
+about when or whether the request completes. If the client application
+does want explicit notification when the request is complete, <a class="reference internal" href="../item.html#mktl.Item.set" title="mktl.Item.set"><code class="xref py py-func docutils literal notranslate"><span class="pre">Item.set()</span></code></a>
+returns a <a class="reference internal" href="../protocol_interface.html#mktl.protocol.message.Request" title="mktl.protocol.message.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">protocol.message.Request</span></code></a> instance that enables this usage
+pattern:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pending</span> <span class="o">=</span> <span class="n">score</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">44</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">pending</span><span class="o">.</span><span class="n">poll</span><span class="p">()</span>
+<span class="n">pending</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>One example of where that might be helpful is if a series of simultaneous
+operations are desired, but the caller wants to ensure they all complete
+before returning. Something like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">waitfor</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">item</span><span class="p">,</span><span class="n">new_value</span> <span class="ow">in</span> <span class="n">settable</span><span class="p">:</span>
+    <span class="n">pending</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">new_value</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">waitfor</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pending</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">pending</span> <span class="ow">in</span> <span class="n">waitfor</span><span class="p">:</span>
+    <span class="n">pending</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="in-line-modification">
+<h2>In-line modification<a class="headerlink" href="#in-line-modification" title="Link to this heading"></a></h2>
+<p>The <a class="reference internal" href="../item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a> class supports in-place modification of values. Incrementing
+the score can be done a few different ways:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mktl</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">mktl</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;team.SCORE&#39;</span><span class="p">)</span>
+
+<span class="c1"># Using in-place modification:</span>
+<span class="n">score</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="c1"># Using the .value property:</span>
+<span class="n">score</span><span class="o">.</span><span class="n">value</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="c1"># Using operator support:</span>
+<span class="n">score</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">score</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Explicit get() and set():</span>
+<span class="n">old_score</span> <span class="o">=</span> <span class="n">score</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="n">new_score</span> <span class="o">=</span> <span class="n">old_score</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">score</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">new_score</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>All of the approaches shown yield the same result.</p>
+</section>
+<section id="full-example">
+<h2>Full example<a class="headerlink" href="#full-example" title="Link to this heading"></a></h2>
+<p>Putting it all together:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mktl</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">mktl</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;team.SCORE&#39;</span><span class="p">)</span>
+<span class="n">score</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">44</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="get.html" class="btn btn-neutral float-left" title="Client: get a value" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="callback.html" class="btn btn-neutral float-right" title="Client: register a callback" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright W. M. Keck Observatory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

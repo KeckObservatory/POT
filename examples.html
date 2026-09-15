@@ -1,0 +1,190 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Examples &mdash; mKTL 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=4bba6b87" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Client: get a value" href="example/get.html" />
+    <link rel="prev" title="The Item class" href="item.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mKTL
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="client.html">Client interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="daemon.html">Daemon interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store.html">The Store class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item.html">The Item class</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="example/get.html">Client: get a value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/set.html">Client: set a value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/callback.html">Client: register a callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/daemon.html">Daemon: basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/daemon_unabridged.html">Daemon: unabridged</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/heater.html">Daemon: heater controller</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="executables.html">Executables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">JSON metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="built_ins.html">Built-in items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol.html">Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol_interface.html">Protocol interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="heritage.html">Heritage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_of_conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="governance.html">Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mKTL</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Examples</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/examples.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h1>
+<p>If you obscure most of the details, mKTL is fundamentally a distributed system
+for event-driven applications. The <a class="reference internal" href="daemon.html#daemon"><span class="std std-ref">Daemon interface</span></a> is built around the handling
+and generation of events, the <a class="reference internal" href="client.html#client"><span class="std std-ref">Client interface</span></a> is built to be the mirror of that
+functionality. While mKTL can be used in a purely procedural fashion, usage
+patterns that focus on an event-driven approach will be most closely aligned
+with the design goals of mKTL.</p>
+<p>The examples provided here are intended to highlight fundamental use cases for
+mKTL in a production environment. All of the examples assume the mKTL module
+is installed and the correct Python interpreter is being invoked; in other
+words, that <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">mktl</span></code> will succeed.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="example/get.html">Client: get a value</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="example/get.html#getting-started">Getting started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/get.html#the-item-value-property">The <code class="xref py py-attr docutils literal notranslate"><span class="pre">Item.value</span></code> property</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/get.html#calling-item-get">Calling <code class="xref py py-func docutils literal notranslate"><span class="pre">Item.get()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/get.html#handling-return-values">Handling return values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/get.html#full-example">Full example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="example/set.html">Client: set a value</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="example/set.html#getting-started">Getting started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/set.html#the-item-value-property">The <code class="xref py py-attr docutils literal notranslate"><span class="pre">Item.value</span></code> property</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/set.html#calling-item-set">Calling <code class="xref py py-func docutils literal notranslate"><span class="pre">Item.set()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/set.html#in-line-modification">In-line modification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/set.html#full-example">Full example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="example/callback.html">Client: register a callback</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="example/callback.html#getting-started">Getting started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/callback.html#defining-a-callback">Defining a callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/callback.html#calling-item-register">Calling <code class="xref py py-func docutils literal notranslate"><span class="pre">Item.register()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/callback.html#full-example">Full example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="example/daemon.html">Daemon: basics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="example/daemon.html#getting-started">Getting started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/daemon.html#daemon-subclass"><code class="xref py py-class docutils literal notranslate"><span class="pre">Daemon</span></code> subclass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/daemon.html#item-subclasses"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code> subclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/daemon.html#daemon-setup-method"><code class="xref py py-func docutils literal notranslate"><span class="pre">Daemon.setup()</span></code> method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/daemon.html#daemon-setup-final-method"><code class="xref py py-func docutils literal notranslate"><span class="pre">Daemon.setup_final()</span></code> method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/daemon.html#daemon-cleanup-method"><code class="xref py py-func docutils literal notranslate"><span class="pre">Daemon.cleanup()</span></code> method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/daemon.html#setting-values-of-other-items">Setting values of other items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/daemon.html#reacting-to-external-events">Reacting to external events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/daemon.html#json-description-of-items">JSON description of items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/daemon.html#starting-the-daemon">Starting the daemon</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="example/daemon_unabridged.html">Daemon: unabridged</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="example/daemon_unabridged.html#precious-py">precious.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/daemon_unabridged.html#precious-json">precious.json</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="example/heater.html">Daemon: heater controller</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="example/heater.html#heater-py">heater.py</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="item.html" class="btn btn-neutral float-left" title="The Item class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="example/get.html" class="btn btn-neutral float-right" title="Client: get a value" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright W. M. Keck Observatory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

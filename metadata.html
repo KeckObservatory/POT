@@ -1,0 +1,481 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JSON metadata &mdash; mKTL 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=4bba6b87" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Built-in items" href="built_ins.html" />
+    <link rel="prev" title="Executables" href="executables.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mKTL
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="client.html">Client interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="daemon.html">Daemon interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store.html">The Store class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item.html">The Item class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="executables.html">Executables</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">JSON metadata</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#catalog-syntax">Catalog syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#item-description">Item description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#item-types">Item types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#storage">Storage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="built_ins.html">Built-in items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol.html">Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol_interface.html">Protocol interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="heritage.html">Heritage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_of_conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="governance.html">Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mKTL</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">JSON metadata</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/metadata.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="json-metadata">
+<span id="metadata"></span><h1>JSON metadata<a class="headerlink" href="#json-metadata" title="Link to this heading"></a></h1>
+<p>The catalog syntax describes what it means to be a mKTL store,
+enumerating the available items and all their intrinsic metadata. This
+document lays out the configuration syntax, as might be returned from
+a _catalog GET request or loaded from a local cache on disk, and additional
+conventions around the handling of a catalog.</p>
+<section id="catalog-syntax">
+<span id="catalog"></span><h2>Catalog syntax<a class="headerlink" href="#catalog-syntax" title="Link to this heading"></a></h2>
+<p>Each daemon will have a single catalog block for which it is authoritative.
+This block will define any/all metadata associated with the daemon, including
+the full description of each item belonging to that daemon.</p>
+<p>A store may be composed of multiple daemons. Each daemon will contribute its
+own block to the store’s full catalog; the full catalog is represented as
+a JSON dictionary, with each catalog block keyed by the unique identifier
+(UUID) associated with its respective daemon.</p>
+<p>For example, the ‘kpfguide’ store may contain multiple daemons, and therefore
+multiple catalog blocks:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;uuid1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;store&#39;</span><span class="p">:</span> <span class="s1">&#39;kpfguide&#39;</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="mf">1724892333.924</span><span class="p">,</span> <span class="o">...</span><span class="p">},</span>
+ <span class="s1">&#39;uuid2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;store&#39;</span><span class="p">:</span> <span class="s1">&#39;kpfguide&#39;</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="mf">1725892343.567</span><span class="p">,</span> <span class="o">...</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p>Each catalog block will contain the following fields:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><em>Field</em></p></th>
+<th class="head"><p><em>Description</em></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>store</strong></p></td>
+<td><p>The name of the store. This is perhaps redundant,
+being implied by the structure of the catalog
+block, but the extra assertion is inexpensive and
+convenient.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>uuid</strong></p></td>
+<td><p>The unique identifier associated with this block.
+The UUID is generated internally and does not need
+to be manipulated directly; it is used to uniquely
+associate a specific daemon with its catalog
+block, as might be necessary when a client needs
+to apply continuity (such as clearing local cache)
+when a remotely-served catalog block changes.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>alias</strong></p></td>
+<td><p>A recognizable identifier for this daemon. This
+identifier will be unique to the daemon, and is
+one of two components, along with the UUID, used
+to determine uniqueness within this store. The
+alias is also used to build keys for built-in
+items associated with all daemons.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>provenance</strong></p></td>
+<td><p>The chain of handling for this catalog
+block. The provenance is a sequence, listing every
+daemon between the client and the original source
+of authority for the block. Each element in the
+sequence contains a stratum, hostname, and req port
+number; the ‘pub’ port is optional, and will only
+be present for daemons that can handle subscribe
+requests. Clients will connect to the stratum zero
+entry to handle any requests; this may change in
+the future to allow identification of full proxies
+for all REQ/REP and PUB/SUB traffic for a daemon.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>time</strong></p></td>
+<td><p>Daemon-provided timestamp for the contents of this
+block. The timestamp may change even if the contents
+(and hash) do not.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>hash</strong></p></td>
+<td><p>A hash value for the ‘items’ component of this block.
+The hash is arbitrary and clients should not concern
+themselves validating the contents of the block with
+the hash; a change in the hash is used to signify the
+contents have changed, and any/all clients relying on
+the contents should update their cached data.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>items</strong></p></td>
+<td><p>A dictionary of dictionaries, organized by item name (key),
+with one dictionary containing the full description
+of a single item. The description of an item is discussed
+in its <a class="reference internal" href="#items"><span class="std std-ref">own section</span></a>.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="item-description">
+<span id="items"></span><h2>Item description<a class="headerlink" href="#item-description" title="Link to this heading"></a></h2>
+<p>Similar to the catalog block for a store, the dictionary describing
+an item contains a set of fields that provide a complete description of the
+item.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><em>Field</em></p></th>
+<th class="head"><p><em>Description</em></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>key</strong></p></td>
+<td><p>The unique name for this item. The uniqueness
+constraint is applied across the entire store, not
+just within this catalog block.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>type</strong></p></td>
+<td><p>The data type for the value associated with this
+item. The type is one of: boolean, bulk, enumerated,
+mask, numeric, numeric array, or string. The type is
+not strictly required, but it is a useful hint for
+what the value is expected to be. A more complete
+description of item types is below.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>description</strong></p></td>
+<td><p>A human-readable description of what this item
+represents. Could be one sentence, could be several;
+ideally the reader can use this information to fully
+understand the intent and function of the key/value
+pair.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>units</strong></p></td>
+<td><p>Terse description of the units for a numeric value;
+a typical item with units will only have one units
+string, assumed to be appropriate for all formats.
+If the value has multiple representations, there
+could be a units value for each representation, for
+example an angular value transmitted as radians but
+with optional formatting as sexagesimal; in this case
+the units field will be a dictionary, with the empty
+string and ‘formatted’ as keys for the different units.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>format</strong></p></td>
+<td><p>How to format the value for printing. This is expected
+to be a printf-like expression, for example %d for
+integers, or %.3f for three decimal places of a floating
+point value.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>initial</strong></p></td>
+<td><p>Initial value for this item. This is only relevant
+for the authoritative daemon, and is only used if
+there is no persistent value to restore for this item.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>persist</strong></p></td>
+<td><p>A boolean to indicate whether this item’s value
+should be persistent on the daemon side, such that
+values persist across a restart of the daemon. This
+is not common for hardware-facing daemons, where the
+controller is the authoritative source for most item
+values.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>gettable</strong></p></td>
+<td><p>Generally not specified unless set to ‘false’,
+which indicates this item will reject any attempts
+to get its value. The use of this property is highly
+discouraged, any item should have a meaningful value;
+this property only exists for backwards compatibility.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>settable</strong></p></td>
+<td><p>Generally not specified unless set to ‘false’,
+which indicates this item will reject any attempts
+to set a new value. Read-only items are fairly common,
+for example it may not make sense for a temperature
+probe to be settable.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>concurrency</strong></p></td>
+<td><p>Select the concurrency used for performing SET requests
+for this item. The two valid options are ‘serial’ and
+‘parallel’; serialized SET requests are performed in order
+of receipt, where the next request does not begin processing
+until the previous request is completed; parallelized SET
+requests are performed immediately upon receipt, regardless
+of whether a previous request is still underway. The default
+concurrency option is ‘serial’.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>interval</strong></p></td>
+<td><p>Specify the polling interval used for this item by its
+authoritative daemon. The interval is specified in seconds;
+fractional seconds (as a floating point number) are allowed.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>enumerators</strong></p></td>
+<td><p>A dictionary mapping a human-readable string
+representation to numeric values. This is only
+meaningful for boolean, enumerated, and mask types,
+though it is also overloaded for use with the legacy
+numeric array type. An example set of enumerators for
+a boolean item might be <code class="docutils literal notranslate"><span class="pre">{'0':</span> <span class="pre">'False',</span> <span class="pre">'1':</span> <span class="pre">'True'}</span></code>.
+In JSON a dictionary key must be a string, integer
+handling of these keys can and should be supported;
+this is particularly relevant for mask values.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="item-types">
+<h2>Item types<a class="headerlink" href="#item-types" title="Link to this heading"></a></h2>
+<p>Each value type may be associated with one or more optional directives from
+the set above. Note that any value could also be empty, as expressed with the
+JSON null value.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><em>Item type</em></p></th>
+<th class="head"><p><em>Description</em></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>boolean</strong></p></td>
+<td><p>A two-state integer, either 0 or 1, with a string
+representation that is usually something like
+false/true, off/on, out/in, etc. The “truth” value
+should always map to 1, though there will be some
+backwards-compatible instances where a badly configured
+boolean value does not adhere to this standard. A
+boolean is effectively an enumerated value with only
+two enumerators.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>bulk</strong></p></td>
+<td><p>A true data array, analogous to a Numpy array, unlike
+the legacy “numeric array” type, which is more like a
+dictionary or named sequence.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>numeric</strong></p></td>
+<td><p>A numeric value, either a floating point number or
+an integer. A numeric value will generally have a
+‘units’ property defined.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>numeric array</strong></p></td>
+<td><p>A sequence of numeric values, often with enumerators
+describing the individual values. This is a legacy type
+intended solely for backwards compatibility.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>enumerated</strong></p></td>
+<td><p>An integer value with a string representation
+for each valid value. The valid enumerators are listed
+in the ‘enumerators’ description property.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>mask</strong></p></td>
+<td><p>An integer value with a string representation for each
+of the possible bits in the integer. The enumerators
+reflect the status for each bit, counting from zero;
+the ‘0’ enumerator represents the mask value if the
+zeroth bit is active, the ‘1’ bit represents the value
+if the next bit is set, and so on. If a mask has
+multiple active bits the string representation is a
+concatenation of the relevant strings, joined by
+commas. The “none” enumerator reflects the string
+value if no bits are set.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>string</strong></p></td>
+<td><p>A text string of arbitrary length.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h2>
+<p>Here is a complete two-item example for what a catalog block may look
+like for a store named ‘pie’:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;store&quot;</span><span class="p">:</span> <span class="s2">&quot;pie&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;hash&quot;</span><span class="p">:</span> <span class="mi">236000907473448652729473003892320198915</span><span class="p">,</span>
+  <span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="s2">&quot;8017ad5b-07a7-5135-a024-c46a0b79b74e&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="mf">1738177027.4993615</span><span class="p">,</span>
+  <span class="s2">&quot;provenance&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;stratum&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s2">&quot;hostname&quot;</span><span class="p">:</span> <span class="s2">&quot;chonk&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;rep&quot;</span><span class="p">:</span> <span class="mi">10112</span><span class="p">,</span>
+      <span class="s2">&quot;pub&quot;</span><span class="p">:</span> <span class="mi">10139</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+  <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;ANGLE&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;numeric&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;&#39;</span><span class="p">:</span> <span class="s2">&quot;rad&quot;</span>
+        <span class="s2">&quot;formatted&quot;</span><span class="p">:</span> <span class="s2">&quot;h&quot;</span><span class="p">,</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Writable angle keyword.&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;initial&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+      <span class="s2">&quot;persist&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;DISPSTOP&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Dispatcher shutdown command. Tells dispatcher to execute a clean shutdown.&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;enumerators&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;0&quot;</span><span class="p">:</span> <span class="s2">&quot;no&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;1&quot;</span><span class="p">:</span> <span class="s2">&quot;yes&quot;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="storage">
+<h2>Storage<a class="headerlink" href="#storage" title="Link to this heading"></a></h2>
+<p>Catalog files are stored on-disk as part of a bootstrapping mechanism
+to prevent transmission of catalog blocks for every new connection.
+Two directory trees have been established; one, an automatic cache for any
+received catalog blocks, and two, a tree for meta data used
+by ‘stratum 0’ daemons providing authoritative access to a set of items.</p>
+<p>The MKTL_HOME environment variable, if set, determines the top-level directory
+used for these on-disk locations. Absent that variable being set, the default
+location is ‘$HOME/.mKTL’.</p>
+<p>The cache directory structure is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$MKTL_HOME/
+$MKTL_HOME/client/cache/
+$MKTL_HOME/client/cache/some_store_name/
+$MKTL_HOME/client/cache/some_store_name/some_uuid.json
+$MKTL_HOME/client/cache/some_store_name/some_other_uuid.json
+</pre></div>
+</div>
+<p>For each store name, each catalog block within a store is written to a
+separate file, where each file is named for the UUID associated with that
+catalog block.</p>
+<p>The daemon directory structure is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$MKTL_HOME/daemon/store/
+$MKTL_HOME/daemon/store/some_store_name/
+$MKTL_HOME/daemon/store/some_store_name/some_items.json
+$MKTL_HOME/daemon/store/some_store_name/some_items.uuid
+</pre></div>
+</div>
+<p>The .json file located here is where a daemon is expected to establish the
+items it provides. The adjacent .uuid file is auto-generated; the only content
+of the file is a single UUID. If the .uuid file exists it will be used,
+regardless of its origins, but there is no need for the developer to establish
+it as part of the daemon’s initial configuration. Unlike the cached client
+side catalog file, the daemon catalog file only includes the
+‘items’ component. This would be the daemon-side .json file for the above
+two-item example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;ANGLE&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;numeric&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s1">&#39;&#39;</span><span class="p">:</span> <span class="s2">&quot;rad&quot;</span>
+      <span class="s2">&quot;formatted&quot;</span><span class="p">:</span> <span class="s2">&quot;h&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Writable angle keyword.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;initial&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="s2">&quot;persist&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;DISPSTOP&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Dispatcher shutdown command. Tells dispatcher to execute a clean shutdown.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;enumerators&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;0&quot;</span><span class="p">:</span> <span class="s2">&quot;no&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;1&quot;</span><span class="p">:</span> <span class="s2">&quot;yes&quot;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="executables.html" class="btn btn-neutral float-left" title="Executables" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="built_ins.html" class="btn btn-neutral float-right" title="Built-in items" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright W. M. Keck Observatory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,259 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Built-in items &mdash; mKTL 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=4bba6b87" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Protocol" href="protocol.html" />
+    <link rel="prev" title="JSON metadata" href="metadata.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mKTL
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="client.html">Client interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="daemon.html">Daemon interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store.html">The Store class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item.html">The Item class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="executables.html">Executables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">JSON metadata</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Built-in items</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#protocol-only">Protocol only</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#regular-items">Regular items</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="protocol.html">Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol_interface.html">Protocol interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="heritage.html">Heritage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_of_conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="governance.html">Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mKTL</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Built-in items</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/built_ins.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="built-in-items">
+<span id="builtins"></span><h1>Built-in items<a class="headerlink" href="#built-in-items" title="Link to this heading"></a></h1>
+<p>A small set of items are defined for metadata and other internal use.
+There are two classes of built-in items: a handful that are only accessible
+at the protocol level, and the remainder that are visible as fully functional
+items in every way. The key for a built-in item has a leading underscore to
+distinguish it from other items; regular items should refrain from using a
+leading underscore.</p>
+<section id="protocol-only">
+<h2>Protocol only<a class="headerlink" href="#protocol-only" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">_hash</span></code> and <code class="docutils literal notranslate"><span class="pre">_catalog</span></code> items are replacements for the HASH and CONFIG
+request types that were defined in the initial prototype of the mKTL protocol.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><em>Key</em></p></td>
+<td><p><em>Description</em></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>_hash</strong></p></td>
+<td><p>Request the current hash identifiers for any known catalog blocks
+of a single mKTL store. All available hash identifiers, for all known
+stores, will be returned for a query of the bare <code class="docutils literal notranslate"><span class="pre">_hash</span></code> item; with a
+store name prefix, such as <cite>kpfguide._hash</cite>, only the hashes for that
+specific store will be returned. An error will be returned if a store
+is requested and the responding daemon does not have a cached
+catalog for that store.</p>
+<p>To rephrase, the scope for a <code class="docutils literal notranslate"><span class="pre">_hash</span></code> item is at two levels:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">_hash</span></code>: returning all locally known hash data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">store._hash</span></code>: returning only the hash data for the requested store</p></li>
+</ul>
+</div></blockquote>
+<p>The hash is 32 hexadecimal integers. The actual hash format is not
+significant, as long as the source of authority is consistent about
+which hash format it uses, and the format can be transmitted as 32
+hexadecimal integers.</p>
+<p>All <code class="docutils literal notranslate"><span class="pre">_hash</span></code> items are read-only, and can only receive GET requests.</p>
+<p>To unify processing the response value is always a dictionary of
+dictionaries, even if only one hash is available.</p>
+<p>Example response values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;kpfguide&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;uuid1&#39;</span><span class="p">:</span> <span class="mh">0x84a30b35</span><span class="o">...</span><span class="p">,</span>
+              <span class="s1">&#39;uuid2&#39;</span><span class="p">:</span> <span class="mh">0x983ae10f</span><span class="o">...</span><span class="p">}}</span>
+
+<span class="p">{</span><span class="s1">&#39;kpfguide&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;uuid1&#39;</span><span class="p">:</span> <span class="mh">0x84a30b35</span><span class="o">...</span><span class="p">,</span>
+              <span class="s1">&#39;uuid2&#39;</span><span class="p">:</span> <span class="mh">0x983ae10f</span><span class="o">...</span><span class="p">},</span>
+ <span class="s1">&#39;kpfmet&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;uuid6&#39;</span><span class="p">:</span> <span class="mh">0xe0377e7d</span><span class="o">...</span><span class="p">,</span>
+            <span class="s1">&#39;uuid7&#39;</span><span class="p">:</span> <span class="mh">0x7735a20a</span><span class="o">...</span><span class="p">,</span>
+            <span class="s1">&#39;uuid8&#39;</span><span class="p">:</span> <span class="mh">0x88645dab</span><span class="o">...</span><span class="p">,</span>
+            <span class="s1">&#39;uuid9&#39;</span><span class="p">:</span> <span class="mh">0x531c14fd</span><span class="o">...</span><span class="p">}}</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>_catalog</strong></p></td>
+<td><p id="builtin-catalog">The full locally known catalog contents for a single mKTL store.
+There is no bare <code class="docutils literal notranslate"><span class="pre">_catalog</span></code> item available to request the catalog
+for all locally known stores; the key used for GET requests will
+always include the store name, such as <cite>kpfguide._catalog</cite>.</p>
+<p>The scope for a <code class="docutils literal notranslate"><span class="pre">_catalog</span></code> item is at two levels:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">store._catalog</span></code>: represents the catalog for the requested store</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">store._aliascat</span></code>: represents the catalog for a single daemon</p></li>
+</ul>
+</div></blockquote>
+<p>A typical client interaction will request the catalog hash first,
+and if the hash for the cached local copy is not a match, request the
+full contents from the daemon to update the local cache.</p>
+<p>The catalog syntax is not fully described here, this is just
+a description of the request. See the
+<a class="reference internal" href="metadata.html#catalog"><span class="std std-ref">catalog syntax documentation</span></a> for a full description
+of the data format.</p>
+<p>A SET operation on a <code class="docutils literal notranslate"><span class="pre">_catalog</span></code> item should only originate from an
+authoritative daemon; as such, it will be treated as an announcement,
+and any errors raised by the recipient have to be treated as a rejection
+of the announcement.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>These two item definitions are critical for the exchange of their respective
+data; both are integral to the initial handshake between a client and a daemon,
+and between any intermediaries aiding in the discovery process.</p>
+</section>
+<section id="regular-items">
+<h2>Regular items<a class="headerlink" href="#regular-items" title="Link to this heading"></a></h2>
+<p>The remaining built-in items are visible in the catalog for the store,
+and are available for each daemon in that store. They are intended to represent
+metadata about an individual daemon, will all have the store name and alias
+as the first elements of the key, including a leading underscore after the
+store name; for example, <code class="docutils literal notranslate"><span class="pre">kpfguide._disp1</span></code>. The built-in items append a
+functional suffix to this common prefix, yielding full keys like
+<code class="docutils literal notranslate"><span class="pre">kpfguide._disp1cfg</span></code> and <code class="docutils literal notranslate"><span class="pre">kpfguide_disp1clk</span></code>.</p>
+<p>The built-in items defined in this fashion are typically read-only, though
+there are some exceptions.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><em>Key suffix</em></p></td>
+<td><p><em>Description</em></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>cat</strong></p></td>
+<td><p>See <a class="reference internal" href="#builtin-catalog"><span class="std std-ref">the description</span></a> of the <code class="docutils literal notranslate"><span class="pre">_catalog</span></code> item above.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>clk</strong></p></td>
+<td><p>The current uptime for this daemon, measured in seconds. The value will
+update and publish on a 1 Hz basis and can be used as a heartbeat
+indicator to assess whether the daemon is running normally.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>cpu</strong></p></td>
+<td><p>An instantaneous measurement of the processor consumption by this daemon.
+This value will udpate and publish on a 1 Hz basis.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>dev</strong></p></td>
+<td><p>A terse description of the function of this daemon. This item is settable,
+and its value will persist across restarts.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>host</strong></p></td>
+<td><p>The locally defined hostname for where this daemon is running.
+No guarantees are made about the external validity of this name.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>mem</strong></p></td>
+<td><p>An instantaneous measurement of the physical memory consumption by this
+daemon. This value will udpate and publish on a 1 Hz basis.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>pid</strong></p></td>
+<td><p>The proces identifier for this daemon.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>uuid</strong></p></td>
+<td><p>The universally unique identifier (UUID) for this daemon; this identifier
+will persist across restats.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="metadata.html" class="btn btn-neutral float-left" title="JSON metadata" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="protocol.html" class="btn btn-neutral float-right" title="Protocol" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright W. M. Keck Observatory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

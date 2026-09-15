@@ -1,0 +1,261 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Executables &mdash; mKTL 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=4bba6b87" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="JSON metadata" href="metadata.html" />
+    <link rel="prev" title="Daemon: heater controller" href="example/heater.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mKTL
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="client.html">Client interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="daemon.html">Daemon interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store.html">The Store class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item.html">The Item class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Executables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mk">mk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mkd">mkd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mkregistryd">mkregistryd</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">JSON metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="built_ins.html">Built-in items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol.html">Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol_interface.html">Protocol interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="heritage.html">Heritage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_of_conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="governance.html">Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mKTL</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Executables</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/executables.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="executables">
+<span id="id1"></span><h1>Executables<a class="headerlink" href="#executables" title="Link to this heading"></a></h1>
+<section id="mk">
+<span id="id2"></span><h2>mk<a class="headerlink" href="#mk" title="Link to this heading"></a></h2>
+<p><cite>mk</cite> is intended to be the primary command line interface for client
+interactions with mKTL. The command line arguments describe its usage:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: mk [-h] [-s STORE] [--serial] [--no-wait] [--formatted] [--unformatted]
+          [--terse] [--timestamp] [--no-timestamp] [-u UNITS]
+          {get,set,watch,describe,discover,list} [requests ...]
+
+This is the mKTL command line interface. The real work is done in the
+mktl Python library; this executable parses command-line flags, invokes
+mktl routines to handle any/all requests, and otherwise waits until all
+requests are complete. Note that the default is to execute all requests
+in parallel.
+
+positional arguments:
+  {get,set,watch,describe,discover,list}
+                        Request type
+  requests              Whitespace-separated sequence of requests. For a get,
+                        watch, or describe request, this is a sequence of
+                        keys; for a set request, this is a sequence of
+                        key=value statements; for a list request this is a
+                        sequence of stores; for a discover request this is a
+                        sequence of registry addresses.
+
+options:
+  -h, --help            show this help message and exit
+  -s, --store STORE     Name of an mKTL store to prefix to all subsequent
+                        keys.
+  --serial              Process all requests serially. The default is to
+                        process requests in parallel.
+  --no-wait             Do not wait until all set requests are complete before
+                        exiting. The default is to wait. --no-wait is not
+                        compatible with --serial.
+  --formatted           Show the formatted value for get requests, and
+                        interpret the provided value as formatted for set
+                        requests. This is the default behavior.
+  --unformatted         Show the unformatted value for get requests, and
+                        interpret the provided value as unformatted for set
+                        requests. The default is to use the formatted value.
+  --terse               For get and set requests, only output the requested
+                        value and no other metadata.
+  --timestamp           Include the timestamp with the output of &#39;get&#39;
+                        requests. The default is to include the timestamp for
+                        &#39;watch&#39; requests, and omit it from &#39;get&#39; requests.
+  --no-timestamp        Omit the timestamp from the output of &#39;watch&#39;
+                        requests. The default is to include the timestamp for
+                        &#39;watch&#39; requests, and omit it from &#39;get&#39; requests.
+  -u, --units UNITS     Use the requested units for getting or setting tem
+                        values. Note that this option is applied to all
+                        requests, and is not practical when interacting with
+                        multiple items.
+
+Example usage:
+
+    mk get rosebud.model rosebud.length
+    mk get -s rosebud model length height color
+    mk set rosebud.speed=50
+    mk set -s rosebud speed=50 passengers=2 --no-wait
+    mk watch rosebud.model rosebud.length
+    mk watch -s rosebud model length height color
+    mk list -s rosebud
+    mk list rosebud redflyer
+</pre></div>
+</div>
+</section>
+<section id="mkd">
+<span id="id3"></span><h2>mkd<a class="headerlink" href="#mkd" title="Link to this heading"></a></h2>
+<p>The <cite>mkd</cite> executable provides a command-line interface to invoke a
+persistent daemon executing a <a class="reference internal" href="daemon.html#mktl.Daemon" title="mktl.Daemon"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Daemon</span></code></a> subclass to implement
+application-specific functionality. The <cite>mkd</cite> executable is intended
+to be the common point of entry for any Python-based mKTL daemon.</p>
+<p>The command line arguments describe its usage:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: mkd [-h] [-m MODULE] [-s SUBCLASS] [-c CATALOG] [-a APPCONFIG] [-o]
+           store alias
+
+This is a generic mKTL daemon. The real work is done in the subclass of
+mktl.Daemon (if any); this executable parses command-line flags, invokes
+a mktl.Daemon instance to handle any/all requests, and otherwise waits
+until the program is terminated.
+
+The store name and daemon alias must be specified in order for
+this daemon to function correctly; all other arguments are optional.
+
+positional arguments:
+  store                 Name of this mKTL store.
+  alias                 Unique alias for the mKTL catalog block associated
+                        with this specific daemon; this is an arbitrary
+                        string, and must be unique for this daemon within this
+                        store.
+
+options:
+  -h, --help            show this help message and exit
+  -m, --module MODULE   Module to import which contains the mktl.Daemon
+                        subclass to invoke. The default module is &quot;mktl&quot;.
+  -s, --subclass SUBCLASS
+                        Specific mktl.Daemon subclass to invoke; this is the
+                        bare class name (Daemon), not a fully qualified class
+                        name (mktl.Daemon). The default subclass name is
+                        &quot;Daemon&quot;.
+  -c, --catalog CATALOG
+                        File containing daemon-specific mKTL catalog of items;
+                        if specified, the contents of this file will supplant
+                        any cached daemon-specific catalog for this
+                        store+alias.
+  -a, --appconfig APPCONFIG
+                        Custom configuration file location, not used directly
+                        by mKTL, but made available to the mktl.Daemon
+                        subclass. How this directive is used is entirely up to
+                        the application-specific subclass code.
+  -o, --override        Request that the local network clear any cached
+                        catalog conflicting with what this daemon will
+                        announce. The override will only be permitted if the
+                        conflicting daemons are all offline.
+
+For example, to run mkd for the store &#39;rosebud&#39;, using the existing
+on-disk catalog block identified as &#39;innocence&#39;, first using the default
+caching implementation, and then with a custom Kane.Sled subclass of
+mktl.Daemon, one might invoke:
+
+    mkd rosebud innocence
+    mkd rosebud innocence --module Kane --subclass Sled
+</pre></div>
+</div>
+</section>
+<section id="mkregistryd">
+<span id="id4"></span><h2>mkregistryd<a class="headerlink" href="#mkregistryd" title="Link to this heading"></a></h2>
+<p>The <cite>mkregistryd</cite> persistent daemon is a discovery aid, listening for UDP
+broadcasts on a well-known port number so that clients can be directed to
+a specific mKTL daemon handling requests for a specific store, or fraction
+of a store. While having a <cite>mkregistryd</cite> daemon running is not a strict
+requirement it is a key component of automated discovery of mKTL stores on
+a local network.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="example/heater.html" class="btn btn-neutral float-left" title="Daemon: heater controller" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="metadata.html" class="btn btn-neutral float-right" title="JSON metadata" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright W. M. Keck Observatory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

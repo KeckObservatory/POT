@@ -1,0 +1,268 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introduction &mdash; mKTL 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=4bba6b87" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Overview" href="overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            mKTL
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="client.html">Client interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="daemon.html">Daemon interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store.html">The Store class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item.html">The Item class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="executables.html">Executables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">JSON metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="built_ins.html">Built-in items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol.html">Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol_interface.html">Protocol interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="heritage.html">Heritage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_of_conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="governance.html">Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">mKTL</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Introduction</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="introduction">
+<span id="id1"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h1>
+<p>mKTL is intended to be the successor to the Keck Task Library (KTL)
+applications programming interface (API) at W. M. Keck Observatory (WMKO).
+The goal of KTL is to standardize interprocess communications, providing a
+common API to access commands and telemetry for systems across the observatory,
+regardless of the specific communication method (mKTL, EPICS, MUSIC, RPC, etc.)
+used by that system.</p>
+<p>As the successor to KTL, mKTL is intended to be a super-set of the fundamental
+publish/subscribe and request/response aspects of KTL; the main departures for
+mKTL, as compared to KTL, focus on usability.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Where KTL requires the local installation of several major pieces
+of kroot, mKTL is intended to install as a standalone package with
+minimal dependencies.</p></li>
+<li><p>Where KTL requires the client to have local support for a specific
+communication method, mKTL will use a universal protocol based on
+<a class="reference external" href="https://www.json.org">JSON</a> and <a class="reference external" href="https://zeromq.org/">ZeroMQ</a>
+for every client/daemon interaction.</p></li>
+<li><p>Where KTL requires the installation of local configuration data for a
+client to access a service, mKTL will discover any/all service metadata
+at run time.</p></li>
+</ul>
+</div></blockquote>
+<p>In addition to usability mKTL also places a strong emphasis on performance,
+with sufficiently lightweight handling to allow high frequency (greater
+than a kilohertz) and high bandwidth (greater than 10 gigabit/sec)
+applications.</p>
+<p>The documentation for mKTL is published here:</p>
+<p><a class="reference external" href="https://keckobservatory.github.io/mKTL">https://keckobservatory.github.io/mKTL</a></p>
+<p>The source code for mKTL is maintained in a GitHub repository:</p>
+<p><a class="reference external" href="https://github.com/KeckObservatory/mKTL">https://github.com/KeckObservatory/mKTL</a></p>
+</section>
+<section id="documentation-contents">
+<h1>Documentation contents<a class="headerlink" href="#documentation-contents" title="Link to this heading"></a></h1>
+<p>This documentation covers the use of mKTL from several different perspectives,
+where awareness of every perspective is not strictly required in order to
+effectively leverage mKTL. The <a class="reference internal" href="client.html#client"><span class="std std-ref">Client interface</span></a> focuses on the needs of ephemeral
+applications that wish to query a daemon; the <a class="reference internal" href="daemon.html#daemon"><span class="std std-ref">Daemon interface</span></a> focuses on
+the needs of a persistent application providing a structured interface to some
+well-defined entity, whether it is logical, hardware, or otherwise; and lastly,
+the maintainer view, focusing on mKTL internals such as the complete description
+of the mKTL <a class="reference internal" href="protocol.html#protocol"><span class="std std-ref">Protocol</span></a> and <a class="reference internal" href="metadata.html#metadata"><span class="std std-ref">JSON metadata</span></a>. To put it another way,
+the intent of mKTL is that users of the interface code should not need to
+be expert mKTL maintainers in order to successfully develop an application.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#core-concepts">Core concepts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="client.html">Client interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="client.html#getting-started">Getting started</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="daemon.html">Daemon interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="daemon.html#the-daemon-class">The Daemon class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="daemon.html#store-metadata">Store metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="daemon.html#mkd-executable">mkd executable</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="store.html">The Store class</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="store.html#mktl.Store"><code class="docutils literal notranslate"><span class="pre">Store</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="item.html">The Item class</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="item.html#mktl.Item"><code class="docutils literal notranslate"><span class="pre">Item</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="example/get.html">Client: get a value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/set.html">Client: set a value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/callback.html">Client: register a callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/daemon.html">Daemon: basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/daemon_unabridged.html">Daemon: unabridged</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example/heater.html">Daemon: heater controller</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="executables.html">Executables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="executables.html#mk">mk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="executables.html#mkd">mkd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="executables.html#mkregistryd">mkregistryd</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">JSON metadata</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metadata.html#catalog-syntax">Catalog syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.html#item-description">Item description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.html#item-types">Item types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.html#example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.html#storage">Storage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="built_ins.html">Built-in items</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="built_ins.html#protocol-only">Protocol only</a></li>
+<li class="toctree-l2"><a class="reference internal" href="built_ins.html#regular-items">Regular items</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="protocol.html">Protocol</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="protocol.html#principles-of-operation">Principles of operation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="protocol.html#request-response">Request/response</a></li>
+<li class="toctree-l2"><a class="reference internal" href="protocol.html#message-types">Message types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="protocol.html#message-payload">Message payload</a></li>
+<li class="toctree-l2"><a class="reference internal" href="protocol.html#publish-subscribe">Publish/subscribe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="protocol.html#discovery">Discovery</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="protocol_interface.html">Protocol interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="protocol_interface.html#payload-class">Payload class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="protocol_interface.html#message-classes">Message classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="protocol_interface.html#request-client">Request client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="protocol_interface.html#request-server">Request server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="protocol_interface.html#publish-client">Publish client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="protocol_interface.html#publish-server">Publish server</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="heritage.html">Heritage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="heritage.html#history">History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="heritage.html#strengths">Strengths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="heritage.html#weaknesses">Weaknesses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="heritage.html#decision-criteria">Decision criteria</a></li>
+<li class="toctree-l2"><a class="reference internal" href="heritage.html#core-dependencies">Core dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="code_of_conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="governance.html">Governance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="governance.html#project-support">Project support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="governance.html#approval">Approval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="governance.html#roles">Roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="governance.html#communication">Communication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="governance.html#contributed-code">Contributed code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="governance.html#releases">Releases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="governance.html#user-support">User support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#external-definitions">External definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html#mktl-specific-terms">mKTL-specific terms</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="overview.html" class="btn btn-neutral float-right" title="Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright W. M. Keck Observatory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

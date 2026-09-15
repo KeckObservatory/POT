@@ -1,0 +1,261 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heritage &mdash; mKTL 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=4bba6b87" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Code of conduct" href="code_of_conduct.html" />
+    <link rel="prev" title="Protocol interface" href="protocol_interface.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mKTL
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="client.html">Client interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="daemon.html">Daemon interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store.html">The Store class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item.html">The Item class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="executables.html">Executables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">JSON metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="built_ins.html">Built-in items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol.html">Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol_interface.html">Protocol interface</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Heritage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#history">History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#strengths">Strengths</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#key-value-pairs">Key/value pairs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#request-response">Request/response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#publish-subscribe">Publish/subscribe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flexible-values">Flexible values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#distributed-control">Distributed control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multiple-languages">Multiple languages</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#weaknesses">Weaknesses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#c-based-api">C-based API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interface-layer">Interface layer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#code-complexity">Code complexity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multiple-communcation-styles">Multiple communcation styles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisite-knowledge">Prerequisite knowledge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exotic-dependencies">Exotic dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#performance">Performance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bundling-keywords">Bundling keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bulk-data">Bulk data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#decision-criteria">Decision criteria</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ubiquity">Ubiquity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#portability">Portability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#simplicity">Simplicity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Performance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#core-dependencies">Core dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="code_of_conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="governance.html">Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mKTL</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Heritage</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/heritage.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="heritage">
+<span id="id1"></span><h1>Heritage<a class="headerlink" href="#heritage" title="Link to this heading"></a></h1>
+<section id="history">
+<h2>History<a class="headerlink" href="#history" title="Link to this heading"></a></h2>
+<p>The development of the Keck Task Library (KTL) has its origins in the early 1990’s,  motivated by the need for a common API to standardize access to commands and telemetry from disparate systems across <a class="reference external" href="https://keckobservatory.org/">W. M. Keck Observatory</a> (WMKO). The first light instruments at WMKO were HIRES, LRIS, and NIRC; HIRES and LRIS had some measure of common heritage and relied on MUSIC messaging, developed by <a class="reference external" href="https://www.ucobservatories.org/">University of California Observatories</a> at the <a class="reference external" href="https://www.ucsc.edu/">UC Santa Cruz</a> campus, for interprocess communications; NIRC used a system based on the <a class="reference external" href="https://en.wikipedia.org/wiki/Sun_RPC">remote procedure call</a> (RPC) library from <a class="reference external" href="https://en.wikipedia.org/wiki/Sun_Microsystems">Sun Microsystems</a>; the telescope control system uses the <a class="reference external" href="https://epics-controls.org/">Experimental Physics and Industrial Control System</a> (EPICS). The KTL API is a set of C routines, implemented as a shared library, that provides a common key/value behavior layered on top of these disparate communication APIs.</p>
+<p>The entry point for any KTL client is to load a shared library unique to the KTL service of interest, where a KTL service is a collection of individual KTL keywords, and where a keyword is a single key/value pair. This KTL client library can be any C code, so long as it implements the methods that the KTL API expects to find. The earliest instruments took full advantage of this opportunity, with custom code implementing the interface to each of their respective communication methods; later instruments relied on common, configuration-driven libraries that were shared across instruments; each of the three communication styles (EPICS, MUSIC, and RPC) has an implementation intended to be shared across many services and/or instruments, though there isn’t much common heritage between the three, and certain optional aspects of the KTL API are poorly supported, or not supported at all, in some of the variants; as a result, shared KTL tools are required to be aware of implementation-specific variances in order to function correctly, and some specific applications cannot be shared because they rely on implementation-specific behavior.</p>
+<p>With that background in mind, let it be stated clearly that KTL was unambiguously successful in its broader objectives. New instruments progressively leaned further on KTL as a key technology, with more services, more dispatchers, more keywords, and overall, more KTL-driven information flow though each system. The telescope control system and adaptive optics benches at WMKO did not realize the same level of benefit, as the development for those systems focused on using EPICS directly as a first-class interface, enabled KTL-based access to a limited subset of commands and telemetry, and often do not use the KTL abstraction for internal tools. KTL also saw widespread adoption at Lick Observatory, where it is used as a first-class interface for all commands and telemetry; University of California Observatories’ oversight of LicK Observatory and the UC participation in WMKO encouraged this practice, and it yielded substantial improvements to both KTL and common KTL tools across both observatories.</p>
+<p>In order for mKTL to succeed it must be better than KTL. While this assertion is simple to write down there will be both qualitative and quantitative metrics that must be met in order to achieve that broader objective. Three decades of KTL development, maintenance, and support provide a wealth of experience to draw from; care must be taken to emphasize the successful design choices made with KTL, while minimizing or eliminating the areas where it was less successful. mKTL is not positioned as a rejection of KTL: mKTL is an evolution, drawing from an established heritage, and avoiding the missteps of the past must not come at the expense of making new missteps that KTL successfully evaded.</p>
+</section>
+<section id="strengths">
+<h2>Strengths<a class="headerlink" href="#strengths" title="Link to this heading"></a></h2>
+<p>The strengths identified here highlight areas to emphasize when making design decisions for mKTL.</p>
+<section id="key-value-pairs">
+<h3>Key/value pairs<a class="headerlink" href="#key-value-pairs" title="Link to this heading"></a></h3>
+<p>Representing commands and telemetry as key/value pairs has been an excellent match for the usage patterns at WMKO. Sensor values, motor positions, filter names, etc., all lend themselves to having a single value, or family of values, representing vital state information for a given system. Being able to address keywords individually is an important part of this approach, as it allows client applications to work with exactly the subset of commands and telemetry they need, instead of requiring manipulation of a bulkier, more complex structure.</p>
+</section>
+<section id="request-response">
+<h3>Request/response<a class="headerlink" href="#request-response" title="Link to this heading"></a></h3>
+<p>A request/response pattern is fundamental to both synchronous and asynchronous usage in KTL. The KTL command exchange involves two steps: a first stage notification, acknowledging that a request has been made, and a second stage notification, a full response indicating the completion of the request. The base pattern for this request/response exchange underpins the different handling options available to a KTL client: ignoring any response, continuing with execution before checking for a response, and blocking execution until a response is received. Each of these patterns is essential for different types of client interactions.</p>
+</section>
+<section id="publish-subscribe">
+<h3>Publish/subscribe<a class="headerlink" href="#publish-subscribe" title="Link to this heading"></a></h3>
+<p>A publish/subscribe pattern allows for asynchronous handling of new values; this is particularly valuable for event-driven use cases, where recording, displaying, or otherwise reacting to a new value should occur immediately rather than wait for a client polling cycle to occur. Publish/subscribe also unlocks additional efficiency, in that a single publish event can be distributed to all subscribers in a single pass, rather than requiring subscribers to individually poll for new values via the request/response interface.</p>
+</section>
+<section id="flexible-values">
+<h3>Flexible values<a class="headerlink" href="#flexible-values" title="Link to this heading"></a></h3>
+<p>Every KTL keyword value has two representations: ‘ascii’ and ‘binary’, which have different meanings depending on the defined keyword type. This behavior, while optional, has powerful practical use: a boolean keyword, for example, may have 0 and 1 as its available binary values, but the ascii values could be anything: off and on, no and yes, false and true, or whatever other values might be handled by that service’s KTL client library. This behavior extends to enumerated and mask keyword types, where a binary integer value can be interpreted as arbitrary strings. This allows the possibility that a client can work directly with human-readable values for command and telemetry instead of relying on the correct handling of magic numbers to achieve the same goal. This same basic feature is used to render numeric values in multiple different units, such as the binary value being in radians and the ascii value in degrees, or as sexagesimal.</p>
+</section>
+<section id="distributed-control">
+<h3>Distributed control<a class="headerlink" href="#distributed-control" title="Link to this heading"></a></h3>
+<p>There is no single source of authority for KTL; there is no federated naming scheme, or any requirement that what is installed on one computer matches what is installed on another. Any naming scheme must only be unique locally, and does not register itself with a persistent registry running elsewhere in order to function correctly. In practice, most KTL services have unique names, and uniqueness is generally a virtue, though for specific use cases, such as testing, there is merit in being able to run any KTL service in an isolated environment. Any KTL client, as long as it satisfies its prerequisites, can communicate with any KTL dispatcher, without invoking an intermediary; any one KTL dispatcher (or family of dispatchers) does not have common infrastructure that might be bottlenecked by some other dispatcher (or dispatchers). In practice, this allows instruments to operate independently of each other, limiting the likelihood that a failure affecting one system might degrade performance for another.</p>
+</section>
+<section id="multiple-languages">
+<h3>Multiple languages<a class="headerlink" href="#multiple-languages" title="Link to this heading"></a></h3>
+<p>One of the virtues of a C-based API is that every other language has a mechanism to access that API; some languages have several. Regardless, the ubiquitous ability to access C code from other languages has been of enduring value to expand KTL access beyond its original intended use. Language-specific KTL interfaces for Tcl, Java, and Python all see production use.</p>
+</section>
+</section>
+<section id="weaknesses">
+<h2>Weaknesses<a class="headerlink" href="#weaknesses" title="Link to this heading"></a></h2>
+<p>The weaknesses identified here highlight areas to avoid when making design decisions for mKTL.</p>
+<section id="c-based-api">
+<h3>C-based API<a class="headerlink" href="#c-based-api" title="Link to this heading"></a></h3>
+<p>While a C-based API has merit it has also proven to be a weakness for KTL. The KTL API relies on an ioctl interface for much of its optional functionality; the arguments to the defined ioctl commands vary in both number and type, and switching ioctl behavior is governed by a single 32-bit integer, which limits the number of optional commands that might be added to the API. Any expansion of the API beyond its current footprint creates binary incompatibility, where interoperability between systems becomes critically impaired and could motivate a mass rebuild across any interconnected systems.  And, just because access to a C-based API is possible from a given language doesn’t mean it’s easy; for example, KTL relies on a union type (a KTL polymorph) to contain telemetry values, which must be handled with care when the value is exposed to a strongly typed language, like Java.</p>
+</section>
+<section id="interface-layer">
+<h3>Interface layer<a class="headerlink" href="#interface-layer" title="Link to this heading"></a></h3>
+<p>With KTL being primarily a C-based API, the key interface layer between a client application and the dispatcher receiving the command is this C API. A client’s application code is custom up until that point; on the other side of the interface, the code associated with the persistent daemon takes over, including all aspects of on-the-wire communication between the KTL client library and the dispatcher. This design decision means that client interactions cannot be cleanly isolated from dispatcher handling, because the behavior of the dispatcher-specific messaging requires code specific to that messaging on the client side.</p>
+</section>
+<section id="code-complexity">
+<h3>Code complexity<a class="headerlink" href="#code-complexity" title="Link to this heading"></a></h3>
+<p>The implementation of the KTL API is a complex collection of C code, having grown organically from the base concepts of the API to include logging behavior, backgrounded queueing and dispatching of events, and additional hooks for optional behavior added to the API over time. Support exists for different types of messaging, of which only one style of messaging is ever used. Making changes in any one area often has unintended consequences elsewhere in the code base; eliminating memory leaks is one example, where memory allocation occurs in one file, but deallocation must occur elsewhere, or in a different context entirely; some allocations occur in the client library but are freed by the KTL API, and the reverse also occurs. So, this code complexity extends to the KTL client libraries themselves, and the amount of close coupling across that API layer is high.</p>
+</section>
+<section id="multiple-communcation-styles">
+<h3>Multiple communcation styles<a class="headerlink" href="#multiple-communcation-styles" title="Link to this heading"></a></h3>
+<p>One of the key design goals of KTL was to implement a common abstraction to manage differences in communication style between different systems, each potentially employing a unique protocol and transport for inter-process communication. While it was successful in this regard, it also created circumstances leading to some of its largest flaws: any communication failures require deep protocol-specific knowledge in order to diagnose and remedy the failure; any client wishing to communicate with a given system must locally install all libraries appropriate for the communication method(s) used by that system; each KTL client library is an isolated code base, and is on its own to successfully map KTL calls to its native method of communication, with significant variance in how successful they actually are. The net result is that it is not sufficient to be an expert in an application-specific protocol and transport, it is not sufficient to be an expert in the KTL API, proper maintenance requires an individual to be expert in both areas in order to succeed.</p>
+</section>
+<section id="prerequisite-knowledge">
+<h3>Prerequisite knowledge<a class="headerlink" href="#prerequisite-knowledge" title="Link to this heading"></a></h3>
+<p>Having the correct KTL client library installed locally is generally insufficient to access the KTL service; some amount of additional information must be provided, such as environment variables defining a target host name, or configuration files describing how the client library should connect to the waiting KTL dispatcher. These configuration management quirks are a barrier to usage, and depending on their nature, delicate and prone to configuration mismatches.</p>
+</section>
+<section id="exotic-dependencies">
+<h3>Exotic dependencies<a class="headerlink" href="#exotic-dependencies" title="Link to this heading"></a></h3>
+<p>The use of KTL is tied to a WMKO standard deployment of kroot; this includes the KTL API shared libraries, the KTL client libraries for the specific KTL services of interest, configuration files used by those KTL client libraries, and command line utilities providing common functionality for scripts as well as interactive use. Any KTL-based software must therefore have a full kroot install available in order to function normally; this is perhaps not a burden for systems that must have kroot regardless, but the close coupling between KTL and kroot is an easy example of an exotic dependency. Individual client libraries create their own burdens in this respect: an EPICS-based client library must have enough EPICS available locally to build and run; likewise for MUSIC, which is bundled in kroot, and RPC, which despite being an industry standard, WMKO’s KTL RPC implementation relies on GNU libc extensions that were deprecated and removed, and multithreaded behavior that was present in Solaris but not ported to Linux. Some dependencies are less exotic, but can still cause problems at build and run time, such as libxml2.</p>
+</section>
+<section id="performance">
+<h3>Performance<a class="headerlink" href="#performance" title="Link to this heading"></a></h3>
+<p>Typical KTL requests must pass through several handling steps on their way to their destination, and the same is true for any response. The handoff between the C API and any KTL client library implementation establishes multiple places where queueing and threading are natural structures to control the flow of data; these queues, signaling steps, and translations result in lost time, either to increased latency, or a need for processing power, or both. This effect is not egregious, in that the original use cases likely did not intend for KTL to achieve frequencies higher than 100 Hz; performance up to an appreciable fraction of a kilohertz has been attained, though not relied on. Nevertheless, KTL is actively avoided for high frequency or low latency communications.</p>
+</section>
+<section id="bundling-keywords">
+<h3>Bundling keywords<a class="headerlink" href="#bundling-keywords" title="Link to this heading"></a></h3>
+<p>The KTL API treats keywords as isolated entities; there is no provision for linking multiple keywords into an atomic unit, either for commands or telemetry. Consider the case where a telescope is commanded to move: the right ascension and declination must both be specified as separate keywords, and then a third keyword triggered in order to begin the move. Consider the case of a motorized mechanism, which may have multiple encoders, motor power feedback, and other telemetry; KTL does not provide a method for a client to confidently assert that a set of telemetry is a self consistent snapshot of a system’s state.</p>
+</section>
+<section id="bulk-data">
+<h3>Bulk data<a class="headerlink" href="#bulk-data" title="Link to this heading"></a></h3>
+<p>The KTL API provides limited support for numeric arrays, which are effectively associative arrays; while this does in part address the bundling concern noted directly above, that is only true if the keywords are all numeric, and either all integers or all floating point numbers. Support for these array types is limited, both in terms of array size and in which KTL client libraries allow their use. The transport of an image buffer is one example of the type of data that falls outside what the KTL API can support.</p>
+</section>
+</section>
+<section id="decision-criteria">
+<h2>Decision criteria<a class="headerlink" href="#decision-criteria" title="Link to this heading"></a></h2>
+<p>The strengths and weaknesses described above can be distilled to a handful of guiding principles, listed in order of decreasing significance.</p>
+<section id="ubiquity">
+<h3>Ubiquity<a class="headerlink" href="#ubiquity" title="Link to this heading"></a></h3>
+<p>It is inevitable that mKTL will need to be implemented in multiple languages, not just Python, in order to maintain acceptance as an observatory standard over a multi-decade time span. Any approaches embedded in mKTL, and any key external technologies leveraged by mKTL, must therefore be ubiquitous and readily available across not just languages of choice, but generally available as standard options for a broad range of languages. This increases the odds that future languages are likely to provide similar support. Widespread adoption also implies widespread familiarity with the technologies and approaches, which could give new developers a head start on their introduction to mKTL.</p>
+</section>
+<section id="portability">
+<h3>Portability<a class="headerlink" href="#portability" title="Link to this heading"></a></h3>
+<p>The concept of portability may be derivative of ubiquity; regardless, mKTL and its dependencies must be readily buildable on a diverse set of potential platforms and architectures. This increases the odds that future platforms and architectures are likely to provide similar support.</p>
+</section>
+<section id="simplicity">
+<h3>Simplicity<a class="headerlink" href="#simplicity" title="Link to this heading"></a></h3>
+<p>mKTL and its dependencies must not impose undue complexity in order to leverage their key functionality. Simple dependencies will allow mKTL code to remain clean and easy to follow, rather than impose their own structure on the design or implementation; mKTL itself should likewise seek to minimize boilerplate requiredfor its use.</p>
+</section>
+<section id="features">
+<h3>Features<a class="headerlink" href="#features" title="Link to this heading"></a></h3>
+<p>mKTL and its dependencies must provide compelling features. For dependencies, if the cost of reimplementing specific functionality is low it is likely preferable to avoid the additional dependency entirely; for mKTL, the feature set should remain targeted to its core functionality, largely in support of achieving the other goals outlined here.</p>
+</section>
+<section id="id2">
+<h3>Performance<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p>mKTL and its dependencies must be adequately performant such that the overall performance is not degraded by their use.</p>
+</section>
+</section>
+<section id="core-dependencies">
+<h2>Core dependencies<a class="headerlink" href="#core-dependencies" title="Link to this heading"></a></h2>
+<p>With these principles as guideposts, mKTL has adopted two key external technologies as foundational components for its functional goals: <a class="reference external" href="https://zeromq.org/">ZeroMQ</a> as a network transport, and <a class="reference external" href="https://www.json.org/">JSON</a> as a data interchange format.</p>
+<p>Support for ZeroMQ spans virtually every programming language in use today, well beyond the set of languages of potential interest to the mKTL community; because of its widespread use and extensive history it is also the type of technology that will have a long tail of maintenance as it ages, even if it is no longer being actively developed. The features of ZeroMQ are also well aligned with the goals of mKTL, with respect to enabling a distributed architecture, having low overhead and high performance, transparent reconnect logic, and usage patterns that mimic simple sockets. By a happy coincidence ZeroMQ also implements an efficient PUB/SUB pattern well-suited to mKTL’s functional requirements.</p>
+<p>Similarly, JSON enjoys ubiquitous support for all modern programming languages, surpassed possibly only by XML; XML’s gains in language support are offset by its bulky structure and inefficiency of parsing. JSON parsing is likewise inefficient and represents a significant source of processing overhead for mKTL messages; this inefficiency is accepted as it is not onerous enough to cause mKTL to miss its performance goals. Being able to natively represent numeric, string, boolean, and sequence data in JSON relieves mKTL of the need to invent its own parsing or complex message payload scheme; being able to represent the description of a store’s items in JSON also eliminates ambiguity about the proper formatting of mKTL metadata.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="protocol_interface.html" class="btn btn-neutral float-left" title="Protocol interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="code_of_conduct.html" class="btn btn-neutral float-right" title="Code of conduct" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright W. M. Keck Observatory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

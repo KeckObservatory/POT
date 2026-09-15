@@ -1,0 +1,203 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client interface &mdash; mKTL 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=4bba6b87" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Daemon interface" href="daemon.html" />
+    <link rel="prev" title="Overview" href="overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mKTL
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Client interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting started</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.home"><code class="docutils literal notranslate"><span class="pre">home()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.get"><code class="docutils literal notranslate"><span class="pre">get()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="daemon.html">Daemon interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store.html">The Store class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item.html">The Item class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="executables.html">Executables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">JSON metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="built_ins.html">Built-in items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol.html">Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol_interface.html">Protocol interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="heritage.html">Heritage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_of_conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="governance.html">Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mKTL</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Client interface</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/client.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="client-interface">
+<span id="client"></span><h1>Client interface<a class="headerlink" href="#client-interface" title="Link to this heading"></a></h1>
+<p>A client is any software component interacting with a daemon, in the form of
+issuing requests, receiving responses to requests, and receiving asynchronous
+updates of new item values. The Python interface described here makes liberal
+use of background threads, callbacks in particular can and will arrive from
+background threads as asynchronous updates arrive.</p>
+<p>Unlike the <a class="reference internal" href="daemon.html#daemon"><span class="std std-ref">Daemon interface</span></a>, a typical client application will not need subclasses
+of the classes defined here, they are expected to be used directly, as-is.</p>
+<section id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h2>
+<p>mKTL will cache information locally; there are no restrictions on where this
+information gets cached, other than it needs to be cached somewhere. The
+default location for this cache is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$HOME/.mKTL
+</pre></div>
+</div>
+<p>You can override this location by setting the <code class="docutils literal notranslate"><span class="pre">MKTL_HOME</span></code> environment
+variable to the absolute path of your choice; any directory specified in
+this fashion will be created if it does not already exist. Alternatively,
+the program may invoke the <a class="reference internal" href="#mktl.home" title="mktl.home"><code class="xref py py-func docutils literal notranslate"><span class="pre">mktl.home()</span></code></a> method to specify the location
+at run time.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mktl.home">
+<span class="sig-prename descclassname"><span class="pre">mktl.</span></span><span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.home" title="Link to this definition"></a></dt>
+<dd><p>Return the directory location where we should be loading and/or saving
+catalog files. This defaults to <code class="docutils literal notranslate"><span class="pre">$HOME/.mKTL</span></code>, but can be
+overridden by calling this method with a valid path, or by setting
+the <code class="docutils literal notranslate"><span class="pre">MKTL_HOME</span></code> environment variable. Note that changes to the
+environment variable will be ignored unless it is set prior to the
+first invocation of this method.</p>
+</dd></dl>
+
+<p>You may need to pre-populate your local cache with information from the
+registries handling the catalog for the store(s) you wish to access.
+The <a class="reference internal" href="executables.html#mk"><span class="std std-ref">mk</span></a> command line tool will handle this process; for a given
+IP address or hostname, you would invoke:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mk</span> <span class="n">discover</span> <span class="mf">192.168.5.34</span>
+</pre></div>
+</div>
+<p>This discovery process will query that address for all available catalogs,
+but more importantly, will cache the address of that registry and use it again
+in the future if/when discovering new services, without an explicit request to
+do so. In other words, it should only be necessary to run this discovery process
+a single time in order to gain access to a new set of mKTL stores.</p>
+<p>The <a class="reference internal" href="#mktl.get" title="mktl.get"><code class="xref py py-func docutils literal notranslate"><span class="pre">mktl.get()</span></code></a> method is the universal entry point to retrieve a
+<a class="reference internal" href="store.html#mktl.Store" title="mktl.Store"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Store</span></code></a> or <a class="reference internal" href="item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Item</span></code></a> instance; cached metadata is
+automatically refreshed if necessary, and the remainder of the connection logic
+is handled by the <a class="reference internal" href="store.html#mktl.Store" title="mktl.Store"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Store</span></code></a>.</p>
+<p>All other client operations, such as getting and setting item values, are
+handled via the <a class="reference internal" href="item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Item</span></code></a> instance.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mktl.get">
+<span class="sig-prename descclassname"><span class="pre">mktl.</span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">store</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.get" title="Link to this definition"></a></dt>
+<dd><p>The <a class="reference internal" href="#mktl.get" title="mktl.get"><code class="xref py py-func docutils literal notranslate"><span class="pre">get()</span></code></a> method is intended to be the primary entry point for
+all interactions with a key/value store.</p>
+<p>The return value is either a cached <a class="reference internal" href="store.html#mktl.Store" title="mktl.Store"><code class="xref py py-class docutils literal notranslate"><span class="pre">Store</span></code></a> or <a class="reference internal" href="item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a>
+instance. If both a <em>store</em> and a <em>key</em> are specified, the requested
+item will be returned from the specified <em>store</em>. The same will occur
+if the sole argument is a store and key name concatenated with a dot
+(store.KEY). A <a class="reference internal" href="store.html#mktl.Store" title="mktl.Store"><code class="xref py py-class docutils literal notranslate"><span class="pre">Store</span></code></a> instance will be returned if the sole
+argument provided is a <em>store</em> name. Both the <em>store</em> and the <em>key</em>
+are case-insensitive, all arguments are translated to lower case
+before proceeding. For example, the following two calls are equivalent:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mktl</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;my_store&#39;</span><span class="p">,</span> <span class="s1">&#39;some_key&#39;</span><span class="p">)</span>
+<span class="n">mktl</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;my_store.some_key&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the caller always uses <a class="reference internal" href="#mktl.get" title="mktl.get"><code class="xref py py-func docutils literal notranslate"><span class="pre">get()</span></code></a> to retrieve a <a class="reference internal" href="store.html#mktl.Store" title="mktl.Store"><code class="xref py py-class docutils literal notranslate"><span class="pre">Store</span></code></a> or
+<a class="reference internal" href="item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a> they will always receive the same instance of that class.
+In that sense, <a class="reference internal" href="#mktl.get" title="mktl.get"><code class="xref py py-func docutils literal notranslate"><span class="pre">get()</span></code></a> is a factory method enforcing a singleton
+pattern.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="overview.html" class="btn btn-neutral float-left" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="daemon.html" class="btn btn-neutral float-right" title="Daemon interface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright W. M. Keck Observatory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

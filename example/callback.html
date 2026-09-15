@@ -1,0 +1,274 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client: register a callback &mdash; mKTL 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=4bba6b87" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Daemon: basics" href="daemon.html" />
+    <link rel="prev" title="Client: set a value" href="set.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            mKTL
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../client.html">Client interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../daemon.html">Daemon interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../store.html">The Store class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../item.html">The Item class</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="get.html">Client: get a value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="set.html">Client: set a value</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Client: register a callback</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#getting-started">Getting started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#defining-a-callback">Defining a callback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#calling-item-register">Calling <code class="xref py py-func docutils literal notranslate"><span class="pre">Item.register()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#full-example">Full example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="daemon.html">Daemon: basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="daemon_unabridged.html">Daemon: unabridged</a></li>
+<li class="toctree-l2"><a class="reference internal" href="heater.html">Daemon: heater controller</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../executables.html">Executables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../metadata.html">JSON metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../built_ins.html">Built-in items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../protocol.html">Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../protocol_interface.html">Protocol interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../heritage.html">Heritage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code_of_conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../governance.html">Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">mKTL</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Client: register a callback</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/example/callback.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="client-register-a-callback">
+<h1>Client: register a callback<a class="headerlink" href="#client-register-a-callback" title="Link to this heading"></a></h1>
+<p>This example will use the ‘oven’ store and the item ‘TEMP’. The objective is
+to handle all broadcasts for ‘oven.TEMP’; a callback method will be defined
+that performs any/all desired operations whenever the value changes. This
+callback method will be invoked asynchronously whenever a new broadcast
+arrives. Callbacks arriving via these mechanisms will not be serialized
+across items, though within an item they will be invoked in the order they
+were originally registered. If you have the same callback method registered
+with multiple items there is no inherent mKTL-based guarantee to prevent
+that method from being called multiple times simultaneously.</p>
+<p>The toy example here will calculate and print an exponentially weighted
+average.</p>
+<section id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h2>
+<p>See the <a class="reference internal" href="get.html#getting-started"><span class="std std-ref">Getting started</span></a> section of the <a class="reference internal" href="get.html#example-get"><span class="std std-ref">Client: get a value</span></a> example for
+more details. We’ll get right to it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mktl</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">mktl</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;oven.TEMP&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="defining-a-callback">
+<h2>Defining a callback<a class="headerlink" href="#defining-a-callback" title="Link to this heading"></a></h2>
+<p>The expected signature of a callback method is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_callback</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">new_value</span><span class="p">,</span> <span class="n">new_timestamp</span><span class="p">):</span>
+</pre></div>
+</div>
+<p>These arguments are always passed to the callback; that doesn’t necessarily
+mean the callback has to use them, a common pattern is to define a callback
+that ignores the arguments provided, an approach made easier by the use of
+<a class="reference internal" href="../client.html#mktl.get" title="mktl.get"><code class="xref py py-func docutils literal notranslate"><span class="pre">get()</span></code></a>. First, a callback that uses the arguments:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">average</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+
+    <span class="n">factor</span> <span class="o">=</span> <span class="mf">0.01</span>
+    <span class="n">new_weight</span> <span class="o">=</span> <span class="n">factor</span>
+    <span class="n">old_weight</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">factor</span>
+
+    <span class="k">if</span> <span class="n">average</span><span class="o">.</span><span class="n">computed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">average</span><span class="o">.</span><span class="n">computed</span> <span class="o">=</span> <span class="n">temp</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">new_weight</span> <span class="o">*</span> <span class="n">temp</span>
+        <span class="n">old</span> <span class="o">=</span> <span class="n">old_weight</span> <span class="o">*</span> <span class="n">average</span><span class="o">.</span><span class="n">computed</span>
+        <span class="n">average</span><span class="o">.</span><span class="n">computed</span> <span class="o">=</span> <span class="n">new</span> <span class="o">+</span> <span class="n">old</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%.3f</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> average: </span><span class="si">%.1f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="n">average</span><span class="o">.</span><span class="n">computed</span><span class="p">)</span>
+
+<span class="n">average</span><span class="o">.</span><span class="n">computed</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>…and an alternate version, ignoring the arguments:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">average</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">mktl</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;oven&#39;</span><span class="p">,</span> <span class="s1">&#39;TEMP&#39;</span><span class="p">)</span>
+
+    <span class="n">factor</span> <span class="o">=</span> <span class="mf">0.01</span>
+    <span class="n">new_weight</span> <span class="o">=</span> <span class="n">factor</span>
+    <span class="n">old_weight</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">factor</span>
+
+    <span class="k">if</span> <span class="n">average</span><span class="o">.</span><span class="n">computed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">average</span><span class="o">.</span><span class="n">computed</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">new_weight</span> <span class="o">*</span> <span class="n">temp</span>
+        <span class="n">old</span> <span class="o">=</span> <span class="n">old_weight</span> <span class="o">*</span> <span class="n">average</span><span class="o">.</span><span class="n">computed</span>
+        <span class="n">average</span><span class="o">.</span><span class="n">computed</span> <span class="o">=</span> <span class="n">new</span> <span class="o">+</span> <span class="n">old</span>
+
+    <span class="n">timestamp</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">timestamp</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%.3f</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> average: </span><span class="si">%.1f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">temp</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="n">average</span><span class="o">.</span><span class="n">computed</span><span class="p">)</span>
+
+<span class="n">average</span><span class="o">.</span><span class="n">computed</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>These two approaches are functionally identical for this simple example.
+The second approach, relying on <a class="reference internal" href="../client.html#mktl.get" title="mktl.get"><code class="xref py py-func docutils literal notranslate"><span class="pre">get()</span></code></a>, becomes appealing
+when multiple items need to be inspected in a given callback; for example,
+if the current temperature were being compared to the current setpoint.
+There is no provision for calling a callback with arguments from multiple
+items, a single invocation of a callback is only ever triggered by a
+broadcast event associated with a single item.</p>
+<p>It is possible to block up a queue of events if the events arrive more
+rapidly than their callbacks can be processed. Each different <a class="reference internal" href="../item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a>
+has its own processing queue on the client side, and events are processed
+sequentially on a per-item basis. Callbacks should avoid delays in order
+to prevent the local queue from backing up.</p>
+</section>
+<section id="calling-item-register">
+<h2>Calling <a class="reference internal" href="../item.html#mktl.Item.register" title="mktl.Item.register"><code class="xref py py-func docutils literal notranslate"><span class="pre">Item.register()</span></code></a><a class="headerlink" href="#calling-item-register" title="Link to this heading"></a></h2>
+<p>Once the callback method is defined it needs to be associated with the
+<a class="reference internal" href="../item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a> instance, so that the callback is invoked every time the value
+of that item changes. This is accomplished via <a class="reference internal" href="../item.html#mktl.Item.register" title="mktl.Item.register"><code class="xref py py-func docutils literal notranslate"><span class="pre">Item.register()</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">average</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../item.html#mktl.Item.register" title="mktl.Item.register"><code class="xref py py-func docutils literal notranslate"><span class="pre">Item.register()</span></code></a> will invoke <code class="xref py py-func docutils literal notranslate"><span class="pre">Item.subscribe()</span></code> if necessary,
+though all client-facing <a class="reference internal" href="../item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a> instances generally invoke
+<code class="xref py py-func docutils literal notranslate"><span class="pre">Item.subscribe()</span></code> when they are first instantiated.</p>
+</section>
+<section id="full-example">
+<h2>Full example<a class="headerlink" href="#full-example" title="Link to this heading"></a></h2>
+<p>Putting it all together:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mktl</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">mktl</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;oven.TEMP&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">just_print</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">mktl</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;oven.TEMP&#39;</span><span class="p">)</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">timestamp</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">%.3f</span><span class="s2"> oven.TEMP: </span><span class="si">%.1f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">average</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">mktl</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;oven&#39;</span><span class="p">,</span> <span class="s1">&#39;TEMP&#39;</span><span class="p">)</span>
+
+    <span class="n">factor</span> <span class="o">=</span> <span class="mf">0.01</span>
+    <span class="n">new_weight</span> <span class="o">=</span> <span class="n">factor</span>
+    <span class="n">old_weight</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">factor</span>
+
+    <span class="k">if</span> <span class="n">average</span><span class="o">.</span><span class="n">computed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">average</span><span class="o">.</span><span class="n">computed</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">new_weight</span> <span class="o">*</span> <span class="n">temp</span>
+        <span class="n">old</span> <span class="o">=</span> <span class="n">old_weight</span> <span class="o">*</span> <span class="n">average</span><span class="o">.</span><span class="n">computed</span>
+        <span class="n">average</span><span class="o">.</span><span class="n">computed</span> <span class="o">=</span> <span class="n">new</span> <span class="o">+</span> <span class="n">old</span>
+
+    <span class="n">timestamp</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">timestamp</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%.3f</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> average: </span><span class="si">%.1f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">temp</span><span class="o">.</span><span class="n">full_key</span><span class="p">,</span> <span class="n">average</span><span class="o">.</span><span class="n">computed</span><span class="p">)</span>
+
+<span class="n">average</span><span class="o">.</span><span class="n">computed</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="n">temp</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">just_print</span><span class="p">)</span>
+<span class="n">temp</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">average</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="set.html" class="btn btn-neutral float-left" title="Client: set a value" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="daemon.html" class="btn btn-neutral float-right" title="Daemon: basics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright W. M. Keck Observatory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

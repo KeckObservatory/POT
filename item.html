@@ -1,0 +1,494 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Item class &mdash; mKTL 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=4bba6b87" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="The Store class" href="store.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mKTL
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="client.html">Client interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="daemon.html">Daemon interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store.html">The Store class</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The Item class</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mktl.Item"><code class="docutils literal notranslate"><span class="pre">Item</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.Item.value"><code class="docutils literal notranslate"><span class="pre">Item.value</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.Item.formatted"><code class="docutils literal notranslate"><span class="pre">Item.formatted</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.Item.quantity"><code class="docutils literal notranslate"><span class="pre">Item.quantity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.Item.get"><code class="docutils literal notranslate"><span class="pre">Item.get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.Item.set"><code class="docutils literal notranslate"><span class="pre">Item.set()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.Item.register"><code class="docutils literal notranslate"><span class="pre">Item.register()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.Item.add_performer"><code class="docutils literal notranslate"><span class="pre">Item.add_performer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.Item.add_get_performer"><code class="docutils literal notranslate"><span class="pre">Item.add_get_performer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.Item.add_set_performer"><code class="docutils literal notranslate"><span class="pre">Item.add_set_performer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.Item.from_payload"><code class="docutils literal notranslate"><span class="pre">Item.from_payload()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.Item.poll"><code class="docutils literal notranslate"><span class="pre">Item.poll()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.Item.publish"><code class="docutils literal notranslate"><span class="pre">Item.publish()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.Item.to_payload"><code class="docutils literal notranslate"><span class="pre">Item.to_payload()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.Item.watch"><code class="docutils literal notranslate"><span class="pre">Item.watch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.Item.perform_get"><code class="docutils literal notranslate"><span class="pre">Item.perform_get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.Item.perform_poll"><code class="docutils literal notranslate"><span class="pre">Item.perform_poll()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.Item.perform_set"><code class="docutils literal notranslate"><span class="pre">Item.perform_set()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.Item.validate"><code class="docutils literal notranslate"><span class="pre">Item.validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.Item.req_get"><code class="docutils literal notranslate"><span class="pre">Item.req_get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mktl.Item.req_set"><code class="docutils literal notranslate"><span class="pre">Item.req_set()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="executables.html">Executables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">JSON metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="built_ins.html">Built-in items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol.html">Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol_interface.html">Protocol interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="heritage.html">Heritage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_of_conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="governance.html">Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mKTL</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">The Item class</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/item.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="the-item-class">
+<span id="item"></span><h1>The Item class<a class="headerlink" href="#the-item-class" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mktl.Item">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">mktl.</span></span><span class="sig-name descname"><span class="pre">Item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">store</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Item" title="Link to this definition"></a></dt>
+<dd><p>An Item represents a key/value pair, where the key is the name of the
+Item, and the value is whatever is provided by the authoritative daemon.
+The principal way for both clients and daemons to get or set the value
+is via the <a class="reference internal" href="#mktl.Item.value" title="mktl.Item.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code></a> property.</p>
+<p>A non-authoritative Item will automatically <code class="xref py py-func docutils literal notranslate"><span class="pre">subscribe()</span></code> itself to
+any available updates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – The key (name) for this item.</p></li>
+<li><p><strong>full_key</strong> – The store and key for this item, in <cite>store.key</cite> format.</p></li>
+<li><p><strong>store</strong> – The <a class="reference internal" href="store.html#mktl.Store" title="mktl.Store"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Store</span></code></a> instance containing this item.</p></li>
+<li><p><strong>description</strong> – The JSON description of this item.</p></li>
+<li><p><strong>log_on_set</strong> – Indicates whether this item will log SET requests. The default is True.</p></li>
+<li><p><strong>publish_on_set</strong> – Indicates whether this item will publish a new value whenever <a class="reference internal" href="#mktl.Item.perform_set" title="mktl.Item.perform_set"><code class="xref py py-func docutils literal notranslate"><span class="pre">perform_set()</span></code></a> is successfully invoked. The default is True.</p></li>
+</ul>
+</dd>
+</dl>
+<p>The bulk of mKTL interactions involve the <a class="reference internal" href="#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Item</span></code></a> class. In
+addition to the methods described here an <a class="reference internal" href="#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Item</span></code></a> instance
+can be used with Python operators, such as addition/concatenation or
+multiplication.</p>
+<p>The behavior of an <a class="reference internal" href="#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Item</span></code></a> when used in this fashion will be
+aligned with the native Python binary type for the item value; for example,
+if an item test.BAR has an integer value 12, <code class="docutils literal notranslate"><span class="pre">test.BAR</span> <span class="pre">+</span> <span class="pre">5</span></code> will return
+the integer value 17. If test.BAR is instead the string value ‘12’, the
+same operation would raise a TypeError exception; however, <code class="docutils literal notranslate"><span class="pre">test.BAR</span> <span class="pre">+</span> <span class="pre">'5'</span></code>
+would return the string value ‘125’, just like you would expect for string
+concatenation. In-place operators will set the current value of the item.</p>
+<p>Three properties allow unified access to getting and setting an item’s
+value, regardless of whether the local application is authoritative for
+that specific item. The use of properties implies default behavior for
+both <a class="reference internal" href="client.html#mktl.get" title="mktl.get"><code class="xref py py-func docutils literal notranslate"><span class="pre">get()</span></code></a> and <a class="reference internal" href="#mktl.Item.set" title="mktl.Item.set"><code class="xref py py-func docutils literal notranslate"><span class="pre">set()</span></code></a> in a client context, and for <a class="reference internal" href="#mktl.Item.publish" title="mktl.Item.publish"><code class="xref py py-func docutils literal notranslate"><span class="pre">publish()</span></code></a>
+in a daemon context. The use of these properties is encouraged as the
+preferred approach to getting and setting item values; any functionality
+beyond the default behavior requires using the methods directly.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="mktl.Item.value">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#mktl.Item.value" title="Link to this definition"></a></dt>
+<dd><p>Get and set the current value of the item. The caller should use
+<a class="reference internal" href="client.html#mktl.get" title="mktl.get"><code class="xref py py-func docutils literal notranslate"><span class="pre">get()</span></code></a> and <a class="reference internal" href="#mktl.Item.set" title="mktl.Item.set"><code class="xref py py-func docutils literal notranslate"><span class="pre">set()</span></code></a> directly for additional control over
+how these respective calls are handled, the handling invoked here
+relies on default values for all optional arguments.</p>
+<p>See also <a class="reference internal" href="#mktl.Item.formatted" title="mktl.Item.formatted"><code class="xref py py-attr docutils literal notranslate"><span class="pre">formatted</span></code></a> and <a class="reference internal" href="#mktl.Item.quantity" title="mktl.Item.quantity"><code class="xref py py-attr docutils literal notranslate"><span class="pre">quantity</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mktl.Item.formatted">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">formatted</span></span><a class="headerlink" href="#mktl.Item.formatted" title="Link to this definition"></a></dt>
+<dd><p>Get and set the human-readable representation of the item.
+For example, the formatted variant of an enumerated type
+is the string string representation, as opposed to the integer
+reported as the current item value. These permutations are driven
+by the JSON description of the item. In the absence of any
+configured formatting the current value will be returned as a
+string.</p>
+<p>This property can also be used to set the new value of the item
+using the formatted representation.</p>
+<p>See also <a class="reference internal" href="#mktl.Item.quantity" title="mktl.Item.quantity"><code class="xref py py-attr docutils literal notranslate"><span class="pre">quantity</span></code></a> and <a class="reference internal" href="#mktl.Item.value" title="mktl.Item.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mktl.Item.quantity">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">quantity</span></span><a class="headerlink" href="#mktl.Item.quantity" title="Link to this definition"></a></dt>
+<dd><p>Get and set the current value of the item as a
+<a class="reference external" href="https://pint.readthedocs.io/en/stable/api/base.html#pint.Quantity" title="(in pint v0.1.dev50+g5a27ca223)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pint.Quantity</span></code></a> instance.</p>
+<p>This property can also be used to set the new value of the item
+using a valid <a class="reference external" href="https://pint.readthedocs.io/en/stable/api/base.html#pint.Quantity" title="(in pint v0.1.dev50+g5a27ca223)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pint.Quantity</span></code></a> instance; the provided
+quantity will be translated to the base units of the item before
+proceeding.</p>
+<p>See also <a class="reference internal" href="#mktl.Item.formatted" title="mktl.Item.formatted"><code class="xref py py-attr docutils literal notranslate"><span class="pre">formatted</span></code></a> and <a class="reference internal" href="#mktl.Item.value" title="mktl.Item.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Item.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">refresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formatted</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Item.get" title="Link to this definition"></a></dt>
+<dd><p>Retrieve the current value. Set <em>refresh</em> to True to prompt
+the daemon responding to the request to return the most up-to-date
+value available, potentially bypassing any local cache. Set
+<em>formatted</em> to True to receive the human-readable formatting
+of the value, if any such formatting is available; similarly,
+set <em>quantity</em> to true to receive the value as a
+<a class="reference external" href="https://pint.readthedocs.io/en/stable/api/base.html#pint.Quantity" title="(in pint v0.1.dev50+g5a27ca223)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pint.Quantity</span></code></a> instance, which will only work if the
+item is configured to have physical units.</p>
+<p>Use of the <a class="reference internal" href="#mktl.Item.formatted" title="mktl.Item.formatted"><code class="xref py py-attr docutils literal notranslate"><span class="pre">formatted</span></code></a>, <a class="reference internal" href="#mktl.Item.quantity" title="mktl.Item.quantity"><code class="xref py py-attr docutils literal notranslate"><span class="pre">quantity</span></code></a>, and
+<a class="reference internal" href="#mktl.Item.value" title="mktl.Item.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code></a> properties is encouraged in the case where
+a synchronous refresh is not required.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Item.set">
+<span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reply</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formatted</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Item.set" title="Link to this definition"></a></dt>
+<dd><p>Set a new value. Set <em>wait</em> to True to block until the request
+completes; this is the default behavior. If <em>wait</em> is set to False,
+the caller will be returned a <a class="reference internal" href="protocol_interface.html#mktl.protocol.message.Request" title="mktl.protocol.message.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.protocol.message.Request</span></code></a>
+instance, which has a <a class="reference internal" href="protocol_interface.html#mktl.protocol.message.Request.wait" title="mktl.protocol.message.Request.wait"><code class="xref py py-func docutils literal notranslate"><span class="pre">mktl.protocol.message.Request.wait()</span></code></a>
+method that can optionally be invoked to block until completion of
+the request; the wait will return immediately once the request is
+satisfied. Set <em>reply</em> to False to disable all error handling and
+acknowledgements for the request (fire and forget); setting
+<em>reply to False implies *wait</em> is also False.
+There is no return value for a blocking request; failed requests
+will raise exceptions.</p>
+<p>The optional <em>formatted</em> and <em>quantity</em> options enable calling
+<a class="reference internal" href="#mktl.Item.set" title="mktl.Item.set"><code class="xref py py-func docutils literal notranslate"><span class="pre">set()</span></code></a> with either the string-formatted representation or
+the <a class="reference external" href="https://pint.readthedocs.io/en/stable/api/base.html#pint.Quantity" title="(in pint v0.1.dev50+g5a27ca223)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pint.Quantity</span></code></a> representation of the item; the new
+value is still the first argument, but set one of <em>formatted</em>
+or <em>quantity</em> to True to indicate it should be interpreted.</p>
+<p>Use of the <a class="reference internal" href="#mktl.Item.formatted" title="mktl.Item.formatted"><code class="xref py py-attr docutils literal notranslate"><span class="pre">formatted</span></code></a>, <a class="reference internal" href="#mktl.Item.quantity" title="mktl.Item.quantity"><code class="xref py py-attr docutils literal notranslate"><span class="pre">quantity</span></code></a>, and
+<a class="reference internal" href="#mktl.Item.value" title="mktl.Item.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code></a> properties is encouraged in the case where
+a blocking set operation is desired.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Item.register">
+<span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prime</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Item.register" title="Link to this definition"></a></dt>
+<dd><p>Register a callback to be invoked whenever a new value is received
+from a remote daemon, regardless of how that new value arrived.
+<code class="xref py py-func docutils literal notranslate"><span class="pre">subscribe()</span></code> will automatically be invoked if it has not been
+invoked for this <a class="reference internal" href="#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a> instance, the client does not need
+to call it separately. If <em>prime</em> is set to True the callback will
+be invoked using the current value of the item, if any, before
+returning; no priming call will occur if the item has no value.</p>
+<p>A callback method should expect three arguments: a reference to
+the <a class="reference internal" href="#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a> from whence the callback originated, the new
+value for the item, and the timestamp associated with the new
+value. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_callback</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">new_value</span><span class="p">,</span> <span class="n">new_timestamp</span><span class="p">):</span>
+</pre></div>
+</div>
+<p>Callback methods should strive to be lightweight in terms of
+their execution time; any callbacks registered for an item will
+be called in series, and there are no provisions for shortening
+the queue if a backlog occurs.</p>
+</dd></dl>
+
+<p id="item-daemon-methods">All of the client functionality remains unchanged when an <a class="reference internal" href="#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a>
+is used in a daemon context. The following methods have utility when
+a daemon is authoritative for an item.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Item.add_performer">
+<span class="sig-name descname"><span class="pre">add_performer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Item.add_performer" title="Link to this definition"></a></dt>
+<dd><p>Assign a method that will be called for either GET or SET requests,
+determined by the <em>request</em> argument, which must be one of ‘get’ or
+‘set’. See <a class="reference internal" href="#mktl.Item.add_get_performer" title="mktl.Item.add_get_performer"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_get_performer()</span></code></a> and <a class="reference internal" href="#mktl.Item.add_set_performer" title="mktl.Item.add_set_performer"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_set_performer()</span></code></a>
+for additional information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Item.add_get_performer">
+<span class="sig-name descname"><span class="pre">add_get_performer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Item.add_get_performer" title="Link to this definition"></a></dt>
+<dd><p>Assign a method that will be called for all GET requests for this
+item. This will replace the <a class="reference internal" href="#mktl.Item.perform_get" title="mktl.Item.perform_get"><code class="xref py py-func docutils literal notranslate"><span class="pre">perform_get()</span></code></a> method in situations
+where the caller does not want to establish custom subclasses and
+override <a class="reference internal" href="#mktl.Item.perform_get" title="mktl.Item.perform_get"><code class="xref py py-func docutils literal notranslate"><span class="pre">perform_get()</span></code></a> directly. The performer method must
+accept no arguments; refer to <a class="reference internal" href="#mktl.Item.perform_get" title="mktl.Item.perform_get"><code class="xref py py-func docutils literal notranslate"><span class="pre">perform_get()</span></code></a> for additional
+details on the expected behavior.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Item.add_set_performer">
+<span class="sig-name descname"><span class="pre">add_set_performer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Item.add_set_performer" title="Link to this definition"></a></dt>
+<dd><p>Assign a method that will be called for all SET requests for this
+item. This will replace the <a class="reference internal" href="#mktl.Item.perform_set" title="mktl.Item.perform_set"><code class="xref py py-func docutils literal notranslate"><span class="pre">perform_set()</span></code></a> method in situations
+where the caller does not want to establish custom subclasses and
+override <a class="reference internal" href="#mktl.Item.perform_set" title="mktl.Item.perform_set"><code class="xref py py-func docutils literal notranslate"><span class="pre">perform_set()</span></code></a> directly. The performer method must
+accept one argument, the ‘unformatted’ Python-native representation
+of the item value; refer to <a class="reference internal" href="#mktl.Item.perform_set" title="mktl.Item.perform_set"><code class="xref py py-func docutils literal notranslate"><span class="pre">perform_set()</span></code></a> for additional
+details on the expected behavior.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Item.from_payload">
+<span class="sig-name descname"><span class="pre">from_payload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Item.from_payload" title="Link to this definition"></a></dt>
+<dd><p>Recreate the fundamental Python type of the value from the provided
+<a class="reference internal" href="protocol_interface.html#mktl.protocol.message.Payload" title="mktl.protocol.message.Payload"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.protocol.message.Payload</span></code></a> instance, and return it to
+the caller.</p>
+<p>This default handler will interpret the bulk component, if any,
+of the payload as an N-dimensional numpy array, with the
+description of the array present in the other fields of the payload.</p>
+<p>This is the inverse of <a class="reference internal" href="#mktl.Item.to_payload" title="mktl.Item.to_payload"><code class="xref py py-func docutils literal notranslate"><span class="pre">to_payload()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Item.poll">
+<span class="sig-name descname"><span class="pre">poll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Item.poll" title="Link to this definition"></a></dt>
+<dd><p>Poll for a new value every <em>interval</em> seconds. Polling will be
+discontinued if <em>interval</em> is set to None or zero. Polling will
+invoke <a class="reference internal" href="#mktl.Item.perform_poll" title="mktl.Item.perform_poll"><code class="xref py py-func docutils literal notranslate"><span class="pre">perform_poll()</span></code></a>, which in turn uses <a class="reference internal" href="#mktl.Item.perform_get" title="mktl.Item.perform_get"><code class="xref py py-func docutils literal notranslate"><span class="pre">perform_get()</span></code></a>
+to retrieve a new value. Polling occurs in a dedicated background
+thread assigned to this item.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Item.publish">
+<span class="sig-name descname"><span class="pre">publish</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Item.publish" title="Link to this definition"></a></dt>
+<dd><p>Publish a new value, which is expected to be the Python native
+representation of the new value. If <em>timestamp</em> is set it is
+expected to be a UNIX epoch timestamp; the current time will be
+used if it is not provided. Newly published values are always
+cached locally. If <em>repeat</em> is set to True the value will be
+published regardless of whether it is a repeat of the previously
+published value.</p>
+<p>Note that, for simple cases, an authoritative daemon can set the
+<a class="reference internal" href="#mktl.Item.value" title="mktl.Item.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code></a> property to publish a new value instead of calling
+<a class="reference internal" href="#mktl.Item.publish" title="mktl.Item.publish"><code class="xref py py-func docutils literal notranslate"><span class="pre">publish()</span></code></a> directly. In other words, these two calls are
+equivalent:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">item</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">new_value</span>
+<span class="n">item</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Item.to_payload">
+<span class="sig-name descname"><span class="pre">to_payload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Item.to_payload" title="Link to this definition"></a></dt>
+<dd><p>Interpret the provided arguments into a
+<a class="reference internal" href="protocol_interface.html#mktl.protocol.message.Payload" title="mktl.protocol.message.Payload"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.protocol.message.Payload</span></code></a> instance; if the <em>value</em> is
+not specified the current value of this <a class="reference internal" href="#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a> will be
+used; if the <em>timestamp</em> is not specified the current time will
+be used. This is particularly important as a step in a custom
+<a class="reference internal" href="#mktl.Item.perform_get" title="mktl.Item.perform_get"><code class="xref py py-func docutils literal notranslate"><span class="pre">perform_get()</span></code></a> implementation.</p>
+<p>This is the inverse of <a class="reference internal" href="#mktl.Item.from_payload" title="mktl.Item.from_payload"><code class="xref py py-func docutils literal notranslate"><span class="pre">from_payload()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Item.watch">
+<span class="sig-name descname"><span class="pre">watch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Item.watch" title="Link to this definition"></a></dt>
+<dd><p>Register a callback with the referenced item, such that the
+current item updates itself any time the referenced item changes.
+This is functionally equivalent to calling:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">item</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">perform_poll</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p id="item-subclassing">Some of the daemon-specific methods are intended to be overridden as
+part of implementing custom, application-specific logic. It may not
+be necessary to override all of these methods depending on the needs
+of the application.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Item.perform_get">
+<span class="sig-name descname"><span class="pre">perform_get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Item.perform_get" title="Link to this definition"></a></dt>
+<dd><p>Acquire the most up-to-date value available for this <a class="reference internal" href="#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a>
+and return it to the caller. The most common return value is any
+Python object that can be serialized as JSON; return None if no
+new value is available.</p>
+<p>If a <a class="reference internal" href="protocol_interface.html#mktl.protocol.message.Payload" title="mktl.protocol.message.Payload"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.protocol.message.Payload</span></code></a> instance is returned
+it will be used as-is, otherwise the return value will be passed
+to <a class="reference internal" href="#mktl.Item.to_payload" title="mktl.Item.to_payload"><code class="xref py py-func docutils literal notranslate"><span class="pre">to_payload()</span></code></a> for encapsulation. The primary motivation
+for returning a Payload instead of a bare value is if the embedded
+timestamp needs to be set to some value other than the current time.</p>
+<p>Calls to this method will be handled in a background thread with
+no restrictions on how long a get request takes to process. There
+are also no restrictions on concurrency, though ideally a get
+request is trivial to execute; this method will be called
+repeatedly if multiple requests arrive and one or more requests are
+already in progress. Management of concurrent requests is left
+entirely to the implementer.</p>
+<p>Returning None will not clear the currently known value, that will
+only occur if the returned Payload instance is assigned None as the
+‘value’; this is not expected to be a common occurrence, but if a
+custom <a class="reference internal" href="#mktl.Item.perform_get" title="mktl.Item.perform_get"><code class="xref py py-func docutils literal notranslate"><span class="pre">perform_get()</span></code></a> implementation wants that to occur they
+need to instantiate and return the Payload instance directly rather
+than use <a class="reference internal" href="#mktl.Item.to_payload" title="mktl.Item.to_payload"><code class="xref py py-func docutils literal notranslate"><span class="pre">to_payload()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Item.perform_poll">
+<span class="sig-name descname"><span class="pre">perform_poll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repeat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Item.perform_poll" title="Link to this definition"></a></dt>
+<dd><p>Handle a background poll request, established by calling
+<a class="reference internal" href="#mktl.Item.poll" title="mktl.Item.poll"><code class="xref py py-func docutils literal notranslate"><span class="pre">poll()</span></code></a>. <a class="reference internal" href="#mktl.Item.perform_get" title="mktl.Item.perform_get"><code class="xref py py-func docutils literal notranslate"><span class="pre">perform_get()</span></code></a> is where custom handling by
+subclasses is expected to occur. The payload returned from
+<a class="reference internal" href="#mktl.Item.perform_poll" title="mktl.Item.perform_poll"><code class="xref py py-func docutils literal notranslate"><span class="pre">perform_poll()</span></code></a> is identical to the payload returned by
+<a class="reference internal" href="#mktl.Item.perform_get" title="mktl.Item.perform_get"><code class="xref py py-func docutils literal notranslate"><span class="pre">perform_get()</span></code></a>.</p>
+<p>A common pattern for custom subclasses involves registering
+<a class="reference internal" href="#mktl.Item.perform_poll" title="mktl.Item.perform_poll"><code class="xref py py-func docutils literal notranslate"><span class="pre">perform_poll()</span></code></a> as a callback on other items, so that the value
+of this item can be refreshed when external events occur. The
+<a class="reference internal" href="#mktl.Item.watch" title="mktl.Item.watch"><code class="xref py py-func docutils literal notranslate"><span class="pre">watch()</span></code></a> method exists to facilitate that pattern.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Item.perform_set">
+<span class="sig-name descname"><span class="pre">perform_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Item.perform_set" title="Link to this definition"></a></dt>
+<dd><p>Implement any custom behavior that should occur as a result of
+a set request for this item. No return value is expected. Any
+subclass implementations should raise an exception in order to
+trigger an error response.</p>
+<p>Calls to this method will be handled in a background thread with
+no restrictions on how long a set request takes to process. There
+are also no restrictions on concurrency; this method will be called
+repeatedly if multiple requests arrive and one or more requests are
+already in progress. Management of concurrent requests is left
+entirely to the implementer.</p>
+<p>Any return value, though again none is expected, will be
+encapsulated via <a class="reference internal" href="#mktl.Item.to_payload" title="mktl.Item.to_payload"><code class="xref py py-func docutils literal notranslate"><span class="pre">to_payload()</span></code></a>, after the same fashion as
+<a class="reference internal" href="#mktl.Item.perform_get" title="mktl.Item.perform_get"><code class="xref py py-func docutils literal notranslate"><span class="pre">perform_get()</span></code></a>, and included in the response to the original
+request.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Item.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Item.validate" title="Link to this definition"></a></dt>
+<dd><p>A hook for a daemon to validate a new value. The default behavior
+is a no-op; any checks should raise exceptions if they encounter
+a problem with the incoming value. The ‘validated’ value must be
+returned by this method; this allows for the possibility that
+the incoming value has been translated to a more acceptable format,
+for example, converting the string ‘123’ to the integer 123 for a
+numeric item type.</p>
+</dd></dl>
+
+<p>The <em>req_*()</em> set of methods can be overridden, but for nearly all
+applications their use is strictly internal and further customization
+should not be necessary.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Item.req_get">
+<span class="sig-name descname"><span class="pre">req_get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Item.req_get" title="Link to this definition"></a></dt>
+<dd><p>Handle a GET request. The <em>request</em> argument is a
+<a class="reference internal" href="protocol_interface.html#mktl.protocol.message.Request" title="mktl.protocol.message.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">protocol.message.Request</span></code></a> instance; the value returned
+from <a class="reference internal" href="#mktl.Item.req_get" title="mktl.Item.req_get"><code class="xref py py-func docutils literal notranslate"><span class="pre">req_get()</span></code></a> is identical to the value returned by
+<a class="reference internal" href="#mktl.Item.perform_get" title="mktl.Item.perform_get"><code class="xref py py-func docutils literal notranslate"><span class="pre">perform_get()</span></code></a>, which is where custom handling by subclasses
+is expected to occur.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mktl.Item.req_set">
+<span class="sig-name descname"><span class="pre">req_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mktl.Item.req_set" title="Link to this definition"></a></dt>
+<dd><p>Handle a SET request. The <em>request</em> argument is a
+<a class="reference internal" href="protocol_interface.html#mktl.protocol.message.Request" title="mktl.protocol.message.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">protocol.message.Request</span></code></a> instance; there is no return
+value provided, this method is invoked in a background worker
+thread, and any payload response will be issued directly by the
+background worker. Any calls to <a class="reference internal" href="#mktl.Item.req_set" title="mktl.Item.req_set"><code class="xref py py-func docutils literal notranslate"><span class="pre">req_set()</span></code></a> are expected to
+block until completion. Custom handling by subclasses is expected
+to occur in <a class="reference internal" href="#mktl.Item.perform_set" title="mktl.Item.perform_set"><code class="xref py py-func docutils literal notranslate"><span class="pre">perform_set()</span></code></a>.</p>
+<p>If the <cite>publish_on_set</cite> attribute is set to True (this is the
+default) a call to <a class="reference internal" href="#mktl.Item.publish" title="mktl.Item.publish"><code class="xref py py-func docutils literal notranslate"><span class="pre">publish()</span></code></a> will occur at the tail end
+of any successful SET request. Custom subclasses can set this
+attribute to False to inhibit that behavior.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="store.html" class="btn btn-neutral float-left" title="The Store class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright W. M. Keck Observatory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

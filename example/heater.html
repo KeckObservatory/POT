@@ -1,0 +1,457 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daemon: heater controller &mdash; mKTL 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=4bba6b87" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Executables" href="../executables.html" />
+    <link rel="prev" title="Daemon: unabridged" href="daemon_unabridged.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            mKTL
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../client.html">Client interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../daemon.html">Daemon interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../store.html">The Store class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../item.html">The Item class</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="get.html">Client: get a value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="set.html">Client: set a value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="callback.html">Client: register a callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="daemon.html">Daemon: basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="daemon_unabridged.html">Daemon: unabridged</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Daemon: heater controller</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#heater-py">heater.py</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../executables.html">Executables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../metadata.html">JSON metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../built_ins.html">Built-in items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../protocol.html">Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../protocol_interface.html">Protocol interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../heritage.html">Heritage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code_of_conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../governance.html">Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">mKTL</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Daemon: heater controller</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/example/heater.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="daemon-heater-controller">
+<span id="heater-daemon"></span><h1>Daemon: heater controller<a class="headerlink" href="#daemon-heater-controller" title="Link to this heading"></a></h1>
+<p>This example is intended to demonstrate how a <a class="reference internal" href="../daemon.html#mktl.Daemon" title="mktl.Daemon"><code class="xref py py-class docutils literal notranslate"><span class="pre">mktl.Daemon</span></code></a> might be
+constructed to communicate with a hardware controller, in this case, a simple
+temperature controller, which is capable of reporting a temperature value,
+heater output, and allows a heater setpoint to be established.</p>
+<p>A typical controller would have many more commands beyond what is presented
+here, but the resulting content of the daemon could be an extension of the
+structure shown here.</p>
+<section id="heater-py">
+<h2>heater.py<a class="headerlink" href="#heater-py" title="Link to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot; This daemon connects to a fictional temperature controller. It is</span>
+<span class="sd">    structured to relay commands and publish available telemetry from</span>
+<span class="sd">    the controller.</span>
+
+<span class="sd">    As a fictional example, this code has not been directly tested, and may</span>
+<span class="sd">    contain syntax errors, logical errors, and other miscellaneous problems.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">configparser</span>
+<span class="kn">import</span> <span class="nn">mktl</span>
+
+<span class="c1"># This module, which does not exist, implements a simple interface to</span>
+<span class="c1"># the hardware controller itself.</span>
+
+<span class="kn">import</span> <span class="nn">heatercontroller</span>
+
+
+<span class="k">class</span> <span class="nc">Daemon</span><span class="p">(</span><span class="n">mktl</span><span class="o">.</span><span class="n">Daemon</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">parse_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Read in the configuration file; this daemon can&#39;t function without</span>
+<span class="sd">            some additional guidance on how it is supposed to run. This file</span>
+<span class="sd">            would define some metadata on how the controller is being used,</span>
+<span class="sd">            including system-specific names for temperature inputs and</span>
+<span class="sd">            heater outputs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">configuration_file</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">appconfig</span>
+
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">configuration_file</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">heater_config</span> <span class="o">=</span> <span class="n">parser</span>
+
+
+    <span class="k">def</span> <span class="nf">describe_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Generate and return the description of all items handled by</span>
+<span class="sd">            this daemon.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">items</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="n">controller_number</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heater_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;controller&#39;</span><span class="p">)</span>
+        <span class="n">controller_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">describe_controller_items</span><span class="p">(</span><span class="n">controller_number</span><span class="p">)</span>
+
+        <span class="n">items</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">controller_items</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heater_config</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="s1">&#39;inputs&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">configparser</span><span class="o">.</span><span class="n">NoSectionError</span><span class="p">:</span>
+            <span class="n">inputs</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heater_config</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="s1">&#39;outputs&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">configparser</span><span class="o">.</span><span class="n">NoSectionError</span><span class="p">:</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="nb">input</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heater_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;inputs&#39;</span><span class="p">,</span> <span class="nb">input</span><span class="p">)</span>
+            <span class="n">items</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">describe_input_items</span><span class="p">(</span><span class="n">prefix</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heater_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outputs&#39;</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+            <span class="n">items</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">describe_output_items</span><span class="p">(</span><span class="n">prefix</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">items</span>
+
+
+    <span class="k">def</span> <span class="nf">describe_controller_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">controller</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Generation of the description of controller-wide items is broken</span>
+<span class="sd">            out here for readability. The *controller* argument is expected</span>
+<span class="sd">            to be a number.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">controller</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">controller</span><span class="p">)</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;ctrl&#39;</span> <span class="o">+</span> <span class="n">controller</span>
+
+        <span class="n">items</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="n">address</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;address&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">address</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">address</span><span class="p">][</span><span class="s1">&#39;description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Controller IP address.&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">address</span><span class="p">][</span><span class="s1">&#39;settable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="n">aux</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;aux&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">aux</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">aux</span><span class="p">][</span><span class="s1">&#39;description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Auxiliary command and response.&#39;</span>
+
+        <span class="n">firmware</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;firmware&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">firmware</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">firmware</span><span class="p">][</span><span class="s1">&#39;description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Controller firmware revision.&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">firmware</span><span class="p">][</span><span class="s1">&#39;settable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="n">status</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;status&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">status</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">status</span><span class="p">][</span><span class="s1">&#39;description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Controller connection status.&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">status</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;enumerated&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">status</span><span class="p">][</span><span class="s1">&#39;settable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="n">items</span>
+
+
+    <span class="k">def</span> <span class="nf">describe_input_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Generation of the description of input-specific items is broken</span>
+<span class="sd">            out here for readability.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">items</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="n">channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heater_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="s1">&#39;input&#39;</span><span class="p">)</span>
+        <span class="n">chi</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;chi&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">chi</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">chi</span><span class="p">][</span><span class="s1">&#39;description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Channel for this temperature input.&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">chi</span><span class="p">][</span><span class="s1">&#39;settable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">chi</span><span class="p">][</span><span class="s1">&#39;initial&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">channel</span>
+
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;tmp&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">tmp</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">tmp</span><span class="p">][</span><span class="s1">&#39;description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Current temperature value.&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">tmp</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;numeric&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">tmp</span><span class="p">][</span><span class="s1">&#39;units&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;deg C&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">tmp</span><span class="p">][</span><span class="s1">&#39;settable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="n">items</span>
+
+
+    <span class="k">def</span> <span class="nf">describe_output_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Generation of the description of output-specific items is broken</span>
+<span class="sd">            out here for readability.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">items</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="n">channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heater_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="s1">&#39;output&#39;</span><span class="p">)</span>
+        <span class="n">cho</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;cho&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">cho</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">cho</span><span class="p">][</span><span class="s1">&#39;description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Channel for this heater output.&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">cho</span><span class="p">][</span><span class="s1">&#39;settable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">chi</span><span class="p">][</span><span class="s1">&#39;initial&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">channel</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;out&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">out</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">out</span><span class="p">][</span><span class="s1">&#39;description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Current heater output.&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">out</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;numeric&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">out</span><span class="p">][</span><span class="s1">&#39;units&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;watts&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">out</span><span class="p">][</span><span class="s1">&#39;settable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="n">trg</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;trg&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">trg</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">trg</span><span class="p">][</span><span class="s1">&#39;description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Heater setpoint/target value.&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">trg</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;numeric&#39;</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">trg</span><span class="p">][</span><span class="s1">&#39;units&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;deg C&#39;</span>
+
+        <span class="k">return</span> <span class="n">items</span>
+
+
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">controller</span> <span class="o">=</span> <span class="n">heatercontroller</span><span class="o">.</span><span class="n">Controller</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">heater_config</span><span class="p">)</span>
+
+        <span class="n">controller_number</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heater_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;controller&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_controller_items</span><span class="p">(</span><span class="n">controller_number</span><span class="p">,</span> <span class="n">controller</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heater_config</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="s1">&#39;inputs&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">configparser</span><span class="o">.</span><span class="n">NoSectionError</span><span class="p">:</span>
+            <span class="n">inputs</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heater_config</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="s1">&#39;outputs&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">configparser</span><span class="o">.</span><span class="n">NoSectionError</span><span class="p">:</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="nb">input</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heater_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;inputs&#39;</span><span class="p">,</span> <span class="nb">input</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setup_input_items</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">controller</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heater_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outputs&#39;</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setup_output_items</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">controller</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">setup_controller_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">controller</span><span class="p">):</span>
+
+        <span class="n">number</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;ctrl&#39;</span> <span class="o">+</span> <span class="n">number</span>
+
+        <span class="n">aux</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;aux&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">AuxiliaryCommand</span><span class="p">,</span> <span class="n">aux</span><span class="p">,</span> <span class="n">controller</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">setup_input_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">controller</span><span class="p">):</span>
+
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;tmp&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">InputTemperature</span><span class="p">,</span> <span class="n">tmp</span><span class="p">,</span> <span class="n">controller</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">setup_output_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">controller</span><span class="p">):</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;out&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">OutputPower</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">controller</span><span class="p">)</span>
+
+        <span class="n">trg</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;trg&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">OutputSetpoint</span><span class="p">,</span> <span class="n">trg</span><span class="p">,</span> <span class="n">controller</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">ControllerItem</span><span class="p">(</span><span class="n">mktl</span><span class="o">.</span><span class="n">Item</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">controller</span><span class="p">):</span>
+
+        <span class="n">mktl</span><span class="o">.</span><span class="n">Item</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">=</span> <span class="n">controller</span>
+
+        <span class="c1"># The custom item subclasses defined here all manage published values</span>
+        <span class="c1"># via some mechanism other than the default publish-on-set behavior.</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">publish_on_set</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<span class="k">class</span> <span class="nc">AuxiliaryCommand</span><span class="p">(</span><span class="n">ControllerItem</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">perform_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span> <span class="o">+</span> <span class="s1">&#39; =&gt; &#39;</span> <span class="o">+</span> <span class="n">response</span>
+
+
+<span class="k">class</span> <span class="nc">InputChannel</span><span class="p">(</span><span class="n">ControllerItem</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">ControllerItem</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;chi&#39;</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">perform_get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="s1">&#39;TEMP? &#39;</span> <span class="o">+</span> <span class="n">channel</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">value</span>
+
+
+<span class="k">class</span> <span class="nc">OutputPower</span><span class="p">(</span><span class="n">ControllerItem</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">ControllerItem</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;cho&#39;</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">perform_get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="s1">&#39;OUT? &#39;</span> <span class="o">+</span> <span class="n">channel</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">value</span>
+
+
+<span class="k">class</span> <span class="nc">OutputSetpoint</span><span class="p">(</span><span class="n">ControllerItem</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">ControllerItem</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;cho&#39;</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span>
+
+        <span class="c1"># The setpoint is not expected to change absent commands, so the</span>
+        <span class="c1"># polling rate here is lower than for the temperature and power</span>
+        <span class="c1"># outputs. But the controller is still considered the authoritative</span>
+        <span class="c1"># source of the setpoint value.</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">perform_get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="s1">&#39;SETP? &#39;</span> <span class="o">+</span> <span class="n">channel</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">value</span>
+
+
+    <span class="k">def</span> <span class="nf">perform_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+
+        <span class="n">channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="s1">&#39;SETP &#39;</span> <span class="o">+</span> <span class="n">channel</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+        <span class="c1"># Read the current setpoint back from the controller rather than</span>
+        <span class="c1"># assume it matches the value commanded.</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">perform_poll</span><span class="p">()</span>
+
+
+<span class="c1"># vim: set expandtab tabstop=8 softtabstop=4 shiftwidth=4 autoindent:</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="daemon_unabridged.html" class="btn btn-neutral float-left" title="Daemon: unabridged" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../executables.html" class="btn btn-neutral float-right" title="Executables" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright W. M. Keck Observatory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

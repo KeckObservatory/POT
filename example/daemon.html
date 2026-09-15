@@ -1,0 +1,413 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daemon: basics &mdash; mKTL 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=4bba6b87" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Daemon: unabridged" href="daemon_unabridged.html" />
+    <link rel="prev" title="Client: register a callback" href="callback.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            mKTL
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../client.html">Client interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../daemon.html">Daemon interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../store.html">The Store class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../item.html">The Item class</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="get.html">Client: get a value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="set.html">Client: set a value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="callback.html">Client: register a callback</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Daemon: basics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#getting-started">Getting started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#daemon-subclass"><code class="xref py py-class docutils literal notranslate"><span class="pre">Daemon</span></code> subclass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#item-subclasses"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code> subclasses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#daemon-setup-method"><code class="xref py py-func docutils literal notranslate"><span class="pre">Daemon.setup()</span></code> method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#daemon-setup-final-method"><code class="xref py py-func docutils literal notranslate"><span class="pre">Daemon.setup_final()</span></code> method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#daemon-cleanup-method"><code class="xref py py-func docutils literal notranslate"><span class="pre">Daemon.cleanup()</span></code> method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-values-of-other-items">Setting values of other items</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reacting-to-external-events">Reacting to external events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#json-description-of-items">JSON description of items</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#starting-the-daemon">Starting the daemon</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="daemon_unabridged.html">Daemon: unabridged</a></li>
+<li class="toctree-l2"><a class="reference internal" href="heater.html">Daemon: heater controller</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../executables.html">Executables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../metadata.html">JSON metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../built_ins.html">Built-in items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../protocol.html">Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../protocol_interface.html">Protocol interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../heritage.html">Heritage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code_of_conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../governance.html">Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">mKTL</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Daemon: basics</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/example/daemon.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="daemon-basics">
+<span id="example-daemon"></span><h1>Daemon: basics<a class="headerlink" href="#daemon-basics" title="Link to this heading"></a></h1>
+<p>This example will establish a ‘metal’ store and items intended to portray
+market prices for various precious metals. Refer to the <a class="reference internal" href="daemon_unabridged.html#unabridged-daemon"><span class="std std-ref">Daemon: unabridged</span></a>
+example to see these different aspects of a daemon presented in a single
+block of code.</p>
+<section id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h2>
+<p>The canonical approach to establish an mKTL daemon involves creating a Python
+module to represent all of your custom logic. Each of the steps described here
+is required, though there is more than one way to satisfy each step.</p>
+<p>In order to successfully run the daemon the Python interpreter being used to
+start the daemon must be able to import the mKTL module as well as any custom
+module(s) implementing the subclass of <a class="reference internal" href="../daemon.html#mktl.Daemon" title="mktl.Daemon"><code class="xref py py-class docutils literal notranslate"><span class="pre">Daemon</span></code></a> that encapsulates
+the remainder of the functionality.</p>
+</section>
+<section id="daemon-subclass">
+<h2><a class="reference internal" href="../daemon.html#mktl.Daemon" title="mktl.Daemon"><code class="xref py py-class docutils literal notranslate"><span class="pre">Daemon</span></code></a> subclass<a class="headerlink" href="#daemon-subclass" title="Link to this heading"></a></h2>
+<p>The structure of the Python module containing the <a class="reference internal" href="../daemon.html#mktl.Daemon" title="mktl.Daemon"><code class="xref py py-class docutils literal notranslate"><span class="pre">Daemon</span></code></a> subclass can
+be completely arbitrary; for the sake of this example, the code is contained
+in a <code class="docutils literal notranslate"><span class="pre">metal</span></code> Python module, and the components described here are in a
+<code class="docutils literal notranslate"><span class="pre">precious</span></code> submodule.</p>
+<p>Within the <code class="docutils literal notranslate"><span class="pre">precious</span></code> submodule we define our subclass. For no reason other
+than convenience it is defined with the name <code class="docutils literal notranslate"><span class="pre">Daemon</span></code>. The structure of the
+<code class="docutils literal notranslate"><span class="pre">precious.py</span></code> file will be as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mktl</span>
+
+<span class="k">class</span> <span class="nc">Daemon</span><span class="p">(</span><span class="n">mktl</span><span class="o">.</span><span class="n">Daemon</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">setup_final</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
+<section id="item-subclasses">
+<h2><a class="reference internal" href="../item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a> subclasses<a class="headerlink" href="#item-subclasses" title="Link to this heading"></a></h2>
+<p>The items represent the interface the daemon presents to its clients; the
+application-specific functionality that motivates the use of mKTL is exposed
+via items, and for most applications this means one or more custom <a class="reference internal" href="../item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a>
+subclasses.</p>
+<p>An example subclass would have a structure like the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MarketPriced</span><span class="p">(</span><span class="n">mktl</span><span class="o">.</span><span class="n">Item</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">mktl</span><span class="o">.</span><span class="n">Item</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># Additional initialization steps would generally follow the</span>
+        <span class="c1"># regular initialization from the base class. In this case,</span>
+        <span class="c1"># our market-prices should update once per day:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="mi">86400</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">perform_get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Determine the current value for this item and return it.</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">perform_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+        <span class="c1"># Receive a request to set a new value for this item; return</span>
+        <span class="c1"># once the request is complete.</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Note in particular the documentation for <a class="reference internal" href="../item.html#mktl.Item.perform_get" title="mktl.Item.perform_get"><code class="xref py py-func docutils literal notranslate"><span class="pre">Item.perform_get()</span></code></a> and
+<a class="reference internal" href="../item.html#mktl.Item.perform_set" title="mktl.Item.perform_set"><code class="xref py py-func docutils literal notranslate"><span class="pre">Item.perform_set()</span></code></a>, as it covers the expected behavior of each method.
+For our example, the various items are intended to represent the market
+spot price of different precious metals. In this case, the
+<a class="reference internal" href="../item.html#mktl.Item.perform_get" title="mktl.Item.perform_get"><code class="xref py py-func docutils literal notranslate"><span class="pre">Item.perform_get()</span></code></a> method may request the current value from a website,
+and <a class="reference internal" href="../item.html#mktl.Item.perform_set" title="mktl.Item.perform_set"><code class="xref py py-func docutils literal notranslate"><span class="pre">Item.perform_set()</span></code></a> would not be defined, since we don’t get to change
+the actual market value. To pick one example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Gold</span><span class="p">(</span><span class="n">MarketPriced</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">perform_get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">spot</span> <span class="o">=</span> <span class="n">get_spot_value</span><span class="p">(</span><span class="s1">&#39;gold&#39;</span><span class="p">,</span> <span class="s1">&#39;usd&#39;</span><span class="p">,</span> <span class="s1">&#39;grams&#39;</span><span class="p">)</span>
+        <span class="n">spot</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">spot</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_payload</span><span class="p">(</span><span class="n">spot</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="daemon-setup-method">
+<h2><a class="reference internal" href="../daemon.html#mktl.Daemon.setup" title="mktl.Daemon.setup"><code class="xref py py-func docutils literal notranslate"><span class="pre">Daemon.setup()</span></code></a> method<a class="headerlink" href="#daemon-setup-method" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="../daemon.html#mktl.Daemon.setup" title="mktl.Daemon.setup"><code class="xref py py-func docutils literal notranslate"><span class="pre">Daemon.setup()</span></code></a> is the first pass of application-level setup for the
+daemon. This is where instantiation of any custom subclasses of <a class="reference internal" href="../item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a>
+needs to
+occur, otherwise the various items defined for this daemon within this store
+will be populated with default, caching-only instances; this occurs immediately
+after the <a class="reference internal" href="../daemon.html#mktl.Daemon" title="mktl.Daemon"><code class="xref py py-class docutils literal notranslate"><span class="pre">Daemon</span></code></a> invokes <a class="reference internal" href="../daemon.html#mktl.Daemon.setup" title="mktl.Daemon.setup"><code class="xref py py-func docutils literal notranslate"><span class="pre">Daemon.setup()</span></code></a>.</p>
+<p>Any application-specific initialization is reasonable to include in
+<a class="reference internal" href="../daemon.html#mktl.Daemon.setup" title="mktl.Daemon.setup"><code class="xref py py-func docutils literal notranslate"><span class="pre">Daemon.setup()</span></code></a>, such as initializing a connection to a controller,
+especially if it is a pre-requisite for any of the custom <a class="reference internal" href="../item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a>
+subclasses. For the example defined here, we only need to instantiate our
+custom subclasses for each of the different precious metals for which we are
+publishing prices:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">Gold</span><span class="p">,</span> <span class="s1">&#39;GOLD&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">Silver</span><span class="p">,</span> <span class="s1">&#39;SILVER&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">Platinum</span><span class="p">,</span> <span class="s1">&#39;PLATINUM&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note the use of <a class="reference internal" href="../daemon.html#mktl.Daemon.add_item" title="mktl.Daemon.add_item"><code class="xref py py-func docutils literal notranslate"><span class="pre">Daemon.add_item()</span></code></a> here when establishing authoritative
+<a class="reference internal" href="../item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a> instances. The <a class="reference internal" href="../daemon.html#mktl.Daemon.add_item" title="mktl.Daemon.add_item"><code class="xref py py-func docutils literal notranslate"><span class="pre">Daemon.add_item()</span></code></a> method tweaks the
+instantiation process such that the <a class="reference internal" href="../item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a> is properly configured as
+an authoritative instance, in addition to other tracking local to the
+<a class="reference internal" href="../daemon.html#mktl.Daemon" title="mktl.Daemon"><code class="xref py py-class docutils literal notranslate"><span class="pre">Daemon</span></code></a> instance that gets leveraged when handling requests.</p>
+</section>
+<section id="daemon-setup-final-method">
+<h2><a class="reference internal" href="../daemon.html#mktl.Daemon.setup_final" title="mktl.Daemon.setup_final"><code class="xref py py-func docutils literal notranslate"><span class="pre">Daemon.setup_final()</span></code></a> method<a class="headerlink" href="#daemon-setup-final-method" title="Link to this heading"></a></h2>
+<p>If this store contained any logic that must be executed only after all the items
+have been fully instantiated, and/or populated with any previously cached
+persistent values, that logic should be invoked in the:func:<cite>Daemon.setup_final</cite>
+method. Most daemons will not take advantage of this method; this example daemon
+is likewise too simple to require it.</p>
+<p>A more complex example, such as a proxy for some other key/value protocol,
+might establish all of the <a class="reference internal" href="../item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a> instances, and the in the
+<a class="reference internal" href="../daemon.html#mktl.Daemon.setup_final" title="mktl.Daemon.setup_final"><code class="xref py py-func docutils literal notranslate"><span class="pre">Daemon.setup_final()</span></code></a> method, it would take whatever actions are necessary
+in the foreign protocol to subscribe to event broadcasts.</p>
+</section>
+<section id="daemon-cleanup-method">
+<h2><a class="reference internal" href="../daemon.html#mktl.Daemon.cleanup" title="mktl.Daemon.cleanup"><code class="xref py py-func docutils literal notranslate"><span class="pre">Daemon.cleanup()</span></code></a> method<a class="headerlink" href="#daemon-cleanup-method" title="Link to this heading"></a></h2>
+<p>The <a class="reference internal" href="../daemon.html#mktl.Daemon.cleanup" title="mktl.Daemon.cleanup"><code class="xref py py-func docutils literal notranslate"><span class="pre">Daemon.cleanup()</span></code></a> method will be invoked just prior to shutting down
+the daemon; this provides an opportunity for any application-specific cleanup
+actions to occur.</p>
+</section>
+<section id="setting-values-of-other-items">
+<h2>Setting values of other items<a class="headerlink" href="#setting-values-of-other-items" title="Link to this heading"></a></h2>
+<p>This scenario is not relevant to this simple example, but it occurs often
+in actual usage. What if you have code that needs to set the value of an
+<a class="reference internal" href="../item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a> instance within the context of a single daemon? Not every
+item will have a custom subclass defined for it; the default behavior of
+a ‘caching’ item is adequate for a large fraction of authoritative items.
+It’s common for there to be an item that sets derived values elsewhere,
+or sets a family of related item values as a result of an isolated change
+elsewhere.</p>
+<p>The <a class="reference internal" href="../item.html#mktl.Item.get" title="mktl.Item.get"><code class="xref py py-func docutils literal notranslate"><span class="pre">Item.get()</span></code></a> and <a class="reference internal" href="../item.html#mktl.Item.set" title="mktl.Item.set"><code class="xref py py-func docutils literal notranslate"><span class="pre">Item.set()</span></code></a> methods are inherently client-facing.
+While they can be used in a daemon context they will invoke the full mKTL
+request handling; in some cases this will be desired, but in the average
+case it is not necessary, or desired– and adds extra overhead.</p>
+<p>Updating the value for an authoritative <a class="reference internal" href="../item.html#mktl.Item" title="mktl.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a> is done via the
+<a class="reference internal" href="../item.html#mktl.Item.publish" title="mktl.Item.publish"><code class="xref py py-func docutils literal notranslate"><span class="pre">Item.publish()</span></code></a> method. The <a class="reference internal" href="../item.html#mktl.Item.value" title="mktl.Item.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Item.value</span></code></a> property, for
+authoritative items, will map to this method, as will using
+<a class="reference internal" href="../item.html#mktl.Item.formatted" title="mktl.Item.formatted"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Item.formatted</span></code></a> or <a class="reference internal" href="../item.html#mktl.Item.quantity" title="mktl.Item.quantity"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Item.quantity</span></code></a>. The following
+two calls are equivalent in a daemon context:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mf">102.45</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="mf">102.45</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The same calling semantics are available for other authoritative items within
+a daemon. The following block shows two equivalent ways to retrieve a reference
+to a locally authoriative item, and similar to the above, two equivalent calls
+to publish a new value:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">other</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="p">[</span><span class="s1">&#39;OTHER_ITEM&#39;</span><span class="p">]</span>
+<span class="n">other</span> <span class="o">=</span> <span class="n">mktl</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;metal.OTHER_ITEM&#39;</span><span class="p">)</span>
+
+<span class="n">other</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mf">33.67</span>
+<span class="n">other</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="mf">33.67</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="reacting-to-external-events">
+<h2>Reacting to external events<a class="headerlink" href="#reacting-to-external-events" title="Link to this heading"></a></h2>
+<p>Event-driven logic involves responding to asynchronous updates. A common
+pattern for custom Item subclasses involves watching other mKTL items for
+new values, and update the local value (or otherwise respond) whenever one
+of those other items publishes a new value.</p>
+<p>The canonical way for an item to determine its current value is via the
+<a class="reference internal" href="../item.html#mktl.Item.perform_get" title="mktl.Item.perform_get"><code class="xref py py-func docutils literal notranslate"><span class="pre">Item.perform_get()</span></code></a> method, as described above. <code class="docutils literal notranslate"><span class="pre">The</span> <span class="pre">MarketPriced</span></code>
+class in the example uses <a class="reference internal" href="../item.html#mktl.Item.poll" title="mktl.Item.poll"><code class="xref py py-func docutils literal notranslate"><span class="pre">Item.poll()</span></code></a> to drive its updates, but what
+if we wanted to respond instantly to external changes? The <a class="reference internal" href="../item.html#mktl.Item.watch" title="mktl.Item.watch"><code class="xref py py-func docutils literal notranslate"><span class="pre">Item.watch()</span></code></a>
+method will register an appropriate callback on a remote item, and effectively
+enable asynchonous polling of the local value, invoking the exact same calling
+sequence as would occur during a polling operation.</p>
+<p>Here’s what that would look like in practice:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MarketPriced</span><span class="p">(</span><span class="n">mktl</span><span class="o">.</span><span class="n">Item</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">mktl</span><span class="o">.</span><span class="n">Item</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># Always update at least once per day:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="mi">86400</span><span class="p">)</span>
+
+        <span class="c1"># Update immediately if other market values change.</span>
+
+        <span class="n">dow</span> <span class="o">=</span> <span class="n">mktl</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dow_jones.futures&#39;</span><span class="p">)</span>
+        <span class="n">sp500</span> <span class="o">=</span> <span class="n">mktl</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sp500.futures&#39;</span><span class="p">)</span>
+        <span class="n">nasdaq</span> <span class="o">=</span> <span class="n">mktl</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nasdaq.futures&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">watch</span><span class="p">(</span><span class="n">dow</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">watch</span><span class="p">(</span><span class="n">sp500</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">watch</span><span class="p">(</span><span class="n">nasdaq</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">perform_get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Determine the current value for this item and return it.</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">perform_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+        <span class="c1"># Receive a request to set a new value for this item; return</span>
+        <span class="c1"># once the request is complete.</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
+<section id="json-description-of-items">
+<h2>JSON description of items<a class="headerlink" href="#json-description-of-items" title="Link to this heading"></a></h2>
+<p>The <a class="reference internal" href="../metadata.html#catalog"><span class="std std-ref">catalog syntax</span></a> describing a set of items is a
+JSON associative array. When a daemon first starts it must have a complete JSON
+description of every item; this forms the core of the catalog block managed by
+that daemon, which is responsible for adding the metadata required for proper
+client interactions.</p>
+<p>The JSON contents can be generated at run time and registered for immediate use
+by the daemon. This is the approach taken by the KTL protocol translation
+daemon, where the JSON is a repackaging of the configuration metadata supplied
+by KTL API calls; with a JSON-like dictionary in hand, the daemon would have
+lines like the following in its initialization method:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+    <span class="n">items</span> <span class="o">=</span> <span class="n">generate_catalog</span><span class="p">()</span>
+    <span class="n">mktl</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">authoritative</span><span class="p">(</span><span class="s1">&#39;metal&#39;</span><span class="p">,</span> <span class="s1">&#39;precious&#39;</span><span class="p">,</span> <span class="n">items</span><span class="p">)</span>
+    <span class="n">mktl</span><span class="o">.</span><span class="n">Daemon</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The catalog can also be written out as a JSON file, ready
+to be used by the daemon. The file can be anywhere, so long as it is accessible
+upon startup, after which the file is no longer referenced in any way. The
+catalog file is expected to contain a single JSON-formatted dictionary,
+with a <a class="reference internal" href="../metadata.html#items"><span class="std std-ref">dictionary for each item</span></a>. Whitespace is not important,
+so long as JSON parsers understand the file contents.</p>
+<p>The following is a catalog block appropriate for the items used in this
+example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+ <span class="s2">&quot;GOLD&quot;</span><span class="p">:</span> <span class="p">{</span>
+   <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;numeric&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;USD/gram&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Current spot price for pure gold.&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;settable&quot;</span><span class="p">:</span> <span class="n">false</span>
+ <span class="p">},</span>
+ <span class="s2">&quot;PLATINUM&quot;</span><span class="p">:</span> <span class="p">{</span>
+   <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;numeric&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;USD/gram&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Current spot price for pure platinum.&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;settable&quot;</span><span class="p">:</span> <span class="n">false</span>
+ <span class="p">},</span>
+ <span class="s2">&quot;SILVER&quot;</span><span class="p">:</span> <span class="p">{</span>
+   <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;numeric&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="p">{</span>
+     <span class="s1">&#39;&#39;</span><span class="p">:</span> <span class="s2">&quot;USD/gram&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;formatted&quot;</span><span class="p">:</span> <span class="s2">&quot;USD/gram&quot;</span>
+   <span class="p">},</span>
+   <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Current spot price for pure silver.&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;settable&quot;</span><span class="p">:</span> <span class="n">false</span>
+ <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="starting-the-daemon">
+<h2>Starting the daemon<a class="headerlink" href="#starting-the-daemon" title="Link to this heading"></a></h2>
+<p>The <a class="reference internal" href="../executables.html#mkregistryd"><span class="std std-ref">mkregistryd</span></a> executable is a persistent application that enables
+clients to easily find authoritative mKTL daemons. Having one instance of
+<a class="reference internal" href="../executables.html#mkregistryd"><span class="std std-ref">mkregistryd</span></a> running on the local network is recommended.</p>
+<p>The <a class="reference internal" href="../executables.html#mkd"><span class="std std-ref">mkd</span></a> executable provides a common entry point for a persistent
+daemon. Assuming the default search path is set up correctly, for the example
+outlined here the invocation would resemble:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkd</span> <span class="n">metal</span> <span class="n">precious</span> <span class="o">--</span><span class="n">module</span> <span class="n">metal</span><span class="o">.</span><span class="n">precious</span> <span class="o">-</span><span class="n">c</span> <span class="n">precious_metals</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<p>Both <a class="reference internal" href="../executables.html#mkregistryd"><span class="std std-ref">mkregistryd</span></a> and <a class="reference internal" href="../executables.html#mkd"><span class="std std-ref">mkd</span></a> should be running before mKTL client
+interactions are attempted.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="callback.html" class="btn btn-neutral float-left" title="Client: register a callback" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="daemon_unabridged.html" class="btn btn-neutral float-right" title="Daemon: unabridged" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright W. M. Keck Observatory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,287 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glossary &mdash; mKTL 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=4bba6b87" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Governance" href="governance.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mKTL
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="client.html">Client interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="daemon.html">Daemon interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store.html">The Store class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item.html">The Item class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="executables.html">Executables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">JSON metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="built_ins.html">Built-in items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol.html">Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol_interface.html">Protocol interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="heritage.html">Heritage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_of_conduct.html">Code of conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="governance.html">Governance</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Glossary</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#external-definitions">External definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mktl-specific-terms">mKTL-specific terms</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mKTL</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Glossary</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/glossary.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="glossary">
+<h1>Glossary<a class="headerlink" href="#glossary" title="Link to this heading"></a></h1>
+<p>This document defines the common nomenclature used within mKTL. Some of the
+terms are inherited from KTL; some are inherited from common design patterns
+in the broader software world. Where there is a conflict between the two,
+we prefer to use the common industry definition rather than traditional use
+within WMKO.</p>
+<section id="external-definitions">
+<h2>External definitions<a class="headerlink" href="#external-definitions" title="Link to this heading"></a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>WMKO</strong>:</dt><dd><p><a class="reference external" href="https://keckobservatory.org/">W. M. Keck Observatory</a>, where mKTL
+was initially established, in collaboration with WMKO partner
+institutions at the
+<a class="reference external" href="https://www.universityofcalifornia.edu">University of California</a>
+and <a class="reference external" href="https://www.caltech.edu">California Institute of Technology</a>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>KTL</strong>:</dt><dd><p><a class="reference internal" href="heritage.html#heritage"><span class="std std-ref">Keck Task Library</span></a>, the predecessor to mKTL at
+WMKO. KTL is a key-value application programming interface (API),
+written in C, and has been the dominant API for interprocess
+communication at both WMKO and Lick Observatory since the 1990’s.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>EPICS</strong>:</dt><dd><p><a class="reference external" href="https://epics-controls.org">Experimental Physics and Industrial Control System</a>, another
+key-value API that WMKO adopted for its telescope and
+adaptive optics control systems. EPICS is one of the interprocess
+communication APIs for which KTL provides a common abstraction.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</section>
+<section id="mktl-specific-terms">
+<h2>mKTL-specific terms<a class="headerlink" href="#mktl-specific-terms" title="Link to this heading"></a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>mKTL</strong>:</dt><dd><p>Modern Keck Task Library. It’s just a name, but it’s ours,
+and was the clear choice out of a field of a dozen options
+that were presented to the future power users of the protocol.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Protocol</strong>:</dt><dd><p>Protocol, as used in the above statement, refers to
+a communication protocol, as opposed to being a synonym for an interface
+in an object-oriented context. Borrowing phrasing from
+<a class="reference external" href="https://en.wikipedia.org/wiki/Communication_protocol">Wikipedia</a>,
+a communication protocol defines the rules, syntax,
+semantics, and synchronization of communication between
+two entities.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Transport</strong>:</dt><dd><p>A <a class="reference external" href="https://en.wikipedia.org/wiki/Transport_layer">transport layer</a>
+is the underlying layer of the network stack that handles application
+level messaging. Though it is built upon TCP and UDP,
+<a class="reference external" href="https://zeromq.org/">ZeroMQ</a> is effectively the transport layer
+for the mKTL protocol.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Daemon</strong>:</dt><dd><p>A persistent process responsible for some or all of the key-value
+pairs in a given store. When client requests are initiated it is
+the daemon that will be contacted to satisfy the request. This is
+analogous to a KTL dispatcher or an EPICS IOC.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Store</strong>:</dt><dd><p>A store is an aggregation of individual key-value pairs.
+Within a given deployment of mKTL the store will have a
+unique name. This is analogous to a KTL service, or an
+EPICS database, and is effectively an associative array,
+or a Python dictionary. “Database” is another term used
+in similar contexts, but that term is more commonly used
+in reference to a relational database. mKTL treats the
+store name as case-insensitive, any actual usage will
+render it as all lower-case.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Key</strong>:</dt><dd><p>A unique name within a store, identifying a single key-value
+pair. This is analogous to a KTL keyword, or an EPICS channel.
+mKTL treats the key as case-insensitive, any actual usage will
+render it as all upper-case.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Value</strong>:</dt><dd><p>The other half of the key-value pair. Like a KTL keyword,
+a mKTL value can be one of many native types (integer,
+floating point, string, etc.), and includes the possibility
+of compound values, similar to KTL arrays.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Item</strong>:</dt><dd><p>The combination of the key/value pair. This term is borrowed
+from Python’s dictionary, where it has a similar meaning. In
+the context of mKTL, the Store class in the reference Python
+module will return Item instances when referenced by the key.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Get</strong>:</dt><dd><p>Retrieve a value corresponding to an individual key in a store.
+A typical client can issue a blocking or a non-blocking
+(synchronous or asynchronous) operation. This is analogous to
+a KTL read or an EPICS get.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Set</strong>:</dt><dd><p>Establish a new value for an individual key in a store. A typical
+client can request a blocking or a non-blocking (synchronous or
+asynchronous) operation. This is analogous to a KTL modify or an
+EPICS put.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Publish</strong>:</dt><dd><p>Broadcast a new value for an individual key in a store.
+The store name combined with the key makes up the bulk of
+the topic, which in turn has specific meaning in a typical
+<a class="reference external" href="https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern">publish-subscribe design pattern</a>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Subscribe</strong>:</dt><dd><p>Request the receipt of any/all published broadcasts of an
+individual key in a store. This is analogous to a KTL monitor
+or EPICS monitor request.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Callback</strong>:</dt><dd><p>A method to be called whenever a published broadcast arrives
+for an individual key in a store.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Register</strong>:</dt><dd><p>The act of associating a callback with a specific key in a
+store. The callback will now be invoked whenever the value
+of that key changes. “Connect” is another term used in
+similar contexts, but that term is more commonly used with
+network sockets.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="governance.html" class="btn btn-neutral float-left" title="Governance" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright W. M. Keck Observatory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
